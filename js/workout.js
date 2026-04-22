@@ -237,7 +237,7 @@ const Workout = {
                 ${ex.name}
                 <button class="btn-search-ex" onclick="Workout.searchExercise(event, '${searchQuery.replace(/'/g, "\\'")}')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-                  Buscar
+                  Buscar ejercicio
                 </button>
               </div>
               <div class="exercise-meta">
