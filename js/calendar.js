@@ -29,13 +29,16 @@ const Calendar = {
     const plans = getAvailablePlans();
     const currentPlan = this._getPlan();
     const planSelectorHtml = plans.length > 1 ? `
-      <div class="plan-selector">
-        ${plans.map(p => `
-          <button class="plan-chip ${p.id === currentPlan ? 'active' : ''}"
-            onclick="Calendar.selectPlan('${p.id}')">
-            ${p.name}
-          </button>
-        `).join('')}
+      <div class="plan-selector-wrap">
+        <label class="plan-selector-label">Plan de entreno</label>
+        <div class="plan-selector-dropdown">
+          <select class="plan-select" onchange="Calendar.selectPlan(this.value)">
+            ${plans.map(p => `
+              <option value="${p.id}" ${p.id === currentPlan ? 'selected' : ''}>${p.name}</option>
+            `).join('')}
+          </select>
+          <svg class="plan-select-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
       </div>
     ` : '';
 
