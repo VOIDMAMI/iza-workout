@@ -19,6 +19,7 @@
   z-index: var(--z-nav);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
 }
 
 .nav-item {
@@ -52,13 +53,13 @@
 .nav-item.active::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 2px;
   left: 50%;
   transform: translateX(-50%);
   width: 32px;
   height: 3px;
   background: var(--gradient-primary);
-  border-radius: 0 0 4px 4px;
+  border-radius: 4px;
 }
 
 .nav-item:active {
