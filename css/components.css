@@ -334,6 +334,10 @@
   font-size: var(--font-md);
   font-weight: 700;
   color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .exercise-meta {
@@ -348,7 +352,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 10px;
+  padding: 3px 10px;
   font-size: var(--font-xs);
   font-weight: 600;
   color: var(--primary);
@@ -356,8 +360,10 @@
   border: 1px solid rgba(139, 92, 246, 0.25);
   border-radius: var(--radius-full);
   text-decoration: none;
+  cursor: pointer;
   transition: all var(--transition-base);
   white-space: nowrap;
+  font-family: inherit;
 }
 
 .btn-search-ex:hover,
