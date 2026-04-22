@@ -1014,3 +1014,307 @@ WORKOUT_PLANS.perdida_grasa = {
     }
   ]
 };
+
+WORKOUT_PLANS.personas_poco_tiempo = {
+  id: 'personas_poco_tiempo',
+  name: 'Personas con poco tiempo',
+  description: '3 días por semana | 12 semanas progresivas',
+  planType: 'phased',
+  weeks: 12,
+  trainingDays: [1, 3, 5],
+  dayMeta: {
+    1: { name: 'Día 1 — Pierna · Press', type: 'strength', muscleGroups: ['Piernas', 'Hombros'] },
+    3: { name: 'Día 3 — Peso muerto · Press banca', type: 'strength', muscleGroups: ['Espalda', 'Pecho', 'Brazos'] },
+    5: { name: 'Día 5 — Accesorio', type: 'strength', muscleGroups: ['Brazos', 'Hombros', 'Espalda'] }
+  },
+  weeklySchedule: [
+    // S1
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 3, '8-10', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 3, '10-12', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 3, '10-12', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 2, '12-14', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 3, '6-8', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 3, '10-12', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 3, '8-10', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 2, '12-14', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 3, '12/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 3, '12-14', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 3, '12-14', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 3, '14-16', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 2, '8-10', 60),
+      ],
+    },
+    // S2
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 3, '10-12', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 3, '12-14', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 3, '12-14', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 2, '14-16', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 3, '8-10', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 3, '12-14', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 3, '10-12', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 2, '14-16', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 3, '14/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 3, '14-16', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 3, '14-16', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 3, '16-18', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 2, '10-12', 60),
+      ],
+    },
+    // S3
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 4, '8-10', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 4, '10-12', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 4, '10-12', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 3, '12-14', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 4, '6-8', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 4, '10-12', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 4, '8-10', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 3, '12-14', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 4, '12/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 4, '12-14', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 4, '12-14', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 4, '14-16', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 3, '8-10', 60),
+      ],
+    },
+    // S4
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 4, '10-12', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 4, '12-14', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 4, '12-14', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 3, '14-16', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 4, '8-10', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 4, '12-14', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 4, '10-12', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 3, '14-16', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 4, '14/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 4, '14-16', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 4, '14-16', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 4, '16-18', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 3, '10-12', 60),
+      ],
+    },
+    // S5
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 4, '6-8', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 4, '10-12', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 4, '10-12', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 3, '12-14', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 4, '5-6', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 4, '10-12', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 4, '8-10', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 3, '12-14', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 4, '12/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 4, '12-14', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 4, '12-14', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 4, '14-16', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 3, '8-10', 60),
+      ],
+    },
+    // S6
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 5, '6-8', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 5, '8-10', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 5, '8-10', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 4, '10-12', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 5, '5-6', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 5, '8-10', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 5, '6-8', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 4, '10-12', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 5, '10/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 5, '10-12', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 5, '10-12', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 5, '12-14', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 4, '8-10', 60),
+      ],
+    },
+    // S7
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '5', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 4, '4-5', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 4, '6-8', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 4, '6-8', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 3, '8-10', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '4', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 4, '4-5', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 4, '6-8', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 4, '5-6', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 3, '8-10', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 4, '8/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 4, '8-10', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 4, '8-10', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 4, '10-12', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 3, '6-8', 60),
+      ],
+    },
+    // S8
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '5', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 5, '4-5', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 5, '6-8', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 5, '6-8', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 4, '8-10', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '4', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 5, '4-5', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 5, '6-8', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 5, '5-6', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 4, '8-10', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 5, '8/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 5, '8-10', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 5, '8-10', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 5, '10-12', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 4, '6-8', 60),
+      ],
+    },
+    // S9
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 4, '10-12', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 4, '12-14', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 4, '12-14', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 3, '14-16', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 4, '6-8', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 4, '12-14', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 4, '10-12', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 3, '14-16', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 4, '14/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 4, '14-16', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 4, '14-16', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 4, '16-18', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 3, '10-12', 60),
+      ],
+    },
+    // S10
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 5, '8-10', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 5, '10-12', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 5, '10-12', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 4, '12-14', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 5, '5-6', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 5, '10-12', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 5, '8-10', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 4, '12-14', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 5, '12/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 5, '12-14', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 5, '12-14', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 5, '14-16', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 4, '8-10', 60),
+      ],
+    },
+    // S11
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 5, '6-8', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 5, '8-10', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 5, '8-10', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 4, '10-12', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '5', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 5, '4-5', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 5, '8-10', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 5, '6-8', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 4, '10-12', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 5, '10/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 5, '10-12', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 5, '10-12', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 5, '12-14', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 4, '6-8', 60),
+      ],
+    },
+    // S12 (Deload)
+    {
+      1: [
+        _ex('ppt_squat_ap', 'Sentadilla | Aproximación', 2, '6', 90),
+        _ex('ppt_squat', 'Sentadilla | Trabajo', 3, '5', 120),
+        _ex('ppt_remo_pecho', 'Remo pecho | Trabajo', 3, '6', 90),
+        _ex('ppt_press_hom', 'Press con mancuernas', 3, '6', 60),
+        _ex('ppt_curl_bic', 'Curl de bíceps', 2, '8', 45),
+      ],
+      3: [
+        _ex('ppt_dlift_ap', 'Peso muerto | Aproximación', 2, '4', 120),
+        _ex('ppt_dlift', 'Peso muerto | Trabajo', 3, '3-4', 180),
+        _ex('ppt_press_banc', 'Press banca con mancuernas', 3, '6', 90),
+        _ex('ppt_remo_int', 'Remo intermedio', 3, '6', 90),
+        _ex('ppt_ext_tri', 'Extensión de tríceps', 2, '8', 45),
+      ],
+      5: [
+        _ex('ppt_lunge_walk', 'Caminar en estocadas', 3, '8/pierna', 60),
+        _ex('ppt_pullover', 'Pull over', 3, '8', 60),
+        _ex('ppt_elev_lat', 'Elevaciones laterales', 3, '8', 45),
+        _ex('ppt_remo_bajo', 'Remo bajo en polea', 3, '8', 60),
+        _ex('ppt_flexion_pecho', 'Flexiones pecho', 2, '5-6', 60),
+      ],
+    },
+  ] // end weeklySchedule
+};
