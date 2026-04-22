@@ -344,6 +344,30 @@
   gap: var(--space-sm);
 }
 
+.btn-search-ex {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--primary);
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn-search-ex:hover,
+.btn-search-ex:active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
 .exercise-sets {
   display: flex;
   flex-direction: column;

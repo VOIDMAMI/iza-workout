@@ -227,17 +227,26 @@ const Workout = {
       const allSetsCompleted = exLog.sets.length >= ex.sets && exLog.sets.every(s => s.completed);
       const completedSets = exLog.sets.filter(s => s.completed).length;
 
+      const searchName = encodeURIComponent(ex.name.replace(/\s*\|\s*/g, ' ').replace(/\([^)]*\)/g, '').trim());
+      const searchUrl = `https://www.tiktok.com/search?q=${searchName}`;
+
       return `
         <div class="exercise-card ${allSetsCompleted ? 'completed' : ''} anim-fade-in-up anim-delay-${Math.min(exIndex + 1, 8)}" id="exercise-${ex.id}">
           <div class="exercise-header">
-            <div>
+            <div style="flex:1; min-width:0;">
               <div class="exercise-name">${ex.name}</div>
               <div class="exercise-meta">
                 <span>${ex.sets} series × ${ex.reps}</span>
                 ${ex.rest ? `<span>⏱ ${ex.rest}s</span>` : ''}
               </div>
             </div>
-            <span class="text-sm ${allSetsCompleted ? 'text-success' : 'text-secondary'}">${completedSets}/${ex.sets}</span>
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+              <a href="${searchUrl}" target="_blank" rel="noopener" class="btn-search-ex" onclick="event.stopPropagation()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+                Buscar
+              </a>
+              <span class="text-sm ${allSetsCompleted ? 'text-success' : 'text-secondary'}">${completedSets}/${ex.sets}</span>
+            </div>
           </div>
           ${ex.notes ? `<div class="text-sm text-tertiary mb-md" style="font-style:italic">💡 ${ex.notes}</div>` : ''}
           <div class="exercise-sets">
