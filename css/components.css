@@ -715,11 +715,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-base);
-  padding: var(--space-xl);
+  gap: var(--space-sm);
+  padding: var(--space-md);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   position: sticky;
   top: var(--space-sm);
   z-index: 50;
@@ -727,11 +727,11 @@
 }
 
 .timer-display {
-  font-size: 3.5rem;
+  font-size: 2.25rem;
   font-weight: 800;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
 }
 
 .timer-display.warning {
@@ -754,9 +754,9 @@
 }
 
 .timer-preset-btn {
-  padding: var(--space-xs) var(--space-md);
-  border-radius: 16px;
-  font-size: var(--font-sm);
+  padding: 4px var(--space-sm);
+  border-radius: 12px;
+  font-size: var(--font-xs);
   font-weight: 600;
   border: 1px solid var(--border);
   background: transparent;
