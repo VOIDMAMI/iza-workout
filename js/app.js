@@ -13,6 +13,15 @@ const App = {
         .catch(err => console.log('SW registration failed:', err));
     }
 
+    // Unlock audio on first user interaction (required by iOS)
+    const unlock = () => {
+      unlockAudio();
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('click', unlock);
+    };
+    document.addEventListener('touchstart', unlock, { once: true });
+    document.addEventListener('click', unlock, { once: true });
+
     // Handle hash navigation
     window.addEventListener('hashchange', () => {
       const page = location.hash.replace('#', '') || 'home';
@@ -25,6 +34,10 @@ const App = {
   },
 
   _switchPage(page, updateHash = true) {
+    // Release wake lock when leaving workout page
+    if (this.currentPage === 'workout' && page !== 'workout') {
+      releaseWakeLock();
+    }
     this.currentPage = page;
     if (updateHash) location.hash = page;
     document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));

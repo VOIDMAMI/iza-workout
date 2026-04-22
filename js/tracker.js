@@ -201,7 +201,11 @@ const Tracker = {
           display.className = 'timer-display done';
           display.textContent = '¡GO!';
           this.stopTimer();
-          vibrate(300);
+
+          // Alert: sound + vibration + notification
+          playAlertSound();
+          vibrate([200, 100, 200, 100, 400]);
+          showRestDoneNotification();
 
           setTimeout(() => this.hideTimer(), 2000);
         }

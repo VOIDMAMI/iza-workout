@@ -35,6 +35,12 @@ const Workout = {
       ? { ...raw, exercises: this._expandExercises(raw.exercises) }
       : raw;
 
+    // Keep screen on during workout
+    if (this.currentWorkout && this.currentWorkout.type !== 'rest') {
+      requestWakeLock();
+      requestNotificationPermission();
+    }
+
     const container = document.getElementById('page-workout');
     if (!container || !this.currentWorkout) return;
 
@@ -301,6 +307,7 @@ const Workout = {
   finishWorkout() {
     const dateKey = formatDateKey(this.currentDate);
     Storage.setDayCompleted(dateKey, this.currentWorkout);
+    releaseWakeLock();
     vibrate(200);
     showToast('¡Entrenamiento completado! 💪🔥');
 
