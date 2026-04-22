@@ -43,10 +43,10 @@ const Tracker = {
       if (!weightInput.value && weight) weightInput.value = weight;
       if (!repsInput.value && reps) repsInput.value = reps;
 
-      // Show timer (use 90s default if exercise has no rest defined)
+      // Show timer (use 60s default if exercise has no rest defined)
       const exercise = Workout.currentWorkout?.exercises?.find(e => e.id === exerciseId);
       if (exercise) {
-        this.showTimer(exercise.rest || 90);
+        this.showTimer(exercise.rest || 60);
       }
 
       // Check if all sets of this exercise are done
@@ -158,7 +158,7 @@ const Tracker = {
     const timerContainer = document.getElementById('rest-timer-container');
     if (!timerContainer) return;
     timerContainer.classList.remove('hidden');
-    this.startTimer(seconds || 90);
+    this.startTimer(seconds || 60);
 
     // Scroll to timer
     timerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });

@@ -283,8 +283,9 @@ const Workout = {
         </div>
         <div class="timer-display" id="timer-display">00:00</div>
         <div class="timer-preset">
-          <button class="timer-preset-btn" onclick="Tracker.startTimer(60)">1:00</button>
-          <button class="timer-preset-btn active" onclick="Tracker.startTimer(90)">1:30</button>
+          <button class="timer-preset-btn" onclick="Tracker.startTimer(30)">0:30</button>
+          <button class="timer-preset-btn active" onclick="Tracker.startTimer(60)">1:00</button>
+          <button class="timer-preset-btn" onclick="Tracker.startTimer(90)">1:30</button>
           <button class="timer-preset-btn" onclick="Tracker.startTimer(120)">2:00</button>
           <button class="timer-preset-btn" onclick="Tracker.startTimer(150)">2:30</button>
         </div>
