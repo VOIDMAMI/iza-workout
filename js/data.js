@@ -682,59 +682,6 @@ const WORKOUT_PLANS = {
       },
     ] // end weeklySchedule
   }, // end fuerza_avanzado
-
-  /* ============================================
-     PERSONAS OCUPADAS — Full Body 3x/semana
-  ============================================ */
-  personas_ocupadas: {
-    id: 'personas_ocupadas',
-    name: 'Personas Ocupadas',
-    planType: 'repeating',
-    weeks: 8,
-    description: 'Full body 3 días/semana con supersets — para personas con poco tiempo',
-    trainingDays: [1, 3, 5],
-    dayMeta: {
-      1: { name: 'Full Body 1', type: 'strength', muscleGroups: ['Full Body', 'Cuádriceps', 'Hombros'] },
-      3: { name: 'Full Body 2', type: 'strength', muscleGroups: ['Full Body', 'Glúteos', 'Espalda'] },
-      5: { name: 'Full Body 3', type: 'strength', muscleGroups: ['Full Body', 'Isquios', 'Core'] },
-    },
-    schedule: {
-      1: [
-        _ex('po_fb1_mob1', 'Movilidad — Rotación de columna en T', 1, '12/lado', 0, 'Activación. Sin descanso.'),
-        _ex('po_fb1_mob2', 'Movilidad — Cat camel', 1, '12', 0, 'Activación. Sin descanso.'),
-        _ex('po_fb1_a1',   'Sentadilla libre | Barra alta', 3, '6-8', 0, 'SUPERSERIE A — continuar con Flexiones sin descanso.'),
-        _ex('po_fb1_a2',   'Flexiones de rodillas', 3, '8-10', 0, 'SUPERSERIE A — continuar con Jalón al pecho sin descanso.'),
-        _ex('po_fb1_a3',   'Jalón al pecho', 3, '10-12', 120, 'SUPERSERIE A — descanso 2 min tras completar los 3 ejercicios.'),
-        _ex('po_fb1_b1',   'Hip Thrust', 3, '8-10', 0, 'SUPERSERIE B — continuar con Press hombro sin descanso. Pausa 2s apretando glúteo.'),
-        _ex('po_fb1_b2',   'Press de hombro con mancuernas', 3, '10-12', 120, 'SUPERSERIE B — descanso 2 min tras completar los 2 ejercicios.'),
-        _ex('po_fb1_fin',  'Elevaciones laterales con mancuernas', 3, 'Drop Set', 0, 'Finisher — Drop Set: baja el peso a la mitad al llegar al fallo.'),
-      ],
-      2: null,
-      3: [
-        _ex('po_fb2_mob1', 'Movilidad — Cervicales', 1, '12', 0, 'Activación. Sin descanso.'),
-        _ex('po_fb2_a1',   'Sentadilla búlgara con mancuerna', 3, '8-10/lado', 0, 'SUPERSERIE A — continuar con Fondos de tríceps sin descanso.'),
-        _ex('po_fb2_a2',   'Fondos de tríceps en banco', 3, '10-12', 120, 'SUPERSERIE A — descanso 2 min.'),
-        _ex('po_fb2_b1',   'Peso muerto sumo', 3, '8-10', 0, 'SUPERSERIE B — continuar sin descanso.'),
-        _ex('po_fb2_b2',   'Remo con barra a 90°', 3, '10-12', 0, 'SUPERSERIE B — continuar sin descanso.'),
-        _ex('po_fb2_b3',   'Zancadas traseras con mancuernas', 3, '20 (alterno)', 0, 'SUPERSERIE B — continuar sin descanso.'),
-        _ex('po_fb2_b4',   'Remo a 90° con mancuernas', 3, '10-12', 120, 'SUPERSERIE B — descanso 2 min.'),
-        _ex('po_fb2_fin',  'Elevaciones laterales + frontales alternas', 3, 'Drop Set', 0, 'Finisher — Drop Set.'),
-      ],
-      4: null,
-      5: [
-        _ex('po_fb3_mob1', 'Movilidad — Rotación de columna en cuadrupedia', 1, '12/lado', 0, 'Activación.'),
-        _ex('po_fb3_mob2', 'Movilidad — Runners lunge', 1, '12', 0, 'Activación.'),
-        _ex('po_fb3_a1',   'Sentadilla búlgara con mancuerna', 3, '8-10/lado', 0, 'SUPERSERIE A — continuar con Peso muerto rumano sin descanso.'),
-        _ex('po_fb3_a2',   'Peso muerto rumano con mancuernas', 3, '8-10', 120, 'SUPERSERIE A — descanso 2 min.'),
-        _ex('po_fb3_b1',   'Jalón al pecho', 3, '10-12', 120, 'SUPERSERIE B.'),
-        _ex('po_fb3_myo',  'Extensión de cuádriceps', 3, 'Myo-reps', 15, 'Myo-reps: 1 set hasta el fallo, luego mini-series de 5 reps con 15s de descanso.'),
-        _ex('po_fb3_fin',  'Curl de femoral', 3, 'Drop Set', 0, 'Finisher — Drop Set.'),
-        _ex('po_fb3_core', 'Core — Knee to toe taps', 2, '20 (alterno)', 30),
-      ],
-      6: null,
-      0: null,
-    },
-  },
 };
 
 /* ── Active plan (used for home screen) ── */
