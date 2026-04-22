@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iza-workout-v4';
+const CACHE_NAME = 'iza-workout-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -23,9 +23,7 @@ const ASSETS = [
 // Install — cache all assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
   self.skipWaiting();
 });
@@ -42,20 +40,35 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch — cache first, then network
+// Fetch — network-first for code (HTML/JS/CSS), cache-first for assets
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      return cached || fetch(event.request).then((response) => {
-        return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, response.clone());
+  const req = event.request;
+  const url = new URL(req.url);
+  const isCode = /\.(html|js|css)$/i.test(url.pathname) || url.pathname.endsWith('/');
+
+  if (isCode) {
+    // Network-first: always try fresh version, fall back to cache offline
+    event.respondWith(
+      fetch(req)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          return response;
+        })
+        .catch(() => caches.match(req).then((cached) =>
+          cached || caches.match('./index.html')
+        ))
+    );
+  } else {
+    // Cache-first for images, icons, manifest, etc.
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        return cached || fetch(req).then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
           return response;
         });
-      });
-    }).catch(() => {
-      if (event.request.destination === 'document') {
-        return caches.match('./index.html');
-      }
-    })
-  );
+      })
+    );
+  }
 });
