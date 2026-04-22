@@ -150,63 +150,105 @@ function vibrate(ms = 50) {
 
 /* ---- Alert system (sound + wake lock + notification) ---- */
 
-let _audioCtx = null;
-function _getAudioCtx() {
-  if (!_audioCtx) {
-    try {
-      _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    } catch (e) { return null; }
+// Build a WAV data URI at the given frequency and duration.
+function _makeBeepDataUri(freq, durationSec, volume = 0.5) {
+  const sampleRate = 44100;
+  const numSamples = Math.floor(sampleRate * durationSec);
+  const bytesPerSample = 2;
+  const dataSize = numSamples * bytesPerSample;
+  const buffer = new ArrayBuffer(44 + dataSize);
+  const view = new DataView(buffer);
+
+  const writeStr = (offset, str) => {
+    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+  };
+  writeStr(0, 'RIFF');
+  view.setUint32(4, 36 + dataSize, true);
+  writeStr(8, 'WAVE');
+  writeStr(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * bytesPerSample, true);
+  view.setUint16(32, bytesPerSample, true);
+  view.setUint16(34, 16, true);
+  writeStr(36, 'data');
+  view.setUint32(40, dataSize, true);
+
+  // Sine with short fade-in/out to avoid clicks
+  const fade = Math.min(0.01, durationSec / 4);
+  const fadeSamples = Math.floor(sampleRate * fade);
+  for (let i = 0; i < numSamples; i++) {
+    let amp = volume;
+    if (i < fadeSamples) amp *= i / fadeSamples;
+    else if (i > numSamples - fadeSamples) amp *= (numSamples - i) / fadeSamples;
+    const s = Math.sin(2 * Math.PI * freq * (i / sampleRate)) * amp;
+    view.setInt16(44 + i * 2, s * 32767, true);
   }
-  if (_audioCtx.state === 'suspended') _audioCtx.resume();
-  return _audioCtx;
+
+  // Convert to base64
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return 'data:audio/wav;base64,' + btoa(binary);
 }
 
-/**
- * Play a beep sound (works even with screen locked in PWA with audio session)
- */
+let _tickAudio = null;
+let _alertAudio = null;
+function _getTickAudio() {
+  if (!_tickAudio) {
+    _tickAudio = new Audio(_makeBeepDataUri(700, 0.12, 0.6));
+    _tickAudio.preload = 'auto';
+  }
+  return _tickAudio;
+}
+function _getAlertAudio() {
+  if (!_alertAudio) {
+    _alertAudio = new Audio(_makeBeepDataUri(1000, 0.5, 0.7));
+    _alertAudio.preload = 'auto';
+  }
+  return _alertAudio;
+}
+
 function playAlertSound() {
-  const ctx = _getAudioCtx();
-  if (!ctx) return;
-
-  // Three-beep pattern
-  [0, 0.25, 0.5].forEach((delay, i) => {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = i === 2 ? 1000 : 800;
-    gain.gain.setValueAtTime(0, ctx.currentTime + delay);
-    gain.gain.linearRampToValueAtTime(0.4, ctx.currentTime + delay + 0.02);
-    gain.gain.linearRampToValueAtTime(0, ctx.currentTime + delay + 0.2);
-    osc.connect(gain).connect(ctx.destination);
-    osc.start(ctx.currentTime + delay);
-    osc.stop(ctx.currentTime + delay + 0.25);
-  });
+  try {
+    const a = _getAlertAudio();
+    a.currentTime = 0;
+    a.play().catch(() => {});
+  } catch (e) {}
 }
 
-/**
- * Short tick beep for countdown (3, 2, 1)
- */
 function playTickSound() {
-  const ctx = _getAudioCtx();
-  if (!ctx) return;
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = 'sine';
-  osc.frequency.value = 700;
-  gain.gain.setValueAtTime(0, ctx.currentTime);
-  gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + 0.01);
-  gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.12);
-  osc.connect(gain).connect(ctx.destination);
-  osc.start(ctx.currentTime);
-  osc.stop(ctx.currentTime + 0.15);
+  try {
+    const a = _getTickAudio();
+    a.currentTime = 0;
+    a.play().catch(() => {});
+  } catch (e) {}
 }
 
 /**
- * Unlock audio context on first user interaction (required by iOS)
+ * Unlock audio on first user interaction (required by iOS).
+ * Plays both clips silently so iOS marks them as user-triggered for later.
  */
 function unlockAudio() {
-  const ctx = _getAudioCtx();
-  if (ctx && ctx.state === 'suspended') ctx.resume();
+  [_getTickAudio(), _getAlertAudio()].forEach(a => {
+    try {
+      a.muted = true;
+      const p = a.play();
+      if (p && p.then) {
+        p.then(() => {
+          a.pause();
+          a.currentTime = 0;
+          a.muted = false;
+        }).catch(() => { a.muted = false; });
+      } else {
+        a.pause();
+        a.currentTime = 0;
+        a.muted = false;
+      }
+    } catch (e) {}
+  });
 }
 
 /* ---- Wake Lock (keep screen on) ---- */
