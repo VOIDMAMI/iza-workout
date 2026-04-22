@@ -289,6 +289,19 @@
   margin-bottom: var(--space-base);
 }
 
+.workout-week-day-label {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: var(--space-sm);
+  background: var(--primary-glow);
+  color: var(--primary-dark);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
 .workout-progress-text {
   display: flex;
   justify-content: space-between;

@@ -229,7 +229,7 @@ const Plans = {
 
     Workout.backPage = 'entrenos';
     App._switchPage('workout');
-    Workout.render(workout, targetDate);
+    Workout.render(workout, targetDate, { weekNum, dayOfWeek, planId });
   },
 
   togglePlan(planId) {

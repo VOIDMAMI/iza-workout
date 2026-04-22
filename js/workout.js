@@ -5,6 +5,9 @@
 const Workout = {
   currentWorkout: null,
   currentDate: null,
+  currentWeek: null,
+  currentDay: null,
+  currentPlanId: null,
   backPage: 'home',
 
   // Exercises whose reps field contains '/' (e.g. '10/8') are split into
@@ -22,9 +25,12 @@ const Workout = {
     });
   },
 
-  render(workout, date) {
+  render(workout, date, context) {
     const raw = workout !== undefined ? workout : getTodayWorkout();
     this.currentDate = date !== undefined ? date : new Date();
+    this.currentWeek = context?.weekNum ?? null;
+    this.currentDay = context?.dayOfWeek ?? null;
+    this.currentPlanId = context?.planId ?? null;
     this.currentWorkout = raw && raw.exercises
       ? { ...raw, exercises: this._expandExercises(raw.exercises) }
       : raw;
@@ -155,6 +161,12 @@ const Workout = {
     setTimeout(() => App.navigate('home'), 800);
   },
 
+  _renderWeekDayLabel() {
+    if (this.currentWeek == null || this.currentDay == null) return '';
+    const dayName = DAY_NAMES_FULL[this.currentDay] || '';
+    return `<div class="workout-week-day-label">Semana ${this.currentWeek} · ${dayName}</div>`;
+  },
+
   renderStrengthDay(container) {
     const dateKey = formatDateKey(this.currentDate);
     const dayLog = Storage.getWorkoutLog(dateKey);
@@ -248,6 +260,7 @@ const Workout = {
       </div>
 
       <div class="workout-progress-section">
+        ${this._renderWeekDayLabel()}
         <div class="workout-progress-text">
           <span>${completedExercises} de ${totalExercises} ejercicios</span>
           <span class="text-bold">${progressPct}%</span>

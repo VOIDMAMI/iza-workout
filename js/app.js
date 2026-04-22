@@ -50,9 +50,11 @@ const App = {
   navigateToWorkout(date, planId) {
     const d = date instanceof Date ? date : new Date();
     const pid = planId || ACTIVE_PLAN;
+    const weekNum = Storage.getPlanCurrentWeek(pid);
+    const dayOfWeek = d.getDay();
     Workout.backPage = date instanceof Date ? 'calendar' : 'home';
     this._switchPage('workout');
-    Workout.render(getWorkoutForPlanAndDay(pid, d.getDay()), d);
+    Workout.render(getWorkoutForPlanAndDay(pid, dayOfWeek), d, { weekNum, dayOfWeek, planId: pid });
   },
 
   renderHome() {
