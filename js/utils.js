@@ -184,6 +184,24 @@ function playAlertSound() {
 }
 
 /**
+ * Short tick beep for countdown (3, 2, 1)
+ */
+function playTickSound() {
+  const ctx = _getAudioCtx();
+  if (!ctx) return;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.value = 700;
+  gain.gain.setValueAtTime(0, ctx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + 0.01);
+  gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.12);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.15);
+}
+
+/**
  * Unlock audio context on first user interaction (required by iOS)
  */
 function unlockAudio() {

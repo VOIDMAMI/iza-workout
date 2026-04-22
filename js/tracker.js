@@ -197,6 +197,10 @@ const Tracker = {
           display.className = 'timer-display warning';
         }
 
+        if (this.timerSeconds === 3 || this.timerSeconds === 2 || this.timerSeconds === 1) {
+          playTickSound();
+        }
+
         if (this.timerSeconds <= 0) {
           display.className = 'timer-display done';
           display.textContent = '¡GO!';
