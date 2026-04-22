@@ -355,8 +355,39 @@ const Workout = {
   searchExercise(event, query) {
     event.stopPropagation();
     event.preventDefault();
-    const url = 'https://www.tiktok.com/search?q=' + encodeURIComponent(query);
-    window.open(url, '_blank', 'noopener');
     vibrate(30);
+
+    const encoded = encodeURIComponent(query);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+
+    // Deep link to TikTok app (iOS/Android)
+    const appUrl = isIOS
+      ? `snssdk1233://search?keyword=${encoded}`
+      : isAndroid
+        ? `intent://search?keyword=${encoded}#Intent;scheme=snssdk1233;package=com.zhiliaoapp.musically;end`
+        : null;
+
+    const webUrl = `https://www.tiktok.com/search?q=${encoded}`;
+
+    if (appUrl && (isIOS || isAndroid)) {
+      // Try opening the app, fall back to web after short delay
+      const fallbackTimer = setTimeout(() => {
+        window.location.href = webUrl;
+      }, 1500);
+
+      // If the app opens, the page becomes hidden → cancel fallback
+      const onVisibility = () => {
+        if (document.hidden) {
+          clearTimeout(fallbackTimer);
+          document.removeEventListener('visibilitychange', onVisibility);
+        }
+      };
+      document.addEventListener('visibilitychange', onVisibility);
+
+      window.location.href = appUrl;
+    } else {
+      window.open(webUrl, '_blank', 'noopener');
+    }
   }
 };
