@@ -544,6 +544,19 @@
   box-shadow: var(--shadow-sm);
 }
 
+.history-item-clickable {
+  transition: all var(--transition-fast);
+}
+
+.history-item-clickable:hover {
+  border-color: var(--primary-light);
+  background: var(--surface);
+}
+
+.history-item-clickable:active {
+  transform: scale(0.98);
+}
+
 .history-date {
   font-size: var(--font-sm);
   color: var(--text-secondary);

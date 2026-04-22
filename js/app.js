@@ -215,8 +215,15 @@ const App = {
       const typeLabel = !workout || workout.type === 'rest' ? 'Descanso' 
         : workout.type === 'running' ? 'Carrera' : 'Fuerza';
 
+      const isClickable = workout && workout.type !== 'rest';
+      const clickHandler = isClickable
+        ? `onclick="App.navigateToWorkout(new Date(${d.getFullYear()}, ${d.getMonth()}, ${d.getDate()}))"`
+        : '';
+
       html += `
-        <div class="history-item ${isTodays ? 'today-highlight' : ''}" style="${isTodays ? 'border-color: var(--primary); background: rgba(233,30,140,0.05);' : ''}">
+        <div class="history-item ${isTodays ? 'today-highlight' : ''} ${isClickable ? 'history-item-clickable' : ''}"
+          ${clickHandler}
+          style="${isTodays ? 'border-color: var(--primary); background: rgba(233,30,140,0.05);' : ''}${isClickable ? 'cursor:pointer;' : ''}">
           <div class="flex items-center gap-md">
             <span style="font-size:1.2rem">${icon}</span>
             <div>
@@ -224,9 +231,9 @@ const App = {
               <div class="text-xs text-secondary">${name}</div>
             </div>
           </div>
-          ${isDone 
+          ${isDone
             ? '<span class="badge badge-success">✓</span>'
-            : isTodays 
+            : isTodays
               ? '<span class="badge badge-primary">Hoy</span>'
               : `<span class="text-xs text-tertiary">${typeLabel}</span>`
           }
