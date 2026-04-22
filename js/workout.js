@@ -10,17 +10,19 @@ const Workout = {
   currentPlanId: null,
   backPage: 'home',
 
-  // Exercises whose reps field contains '/' (e.g. '10/8') are split into
-  // individual 1-set cards so each warm-up approximation appears separately.
+  // Exercises whose reps field is strictly "N/M" (two plain numbers, e.g. '10/8')
+  // are split into individual 1-set cards so each warm-up approximation appears
+  // separately. Patterns like '6/lado', '30s/pierna', '10 (5/lado)' are left as-is.
   _expandExercises(exercises) {
     return exercises.flatMap(ex => {
-      const repsStr = String(ex.reps);
-      if (!repsStr.includes('/')) return [ex];
-      return repsStr.split('/').map((r, i) => ({
+      const repsStr = String(ex.reps).trim();
+      const match = repsStr.match(/^(\d+)\/(\d+)$/);
+      if (!match) return [ex];
+      return [match[1], match[2]].map((r, i) => ({
         ...ex,
         id: ex.id + '__' + i,
         sets: 1,
-        reps: r.trim()
+        reps: r
       }));
     });
   },
