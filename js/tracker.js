@@ -43,10 +43,10 @@ const Tracker = {
       if (!weightInput.value && weight) weightInput.value = weight;
       if (!repsInput.value && reps) repsInput.value = reps;
 
-      // Show timer
+      // Show timer (use 90s default if exercise has no rest defined)
       const exercise = Workout.currentWorkout?.exercises?.find(e => e.id === exerciseId);
-      if (exercise && exercise.rest) {
-        this.showTimer(exercise.rest);
+      if (exercise) {
+        this.showTimer(exercise.rest || 90);
       }
 
       // Check if all sets of this exercise are done
