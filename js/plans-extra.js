@@ -465,14 +465,14 @@ WORKOUT_PLANS.perdida_grasa = {
         _ex('pdg_m_snow',       'Movilidad | Prone snow angels', 1, '10', 0),
         _ex('pdg_m_rlunge_r',   'Movilidad | Runners lunge with reach', 1, '6/lado', 0),
         _ex('pdg_m_rot_hum',    'Movilidad | Rotación humeral con peso', 1, '8/lado', 0),
-        _ex('pdg_flex_plio',    'Flexiones pliométricas con altura', 3, 'Máximas (10-12)', 53),
+        _ex('pdg_flex_plio',    'Flexiones pliométricas con altura', 3, 'Máximas (12-14)', 30),
         _ex('pdg_jalon_uni',    'Jalón unilateral en polea', 4, '14', 60),
-        _ex('pdg_press_hom_mc', 'Press de hombro con mancuernas', 3, '14', 60),
-        _ex('pdg_elev_lat_mc',  'Elevaciones laterales con mancuernas', 4, '12', 60),
-        _ex('pdg_remo_seal',    'Remo seal', 3, '12', 60),
-        _ex('pdg_curl_bic_mc',  'Curl de bíceps con mancuerna', 3, '14', 60),
-        _ex('pdg_skull',        'Skull crusher', 3, '14', 60),
-        _ex('pdg_liss_torso',   'Cardio LISS', 1, '20 min (5+10+5)', 0),
+        _ex('pdg_press_hom_uni','Press de hombro unilateral', 4, '14', 60),
+        _ex('pdg_elev_lat_drop','Elevaciones laterales - Drop set', 4, '12', 60, 'RIR 0 - Al fallo'),
+        _ex('pdg_remo_seal',    'Remo seal', 4, '12', 60),
+        _ex('pdg_curl_bic_mc',  'Curl de bíceps con mancuerna', 4, '14', 60),
+        _ex('pdg_skull',        'Skull crusher', 4, '14', 60),
+        _ex('pdg_liss_torso',   'Cardio LISS', 1, '5/15/5 min (baja/moderada/baja)', 0),
       ],
       3: [
         _ex('pdg_m_rockback',     'Movilidad | Leg Rockback', 1, '8/lado', 0),
@@ -572,7 +572,7 @@ WORKOUT_PLANS.perdida_grasa = {
         _ex('pdg_hiit_piv_180',   'HIIT | Pivot squat jumps 180°', 3, '30s', 30),
       ]
     },
-    // S6 (deload) — sin día 6 (carpeta vacía)
+    // S6 (deload)
     {
       1: [
         _ex('pdg_m_cat_camel',  'Movilidad | Cat camel', 1, '10', 0),
@@ -626,6 +626,13 @@ WORKOUT_PLANS.perdida_grasa = {
         _ex('pdg_salt_lat_cj',    'Saltos laterales al cajón | Progresión', 2, '10', 30),
         _ex('pdg_samurai_pol',    'Samurai pulls en polea', 2, '16', 60),
         _ex('pdg_core_elev_col',  'Core | Elevación de piernas colgada', 2, '10', 30),
+      ],
+      6: [
+        _ex('pdg_hiit_pris_ss',   'HIIT | Prisoner side to side squats', 3, '30s', 30),
+        _ex('pdg_core_jj_plank',  'Core | Jumping jacks plank', 3, '30s', 30),
+        _ex('pdg_hiit_calf',      'HIIT | Calf jumps', 3, '30s', 30),
+        _ex('pdg_hiit_spider_l',  'HIIT | Spider lunges', 3, '30s', 30),
+        _ex('pdg_hiit_remo_res',  'HIIT | Remo con salto y resistencia', 3, '30s', 30),
       ]
     },
     // ───── FASE 2 (semanas 7-12, 6 días/sem) ─────
