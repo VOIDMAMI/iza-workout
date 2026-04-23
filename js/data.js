@@ -15,7 +15,7 @@ const WORKOUT_PLANS = {
   ============================================ */
   fuerza_avanzado: {
     id: 'fuerza_avanzado',
-    name: 'Más Fuertes — Avanzado',
+    name: 'Fuertes avanzadas',
     planType: 'phased',
     weeks: 12,
     description: 'Programa de fuerza 5 días/semana — 12 semanas periodizadas',
