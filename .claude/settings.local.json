@@ -3,7 +3,9 @@
     "allow": [
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/VOIDMAMI/iza-workout/main/sw.js\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/VOIDMAMI/iza-workout/main/js/plans-extra.js\")"
     ]
   }
 }
