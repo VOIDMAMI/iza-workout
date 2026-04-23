@@ -134,7 +134,7 @@ body {
 /* Main content area */
 .main-content {
   padding: var(--space-base);
-  padding-bottom: calc(var(--nav-height) + var(--space-2xl));
+  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px) + var(--space-2xl));
   min-height: 100vh;
   min-height: 100dvh;
 }
