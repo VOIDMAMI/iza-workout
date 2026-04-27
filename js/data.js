@@ -723,6 +723,8 @@ function _getPhasedWorkout(plan, weekNum, dayOfWeek) {
 function getWorkoutForPlanWeekDay(planId, weekNum, dayOfWeek) {
   const plan = WORKOUT_PLANS[planId];
   if (!plan) return null;
+  // Some plans use day 7 for Sunday instead of 0 (JS Date.getDay() returns 0 for Sunday).
+  if (dayOfWeek === 0 && plan.dayMeta && plan.dayMeta[7]) dayOfWeek = 7;
   if (plan.planType === 'phased') return _getPhasedWorkout(plan, weekNum, dayOfWeek);
   return _getRepeatingWorkout(plan, dayOfWeek);
 }

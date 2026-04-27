@@ -184,7 +184,7 @@ const Plans = {
     }
 
     const dayChips = [1, 2, 3, 4, 5, 6, 0].map(d => {
-      const isTrain = trainingDays.has(d);
+      const isTrain = trainingDays.has(d) || (d === 0 && trainingDays.has(7));
       return `<button
         class="day-chip ${isTrain ? 'day-chip-train' : 'day-chip-rest'}"
         ${isTrain
@@ -307,7 +307,8 @@ const Plans = {
     Object.entries(logs).forEach(([dateKey, dayLog]) => {
       if (!dayLog._completed) return;
       const d = new Date(dateKey + 'T12:00:00');
-      if (!training.has(d.getDay())) return;
+      const dow = d.getDay() === 0 && training.has(7) ? 7 : d.getDay();
+      if (!training.has(dow)) return;
       if (startStr && plan.weeks) {
         const start = new Date(startStr + 'T12:00:00');
         const end   = new Date(start);
@@ -348,7 +349,8 @@ const Plans = {
     Object.entries(logs).forEach(([dateKey, dayLog]) => {
       if (!dayLog._completed) return;
       const d = new Date(dateKey + 'T12:00:00');
-      if (d >= weekStart && d < weekEnd && training.has(d.getDay())) count++;
+      const dow = d.getDay() === 0 && training.has(7) ? 7 : d.getDay();
+      if (d >= weekStart && d < weekEnd && training.has(dow)) count++;
     });
 
     return weekTrainingDays.length > 0 && count >= weekTrainingDays.length;
