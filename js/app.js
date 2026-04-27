@@ -6,10 +6,21 @@ const App = {
   currentPage: 'home',
 
   init() {
-    // Register Service Worker
+    // Register Service Worker with auto-update
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js')
-        .then(() => console.log('SW registered'))
+        .then(reg => {
+          reg.update();
+          setInterval(() => reg.update(), 60000);
+          reg.addEventListener('updatefound', () => {
+            const nw = reg.installing;
+            nw.addEventListener('statechange', () => {
+              if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                window.location.reload();
+              }
+            });
+          });
+        })
         .catch(err => console.log('SW registration failed:', err));
     }
 
