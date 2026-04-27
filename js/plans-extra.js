@@ -3173,11 +3173,11 @@ WORKOUT_PLANS.empezando_rutina = {
         _ex('ezc_s1d2_core_wheel', 'Core | Rueda abdominal adaptada', 2, '8', 0),
       ],
       3: [
-        _ex('ezc_s1d3_burp', 'HIIT | Burpee sin salto', 2, '30" trabajo', 30, '2 rondas'),
-        _ex('ezc_s1d3_sprint', 'HIIT | Sprint estático', 2, '30" trabajo', 30, '2 rondas'),
-        _ex('ezc_s1d3_jj', 'HIIT | Jumping jacks', 2, '30" trabajo', 30, '2 rondas'),
-        _ex('ezc_s1d3_mt_climb', 'Core | Mountain climbers + toques de rodilla', 2, '30" trabajo', 30, '2 rondas'),
-        _ex('ezc_s1d3_prisoner_sq', 'HIIT | Prisoner side to side squats', 2, '30" trabajo', 30, '2 rondas'),
+        _ex('ezc_s1d3_burp', 'HIIT | Burpee sin salto', 3, '30" trabajo', 30, '3 rondas'),
+        _ex('ezc_s1d3_sprint', 'HIIT | Sprint estático', 3, '30" trabajo', 30, '3 rondas'),
+        _ex('ezc_s1d3_jj', 'HIIT | Jumping jacks', 3, '30" trabajo', 30, '3 rondas'),
+        _ex('ezc_s1d3_mt_climb', 'Core | Mountain climbers + toques de rodilla', 3, '30" trabajo', 30, '3 rondas'),
+        _ex('ezc_s1d3_prisoner_sq', 'HIIT | Prisoner side to side squats', 3, '30" trabajo', 30, '3 rondas'),
       ],
       4: [
         _ex('ezc_s1d4_core_limb', 'Core | Limb lifts', 2, '8/lado', 0),
@@ -3200,11 +3200,11 @@ WORKOUT_PLANS.empezando_rutina = {
         _ex('ezc_s1d5_core_pallof', 'Core | Press Pallof con resistencia', 2, '8/lado', 0),
       ],
       6: [
-        _ex('ezc_s1d6_plank_thrust', 'HIIT | Plank thrust', 2, '30" trabajo', 30, '2 rondas'),
-        _ex('ezc_s1d6_dolphin', 'Core | Dolphin plank + knee taps', 2, '30" trabajo', 30, '2 rondas'),
-        _ex('ezc_s1d6_kick_sit', 'Core | Kick sits tap', 2, '30" trabajo', 30, '2 rondas'),
-        _ex('ezc_s1d6_rocket_sq', 'HIIT | Rocket jump squat taps', 2, '30" trabajo', 30, '2 rondas'),
-        _ex('ezc_s1d6_drunken_mt', 'Core | Drunken mountain climbers', 2, '30" trabajo', 30, '2 rondas'),
+        _ex('ezc_s1d6_plank_thrust', 'HIIT | Plank thrust', 3, '30" trabajo', 30, '3 rondas'),
+        _ex('ezc_s1d6_dolphin', 'Core | Dolphin plank + knee taps', 3, '30" trabajo', 30, '3 rondas'),
+        _ex('ezc_s1d6_kick_sit', 'Core | Kick sits tap', 3, '30" trabajo', 30, '3 rondas'),
+        _ex('ezc_s1d6_rocket_sq', 'HIIT | Rocket jump squat taps', 3, '30" trabajo', 30, '3 rondas'),
+        _ex('ezc_s1d6_drunken_mt', 'Core | Drunken mountain climbers', 3, '30" trabajo', 30, '3 rondas'),
       ],
       7: [
         _ex('ezc_s1d7_core_deadbug', 'Core | Deadbugs', 2, '8/lado', 0),
