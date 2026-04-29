@@ -3729,14 +3729,19 @@ WORKOUT_PLANS.empezando_gym = {
     },
     // ════════════════ SEMANA 3 ════════════════
     {
-      // S3 D1 — Movilidad (las imágenes muestran "Día 4: Movilidad")
+      // S3 D1 — Pierna y glúteos
       1: [
-        _ex('eg_s3d1_core_limb',      'Core | Limb lifts', 2, '8/lado', 0),
-        _ex('eg_s3d1_mob_rlunge_r',   'Movilidad - Runners lunge with reach', 2, '6/lado', 0),
-        _ex('eg_s3d1_est_rod_pecho',  'Estiramiento - Rodilla al pecho', 2, '30"/lado', 0),
-        _ex('eg_s3d1_mob_bridge',     'Movilidad - Bridge march', 2, '8/lado', 0),
-        _ex('eg_s3d1_mob_supermans',  'Movilidad - Supermans', 2, '10', 0),
-        _ex('eg_s3d1_est_circular',   'Estiramientos circulares', 2, '8/lado', 0),
+        _ex('eg_s3d1_mob_cat',        'Movilidad - Cat camel', 1, '10', 0),
+        _ex('eg_s3d1_mob_snow',       'Movilidad - Prone snow angels', 1, '10', 0),
+        _ex('eg_s3d1_mob_rot90',      'Movilidad - Rotación interna de cadera 90-90', 1, '8/lado', 0),
+        _ex('eg_s3d1_mob_flex_esc',   'Movilidad - Flexiones escapulares', 1, '10', 0),
+        _ex('eg_s3d1_sent_libre_1',   'Sentadilla libre | barra alta', 2, '10', 0),
+        _ex('eg_s3d1_sent_libre_2',   'Sentadilla libre | barra alta', 2, '8', 0),
+        _ex('eg_s3d1_curl_fem',       'Curl de femoral con resistencia', 2, '14', 0),
+        _ex('eg_s3d1_hip_thrust',     'Hip Thrust', 4, '14', 0),
+        _ex('eg_s3d1_bulgara',        'Sentadilla búlgara con mancuerna', 2, '10/lado', 0),
+        _ex('eg_s3d1_kb_swing',       'Kettlebell swing', 3, '16', 0),
+        _ex('eg_s3d1_patada_gluteo',  'Patada de glúteo en polea en cuadrupedia', 3, '14/lado', 0),
       ],
       // S3 D2 — Torso y core
       2: [
