@@ -362,8 +362,8 @@ const EXPRESS_WORKOUTS = {
   },
 
   pp_abs: {
-    id: 'pp_abs', name: 'Abdominales', category: 'POR PARTES', type: 'strength',
-    description: 'Solo 30 min — dale fuego a tus abs',
+    id: 'pp_abs', name: 'Abs Express', category: 'POR PARTES', type: 'strength',
+    description: '¿Solo 30\'? Dale fuego a tus abdominales',
     muscleGroups: ['Core'],
     exercises: [
       _ex('pp_abs_ex1', 'Movilidad | Rotación de columna en cuadrupedia', 1, '10', 0),
