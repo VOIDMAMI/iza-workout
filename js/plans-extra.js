@@ -5309,3 +5309,290 @@ WORKOUT_PLANS.quemando_gym = {
     })
   };
 })();
+
+/* ══════════════ FUERTES INTERMEDIAS (12 semanas) ══════════════ */
+(function () {
+  const E = (id, name, sets, reps, rest, notes) => _ex(`fi_${id}`, name, sets, reps, rest, notes);
+
+  // ─────── BLOQUE A: S1-S3 (descansos sin cuantificar) ───────
+  const D1_A = (s, hipThrustSets, bulgaraSets, coreEx, coreId) => [
+    E(`s${s}d1_clamshells`,'Clamshells', 1, '10/lado', 0),
+    E(`s${s}d1_spider`,    'HIIT | Spider lunges', 1, '20 en total', 0),
+    E(`s${s}d1_abd_maq`,   'Abducción de cadera en máquina', 3, '16', 0),
+    E(`s${s}d1_pm_aprox1`, 'Peso muerto convencional (aproximación)', 1, '8', 0),
+    E(`s${s}d1_pm_aprox2`, 'Peso muerto convencional (aproximación)', 1, '8', 0),
+    E(`s${s}d1_pm_top`,    'Peso muerto convencional', 1, '6', 0),
+    E(`s${s}d1_pm_bajada`, 'Peso muerto convencional', s === 1 ? 2 : 3, '6 con 10% menos del peso de la primera serie', 0),
+    E(`s${s}d1_ht_rom`,    'Hip Thrust 1/2 ROM', hipThrustSets, hipThrustSets === 4 ? '10' : '8', 0),
+    E(`s${s}d1_bulgara`,   'Sentadilla búlgara con peso', bulgaraSets, '12/pierna', 0),
+    E(`s${s}d1_${coreId}`, coreEx, 4, '30"', 30),
+  ];
+  const D2_A = (s) => [
+    E(`s${s}d2_curl_press`,'Curl de bíceps + press con resistencia', 1, '10', 0),
+    E(`s${s}d2_elev_lat_r`,'Elevaciones laterales con resistencia', 1, '10', 0),
+    E(`s${s}d2_press_mil1`,'Press militar con barra', 1, '8', 0),
+    E(`s${s}d2_press_mil2`,'Press militar con barra', 2, '8 con 10% menos del peso', 0),
+    E(`s${s}d2_press_inc`, 'Press banca inclinado con mancuernas', 3, '10', 0),
+    E(`s${s}d2_remo_90`,   'Remo con barra a 90°', 3, '12', 0),
+    E(`s${s}d2_elev_apoyo`,'Elevaciones laterales con apoyo en banco', 4, '12 con 1" de pausa arriba', 0),
+    E(`s${s}d2_elev_front`,'Elevaciones frontales con disco', 3, '16', 0),
+  ];
+  const D4_A = (s) => [
+    E(`s${s}d4_mob_bisagra`,'Movilidad - Bisagra de cadera', 1, '10', 0),
+    E(`s${s}d4_lunge_drop`, 'HIIT | Lunge drop', 1, '20 en total', 0),
+    E(`s${s}d4_curl_fem`,   'Curl de femoral', 3, '12', 0),
+    E(`s${s}d4_sent_aprox1`,'Sentadilla libre | barra alta (aproximación)', 1, '8', 0),
+    E(`s${s}d4_sent_aprox2`,'Sentadilla libre | barra alta (aproximación)', 1, '8', 0),
+    E(`s${s}d4_sent_top`,   'Sentadilla libre | barra alta', 1, '6', 0),
+    E(`s${s}d4_sent_bajada`,'Sentadilla libre | barra alta', 1, '6 con 10% menos del peso', 0),
+    E(`s${s}d4_pm_rumano`,  'Peso muerto rumano', 3, '10', 0),
+    E(`s${s}d4_patada`,     'Patada de glúteo en polea en cuadrupedia', 3, '16 (con 1" de pausa arriba)', 0),
+    E(`s${s}d4_prensa_uni`, 'Prensa unilateral', 3, '8', 0),
+    E(`s${s}d4_core_crunch`,'Core | Crunch abdominal con resistencia', 3, '20', 0),
+  ];
+  const D5_A = (s) => [
+    E(`s${s}d5_mob_esc`,    'Movilidad | Movimientos escapulares', 2, '10', 0),
+    E(`s${s}d5_press_banca`,'Press banca con barra', 3, '10', 0),
+    E(`s${s}d5_remo_uni_1`, 'Remo unilateral con mancuernas', 1, '8', 0),
+    E(`s${s}d5_remo_uni_2`, 'Remo unilateral con mancuernas', 1, '10', 0),
+    E(`s${s}d5_remo_uni_3`, 'Remo unilateral con mancuernas', 1, '12', 0),
+    E(`s${s}d5_remo_gironda`,'Remo gironda en polea', 3, '14', 0),
+    E(`s${s}d5_elev_polea`, 'Elevaciones laterales en polea', 3, '14', 0),
+    E(`s${s}d5_jalon_uni`,  'Jalón unilateral en polea', 3, '16', 0),
+    E(`s${s}d5_ext_tri`,    'Extensión de tríceps en polea', 3, '14', 0),
+    E(`s${s}d5_curl_bicep`, 'Curl de bíceps con mancuerna', 3, '14', 0),
+  ];
+
+  // ─────── BLOQUE B (S4): mismos ejercicios que A pero descansos cuantificados ───────
+  const D1_B = (s) => [
+    E(`s${s}d1_clamshells`,'Clamshells', 1, '10/lado', 0, 'Calentamiento'),
+    E(`s${s}d1_spider`,    'HIIT | Spider lunges', 1, '20 en total', 0, 'Calentamiento'),
+    E(`s${s}d1_abd_maq`,   'Abducción de cadera en máquina', 3, '16', 120),
+    E(`s${s}d1_pm_aprox1`, 'Peso muerto convencional (aproximación)', 1, '8', 240),
+    E(`s${s}d1_pm_aprox2`, 'Peso muerto convencional (aproximación)', 1, '8', 120),
+    E(`s${s}d1_pm_top`,    'Peso muerto convencional', 1, '6', 0),
+    E(`s${s}d1_pm_bajada`, 'Peso muerto convencional', 3, '6 con 10% menos del peso de la primera serie', 0),
+    E(`s${s}d1_ht_rom`,    'Hip Thrust 1/2 ROM', 4, '10', 0),
+    E(`s${s}d1_bulgara`,   'Sentadilla búlgara con peso', 4, '12/pierna', 120),
+    E(`s${s}d1_pike`,      'Core | Pike plank en fitball', 4, '30"', 30),
+  ];
+  const D2_B = (s) => [
+    E(`s${s}d2_curl_press`,'Curl de bíceps + press con resistencia', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d2_elev_lat_r`,'Elevaciones laterales con resistencia', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d2_press_mil1`,'Press militar con barra', 1, '8', 120),
+    E(`s${s}d2_press_mil2`,'Press militar con barra', 3, '8 con 10% menos del peso', 0),
+    E(`s${s}d2_press_inc`, 'Press banca inclinado con mancuernas', 3, '10', 120),
+    E(`s${s}d2_remo_90`,   'Remo con barra a 90°', 3, '12', 120),
+    E(`s${s}d2_elev_apoyo`,'Elevaciones laterales con apoyo en banco', 4, '12 con 1" de pausa arriba', 0),
+    E(`s${s}d2_elev_front`,'Elevaciones frontales con disco', 3, '16', 60),
+  ];
+  const D4_B = (s) => [
+    E(`s${s}d4_mob_bisagra`,'Movilidad - Bisagra de cadera', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d4_lunge_drop`, 'HIIT | Lunge drop', 1, '20 en total', 0, 'Calentamiento'),
+    E(`s${s}d4_curl_fem`,   'Curl de femoral', 3, '12', 120),
+    E(`s${s}d4_sent_aprox1`,'Sentadilla libre | barra alta (aproximación)', 1, '8', 240),
+    E(`s${s}d4_sent_aprox2`,'Sentadilla libre | barra alta (aproximación)', 1, '8', 120),
+    E(`s${s}d4_sent_top`,   'Sentadilla libre | barra alta', 1, '6', 120),
+    E(`s${s}d4_sent_bajada`,'Sentadilla libre | barra alta', 1, '6 con 10% menos del peso', 0),
+    E(`s${s}d4_pm_rumano`,  'Peso muerto rumano', 3, '10', 120),
+    E(`s${s}d4_patada`,     'Patada de glúteo en polea en cuadrupedia', 3, '16 (con 1" de pausa arriba)', 60),
+    E(`s${s}d4_prensa_uni`, 'Prensa unilateral', 3, '8', 120),
+    E(`s${s}d4_core_crunch`,'Core | Crunch abdominal con resistencia', 3, '20', 0),
+  ];
+  const D5_B = (s) => [
+    E(`s${s}d5_mob_esc`,    'Movilidad | Movimientos escapulares', 2, '10', 0, 'Calentamiento'),
+    E(`s${s}d5_press_banca`,'Press banca con barra', 3, '10', 120),
+    E(`s${s}d5_remo_uni_1`, 'Remo unilateral con mancuernas', 1, '8', 60),
+    E(`s${s}d5_remo_uni_2`, 'Remo unilateral con mancuernas', 1, '10', 60),
+    E(`s${s}d5_remo_uni_3`, 'Remo unilateral con mancuernas', 1, '12', 60),
+    E(`s${s}d5_remo_gironda`,'Remo gironda en polea', 3, '14', 120),
+    E(`s${s}d5_elev_polea`, 'Elevaciones laterales en polea', 3, '14', 60),
+    E(`s${s}d5_jalon_uni`,  'Jalón unilateral en polea', 3, '16', 120),
+    E(`s${s}d5_ext_tri`,    'Extensión de tríceps en polea', 3, '14', 0),
+    E(`s${s}d5_curl_bicep`, 'Curl de bíceps con mancuerna', 3, '14', 0),
+  ];
+
+  // ─────── BLOQUE C (S5-S8) ───────
+  const D1_C = (s, zancadasReps) => [
+    E(`s${s}d1_monster`,    'Monster walks', 1, '10/lado', 0, 'Calentamiento'),
+    E(`s${s}d1_spider`,     'HIIT | Spider lunges', 1, '20 en total', 0, 'Calentamiento'),
+    E(`s${s}d1_abd_polea`,  'Abducción en polea', 3, '16', 120),
+    E(`s${s}d1_pm_sumo_a1`, 'Peso muerto sumo (aproximación)', 1, '8', 240),
+    E(`s${s}d1_pm_sumo_a2`, 'Peso muerto sumo (aproximación)', 1, '8', 120),
+    E(`s${s}d1_pm_sumo_top`,'Peso muerto sumo', 1, '6', 120),
+    E(`s${s}d1_pm_sumo_bj`, 'Peso muerto sumo', 3, '6 con 10% menos del peso de la primera serie', 0),
+    E(`s${s}d1_hiper`,      'Hiperextensión con disco', 3, '10', 0, 'con 2" de pausa arriba'),
+    E(`s${s}d1_zancadas`,   'Zancadas con mancuernas', 3, `${zancadasReps} pasos en total`, zancadasReps === '20' ? 60 : 0),
+    E(`s${s}d1_plancha_fb`, 'Core | Plancha en fitball', 4, '30"', 30),
+  ];
+  const D2_C = (s) => [
+    E(`s${s}d2_curl_press`,'Curl de bíceps + press con resistencia', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d2_elev_lat_r`,'Elevaciones laterales con resistencia', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d2_press_mc1`, 'Press de hombro con mancuernas', 1, '8', 120),
+    E(`s${s}d2_press_mc2`, 'Press de hombro con mancuernas', 3, '8 con 10% menos del peso', 0),
+    E(`s${s}d2_press_b`,   'Press banca con barra', 3, '8', 120),
+    E(`s${s}d2_jalon`,     'Jalón al pecho', 3, '12', 120),
+    E(`s${s}d2_remo_ment`, 'Remo al mentón en polea', 4, '14', 0),
+    E(`s${s}d2_flex_elev`, 'Flexiones con elevación', 2, 'Máximas', 60),
+  ];
+  const D4_C = (s) => [
+    E(`s${s}d4_mob_bisagra`,'Movilidad - Bisagra de cadera', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d4_lunge_drop`, 'HIIT | Lunge drop', 1, '20 en total', 0, 'Calentamiento'),
+    E(`s${s}d4_curl_fem`,   'Curl de femoral', 3, '12', 120),
+    E(`s${s}d4_bulg_mp_1`,  'Sentadilla búlgara en multipower', 2, '8', 120),
+    E(`s${s}d4_bulg_mp_2`,  'Sentadilla búlgara en multipower', 2, '10', 60),
+    E(`s${s}d4_buenos`,     'Buenos días', 3, '12', 120),
+    E(`s${s}d4_ht`,         'Hip Thrust', 3, '10 (con 2" de pausa arriba)', 0),
+    E(`s${s}d4_ext_cuad`,   'Extensión de cuádriceps', 3, '16', 0),
+    E(`s${s}d4_core_elev`,  'Core | Elevación de piernas en banco', 3, '20', 0),
+  ];
+  const D5_C = (s) => [
+    E(`s${s}d5_mob_esc`,    'Movilidad | Movimientos escapulares', 2, '10', 0, 'Calentamiento'),
+    E(`s${s}d5_press_mc`,   'Press banca con mancuernas', 3, '10', 120),
+    E(`s${s}d5_remo_seal_1`,'Remo seal', 1, '8', 60),
+    E(`s${s}d5_remo_seal_2`,'Remo seal', 1, '10', 60),
+    E(`s${s}d5_remo_seal_3`,'Remo seal', 1, '12', 60),
+    E(`s${s}d5_remo_uni_p`, 'Remo unilateral en polea', 3, '14', 120),
+    E(`s${s}d5_elev_drop`,  'Elevaciones laterales - drop set', 3, '14', 60),
+    E(`s${s}d5_remo_trx`,   'Remo en TRX', 3, '8', 0),
+    E(`s${s}d5_skull`,      'Skull crusher', 3, '14', 0),
+    E(`s${s}d5_curl_conc`,  'Curl concentrado', 3, '14', 0),
+  ];
+
+  // ─────── BLOQUE D (S9-S12) ───────
+  const D1_D = (s, coreEx, coreId) => [
+    E(`s${s}d1_monster`,   'Monster walks', 1, '10/lado', 0, 'Calentamiento'),
+    E(`s${s}d1_spider`,    'HIIT | Spider lunges', 1, '20 en total', 0, 'Calentamiento'),
+    E(`s${s}d1_abd_maq`,   'Abducción de cadera en máquina', 3, '16', 120),
+    E(`s${s}d1_ht_a1`,     'Hip Thrust (aproximación)', 1, '8', 240),
+    E(`s${s}d1_ht_a2`,     'Hip Thrust (aproximación)', 1, '8', 120),
+    E(`s${s}d1_ht_top`,    'Hip Thrust', 1, '6', 120),
+    E(`s${s}d1_ht_bj`,     'Hip Thrust', 3, '6 con 10% menos del peso de la primera serie', 0),
+    E(`s${s}d1_pm_uni`,    'Peso muerto rumano unilateral con mancuernas', 3, '10', 120),
+    E(`s${s}d1_bulg_mp_1`, 'Sentadilla búlgara en multipower', 2, '8', 60),
+    E(`s${s}d1_bulg_mp_2`, 'Sentadilla búlgara en multipower', 1, '12', 0),
+    E(`s${s}d1_${coreId}`, coreEx, 3, '8', 0),
+  ];
+  const D2_D = (s) => [
+    E(`s${s}d2_curl_press`,'Curl de bíceps + press con resistencia', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d2_elev_lat_r`,'Elevaciones laterales con resistencia', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d2_press_lm`,  'Press landmine', 1, '8', 120),
+    E(`s${s}d2_press_inc`, 'Press banca inclinado con mancuernas', 3, '10', 120),
+    E(`s${s}d2_remo_seal`, 'Remo seal', 3, '12', 120),
+    E(`s${s}d2_elev_lat_mc`,'Elevaciones laterales con mancuernas', 4, '14', 0),
+    E(`s${s}d2_elev_front`,'Elevaciones frontales con disco', 3, '12', 60),
+  ];
+  const D4_D = (s) => [
+    E(`s${s}d4_mob_bisagra`,'Movilidad - Bisagra de cadera', 1, '10', 0, 'Calentamiento'),
+    E(`s${s}d4_lunge_drop`, 'HIIT | Lunge drop', 1, '20 en total', 0, 'Calentamiento'),
+    E(`s${s}d4_curl_fem`,   'Curl de femoral', 3, '12', 120),
+    E(`s${s}d4_sent_front`, 'Sentadilla frontal', 3, '10', 60),
+    E(`s${s}d4_pm_rumano`,  'Peso muerto rumano', 3, '12', 120),
+    E(`s${s}d4_glute_br`,   'Glute bridge con barra', 3, '10 (con 2" de pausa arriba)', 0),
+    E(`s${s}d4_cossak`,     'Sentadilla Cossak con mancuerna', 3, '10/lado', 0),
+    E(`s${s}d4_elev_pier`,  'Elevación de piernas colgada', 3, '20', 0),
+  ];
+  const D5_D = (s) => [
+    E(`s${s}d5_mob_esc`,    'Movilidad | Movimientos escapulares', 2, '10', 0, 'Calentamiento'),
+    E(`s${s}d5_press_maq`,  'Press militar en máquina', 3, '10', 120),
+    E(`s${s}d5_remo_90_1`,  'Remo con barra a 90°', 1, '8', 60),
+    E(`s${s}d5_remo_90_2`,  'Remo con barra a 90°', 1, '10', 60),
+    E(`s${s}d5_remo_90_3`,  'Remo con barra a 90°', 1, '12', 60),
+    E(`s${s}d5_jalon_uni`,  'Jalón unilateral en polea', 3, '16', 120),
+    E(`s${s}d5_elev_uni`,   'Elevaciones unilaterales', 3, '10/lado', 60),
+    E(`s${s}d5_delt_post`,  'Deltoides posterior en máquina', 3, '18', 0),
+    E(`s${s}d5_ext_tri_tn`, 'Extensión de tríceps trasnuca con mancuerna', 3, '14', 0),
+    E(`s${s}d5_curl_arana`, 'Curl araña', 3, '14', 0),
+  ];
+
+  // ─────── DÍAS 7 — Full body opcional (varía por semana) ───────
+  // S1, S4: variante "Burpees + Pistol + Australian + KB swing + Fondos + Elev piernas banco"
+  const D7_var1 = (s, coreEx, coreId, coreReps, coreRest) => [
+    E(`s${s}d7_burpees`,  'HIIT | Burpee sin salto', 3, '30"', 30),
+    E(`s${s}d7_pistol`,   'Pistol squats con ayuda', 2, '8/pierna', 0),
+    E(`s${s}d7_aussie`,   'Australian chin ups', 3, '10', 0),
+    E(`s${s}d7_kb_swing`, 'Kettlebell swing', 3, '12', 0),
+    E(`s${s}d7_fondos`,   'Fondos de tríceps en banco', 3, '10', 0),
+    E(`s${s}d7_${coreId}`,coreEx, 4, coreReps || '20', coreRest || 0),
+  ];
+  // S2, S8, S11: variante "Burpees + Landmine thruster + Ball pushes + ..."
+  const D7_var2 = (s, includeAccessory) => [
+    E(`s${s}d7_burpees`,    'HIIT | Burpees', 3, '30"', 30),
+    E(`s${s}d7_landmine`,   'Landmine thruster', 2, '8', 0),
+    E(`s${s}d7_ball`,       'Ball pushes', 3, '10', 0),
+    ...(includeAccessory ? [
+      E(`s${s}d7_aussie_pu`,'Australian pull-ups', 3, '12', 0),
+      E(`s${s}d7_gemelo`,   'Gemelo en prensa', 3, '30', 0),
+      E(`s${s}d7_bicycle`,  'Core | Bicycle twist', 3, '30"', 30),
+    ] : []),
+  ];
+  // S3, S6, S9, S12: variante "Rocket launch taps + Thruster + ..."
+  const D7_var3 = (s, opts) => [
+    E(`s${s}d7_rocket`,   'HIIT | Rocket launch taps', 3, '30"', 30),
+    E(`s${s}d7_thruster`, 'Thruster con mancuernas', 2, '8', 0),
+    E(`s${s}d7_flex`,     opts.flex || 'Flexiones', 3, '10', 0),
+    E(`s${s}d7_dom_gomas`,'Dominadas con gomas', 3, opts.domReps || '10', 0),
+    ...(opts.calf ? [E(`s${s}d7_calf`, 'HIIT | Calf jumps', 3, '30"', 30)] : []),
+    ...(opts.gemelo ? [E(`s${s}d7_gemelo`, 'Gemelo en prensa', 3, '30', 0)] : []),
+    E(`s${s}d7_${opts.coreId}`, opts.coreEx, opts.coreSets || 4, opts.coreReps || '20', opts.coreRest != null ? opts.coreRest : 0),
+  ];
+
+  const W = {};
+  // BLOQUE A
+  W[1]  = { d1: D1_A(1, 3, 3, 'Core | Plancha con manos distanciadas', 'plancha'), d2: D2_A(1), d4: D4_A(1), d5: D5_A(1),
+            d7: D7_var1(1, 'Core | Elevación de piernas en banco', 'elev_pier_b') };
+  W[2]  = { d1: D1_A(2, 3, 3, 'Core | Pike plank en fitball', 'pike'),
+            d2: D2_A(2),  // Imágenes faltan en source — se reusa el patrón del bloque A (= S1 D2)
+            d4: D4_A(2), d5: D5_A(2),
+            d7: D7_var2(2, false) };
+  W[3]  = { d1: D1_A(3, 4, 4, 'Core | Plancha con manos distanciadas', 'plancha'), d2: D2_A(3), d4: D4_A(3), d5: D5_A(3),
+            d7: D7_var3(3, { coreEx: 'Core | Bicycle twist', coreId: 'bicycle', coreSets: 4, coreReps: '20', calf: true }) };
+  // BLOQUE B
+  W[4]  = { d1: D1_B(4), d2: D2_B(4), d4: D4_B(4), d5: D5_B(4),
+            d7: D7_var1(4, 'Core | Elevación de piernas en banco', 'elev_pier_b') };
+  // BLOQUE C
+  W[5]  = { d1: D1_C(5, '20'), d2: D2_C(5), d4: D4_C(5), d5: D5_C(5),
+            d7: D7_var3(5, { coreEx: 'Core | Bicycle twist', coreId: 'bicycle', coreSets: 4, coreReps: '20' }) };
+  W[6]  = { d1: D1_C(6, '40'), d2: D2_C(6), d4: D4_C(6), d5: D5_C(6),
+            d7: D7_var3(6, { coreEx: 'Core | Plancha inversa con toques de rodilla', coreId: 'plancha_inv', coreSets: 3, coreReps: '30"', coreRest: 30, gemelo: true }) };
+  W[7]  = { d1: D1_C(7, '40'), d2: D2_C(7), d4: D4_C(7), d5: D5_C(7),
+            d7: D7_var1(7, 'Core | McGuill crunch', 'mcguill', '14', 0) };
+  W[8]  = { d1: D1_C(8, '40'), d2: D2_C(8), d4: D4_C(8), d5: D5_C(8),
+            d7: D7_var2(8, true) };
+  // BLOQUE D
+  W[9]  = { d1: D1_D(9,  'Plancha con toques de hombro', 'plank_hombro'), d2: D2_D(9), d4: D4_D(9), d5: D5_D(9),
+            d7: D7_var3(9, { flex: 'Flexiones de diamante', coreEx: 'Core | Kick sits tap', coreId: 'kicksits', coreSets: 3, coreReps: '30"', coreRest: 30, domReps: '12', gemelo: true }) };
+  W[10] = { d1: D1_D(10, 'Core | Mountain climbers + toques de rodilla', 'mc'), d2: D2_D(10), d4: D4_D(10), d5: D5_D(10),
+            d7: [
+              E('s10d7_burpees', 'HIIT | Burpee sin salto', 3, '30"', 30),
+              E('s10d7_pistol',  'Pistol squat con apoyo a dos manos', 2, '8', 0),
+              E('s10d7_aussie',  'Australian chin ups', 3, '10', 0),
+              E('s10d7_kb_swing','Kettlebell swing', 3, '12', 0),
+              E('s10d7_fondos',  'Fondos de tríceps', 3, '30', 0),
+              E('s10d7_russian', 'Core | Russian twist con disco', 3, '30"', 30),
+            ] };
+  W[11] = { d1: D1_D(11, 'Plancha con toques de hombro', 'plank_hombro'), d2: D2_D(11), d4: D4_D(11), d5: D5_D(11),
+            d7: D7_var2(11, true) };
+  W[12] = { d1: D1_D(12, 'Core | Mountain climbers + toques de rodilla', 'mc'), d2: D2_D(12), d4: D4_D(12), d5: D5_D(12),
+            d7: D7_var3(12, { flex: 'Flexiones de diamante', coreEx: 'Core | Plancha inversa con toques de rodilla', coreId: 'plancha_inv', coreSets: 3, coreReps: '30"', coreRest: 30, domReps: '12', gemelo: true }) };
+
+  WORKOUT_PLANS.fuertes_intermedias = {
+    id: 'fuertes_intermedias',
+    name: 'Fuertes Intermedias',
+    planType: 'phased',
+    weeks: 12,
+    description: 'Plan 12 semanas — fuerza intermedia 5 días/sem (D1, D2, D4, D5, D7). Bloque A (S1-S3) → Transición B (S4) → Bloque C (S5-S8) → Bloque D avanzado (S9-S12). D3 y D6 descanso. D7 full body opcional.',
+    trainingDays: [1, 2, 4, 5, 7],
+    dayMeta: {
+      1: { name: 'Piernas',   type: 'strength', muscleGroups: ['Piernas', 'Glúteos'] },
+      2: { name: 'Torso',     type: 'strength', muscleGroups: ['Pecho', 'Espalda', 'Hombros'] },
+      4: { name: 'Piernas',   type: 'strength', muscleGroups: ['Piernas', 'Glúteos'] },
+      5: { name: 'Torso',     type: 'strength', muscleGroups: ['Pecho', 'Espalda', 'Hombros'] },
+      7: { name: 'Full Body', type: 'strength', muscleGroups: ['Full body', 'Cardio'] }
+    },
+    weeklySchedule: Array.from({ length: 12 }, (_, i) => {
+      const w = W[i + 1];
+      return { 1: w.d1, 2: w.d2, 4: w.d4, 5: w.d5, 7: w.d7 };
+    })
+  };
+})();
