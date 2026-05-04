@@ -4838,3 +4838,153 @@ WORKOUT_PLANS.quemando_gym = {
     },
   ]
 };
+
+/* ══════════════ QUEMANDO GRASA EN CASA (8 semanas) ══════════════ */
+/* Helper para construir un día HIIT con N ejercicios × 3 rondas (cards individuales) */
+(function () {
+  const _hiitDay = (prefix, label, items) => {
+    const out = [];
+    for (let r = 1; r <= 3; r++) {
+      items.forEach((it, i) => {
+        out.push(_ex(`${prefix}_${i + 1}_r${r}`, it.name, 1, '40"', 20, `${label} — Ronda ${r}`));
+      });
+    }
+    return out;
+  };
+
+  // Items de Día 3 — Circuito A (HIIT) y Circuito B (Core)
+  const D3_A = [
+    { name: 'HIIT | Burpees' },
+    { name: 'Core | Mountain climbers' },
+    { name: 'HIIT | Sentadilla + toque de rodilla' },
+    { name: 'HIIT | Jumping jacks' },
+    { name: 'HIIT | Walking pivot squats' },
+  ];
+  const D3_B = [
+    { name: 'Core | Bicycle twist' },
+    { name: 'Core | Elevación de piernas' },
+    { name: 'Core | Deadbugs' },
+    { name: 'Core | Plancha lateral' },
+  ];
+  // Items de Día 6 — Versión A (S1-S4)
+  const D6_A = [
+    { name: 'HIIT | Sentadilla con salto + rotación' },
+    { name: 'Core | Dolphin plank + knee taps' },
+    { name: 'HIIT | Skater jumps' },
+    { name: 'Core | Forward kick sits' },
+    { name: 'HIIT | Sentadilla + toques de pie' },
+    { name: 'Core | Jumping jacks plank' },
+    { name: 'HIIT | Scissor jumps' },
+    { name: 'Core | Knee to toe taps' },
+  ];
+  // Items de Día 6 — Versión B (S5-S8)
+  const D6_B = [
+    { name: 'HIIT | Sentadilla + toques de pie' },
+    { name: 'Core | Drunken mountain climbers' },
+    { name: 'HIIT | Skater jumps' },
+    { name: 'Core | V ups con toques de pie' },
+    { name: 'HIIT | Sprint estático' },
+    { name: 'Core | Scissors' },
+    { name: 'HIIT | Rocket jump squat taps' },
+    { name: 'HIIT | Explosive jumping jacks' },
+  ];
+
+  const buildWeek = (sN, useD6B) => ({
+    // D1 — Tren Inferior
+    1: [
+      _ex(`qc_s${sN}d1_mob_rotcol`,  'Movilidad - Rotación de columna en cuadrupedia', 1, '12/lado', 0),
+      _ex(`qc_s${sN}d1_mob_cat`,     'Movilidad - Cat camel', 1, '12', 0),
+      _ex(`qc_s${sN}d1_mob_flextob`, 'Movilidad - Flexión de tobillo de rodillas', 1, '12/lado', 0),
+      _ex(`qc_s${sN}d1_sent`,        'Sentadilla con resistencia', 3, '8-10', 60),
+      _ex(`qc_s${sN}d1_zancadas`,    'Zancadas sin peso', 3, '10-12/lado', 60),
+      _ex(`qc_s${sN}d1_pm`,          'Peso muerto con resistencia', 3, '10-12', 60),
+      _ex(`qc_s${sN}d1_ht_uni`,      'Hip thrust unilateral sin peso', 3, '10-12/pierna', 60),
+      _ex(`qc_s${sN}d1_curl_fem`,    'Curl de femoral con resistencia', 3, '12-15', 60),
+      _ex(`qc_s${sN}d1_gemelo`,      'Gemelo - elevación de talones', 3, '12-15', 60),
+      _ex(`qc_s${sN}d1_est_glut`,    'Estiramiento - Glúteo medio', 1, '16"/pierna', 0),
+      _ex(`qc_s${sN}d1_est_torsion`, 'Estiramiento | Torsión en sedestación', 1, '16"/pierna', 0),
+    ],
+    // D2 — Tren Superior
+    2: [
+      _ex(`qc_s${sN}d2_mob_cervic`,  'Movilidad - Cervicales', 1, '12', 0),
+      _ex(`qc_s${sN}d2_mob_super`,   'Movilidad - Supermans', 1, '12', 0),
+      _ex(`qc_s${sN}d2_mob_rotcol`,  'Movilidad - Rotación de columna en T', 1, '12/lado', 0),
+      _ex(`qc_s${sN}d2_press_pecho`, 'Press de pecho con resistencia tumbada', 3, '10-12', 60),
+      _ex(`qc_s${sN}d2_remo_pie`,    'Remo de pie con resistencia', 3, '10-12', 60),
+      _ex(`qc_s${sN}d2_press_homb`,  'Press de hombro con resistencia', 3, '10-12', 60),
+      _ex(`qc_s${sN}d2_facepull`,    'Facepull con resistencia', 3, '12-15', 60),
+      _ex(`qc_s${sN}d2_pullover`,    'Pull over con resistencia', 3, '12-15', 60),
+      _ex(`qc_s${sN}d2_curl_bicep`,  'Curl de bíceps con resistencia', 3, '12-15', 60),
+      _ex(`qc_s${sN}d2_ext_tri`,     'Extensión de tríceps con resistencia', 3, '12-15', 60),
+      _ex(`qc_s${sN}d2_est_esp`,     'Estiramiento - Espalda', 1, '16"', 0),
+      _ex(`qc_s${sN}d2_est_homb`,    'Estiramiento - Hombros con rotación', 1, '16"/lado', 0),
+    ],
+    // D3 — HIIT + Core (Circuito A 5×3 + Circuito B 4×3)
+    3: [
+      _ex(`qc_s${sN}d3_mob_rotcol`,  'Movilidad - Rotación de columna en cuadrupedia', 1, '12/lado', 0),
+      _ex(`qc_s${sN}d3_mob_rot90`,   'Movilidad - Rotación interna de cadera 90-90', 1, '12/lado', 0),
+      _ex(`qc_s${sN}d3_mob_cobra`,   'Movilidad | Cobra dinámica', 1, '12', 0),
+      ..._hiitDay(`qc_s${sN}d3_a`, 'Circuito A', D3_A),
+      ..._hiitDay(`qc_s${sN}d3_b`, 'Circuito B', D3_B),
+    ],
+    // D4 — Movilidad
+    4: [
+      _ex(`qc_s${sN}d4_mob_cat`,      'Movilidad - Cat camel', 2, '12', 0),
+      _ex(`qc_s${sN}d4_mob_pelvis`,   'Movilidad | Círculos con la pelvis en cuadrupedia', 2, '12', 0),
+      _ex(`qc_s${sN}d4_mob_flexesc`,  'Movilidad - Flexiones escapulares', 2, '12', 0),
+      _ex(`qc_s${sN}d4_mob_cobra`,    'Movilidad | Cobra dinámica', 2, '12', 0),
+      _ex(`qc_s${sN}d4_mob_flextob`,  'Movilidad - Flexión de tobillo de rodillas', 2, '12/lado', 0),
+      _ex(`qc_s${sN}d4_mob_glute`,    'Movilidad - Glute bridge', 2, '12', 0),
+      _ex(`qc_s${sN}d4_mob_esc`,      'Movilidad | Movimientos escapulares', 2, '12', 0),
+      _ex(`qc_s${sN}d4_mob_super`,    'Movilidad - Supermans', 2, '12', 0),
+      _ex(`qc_s${sN}d4_mob_rotcol`,   'Movilidad - Rotación de columna en T', 2, '12/lado', 0),
+      _ex(`qc_s${sN}d4_mob_rot90`,    'Movilidad - Rotación interna de cadera 90-90', 2, '12/lado', 0),
+    ],
+    // D5 — Full body
+    5: [
+      _ex(`qc_s${sN}d5_mob_cat`,      'Movilidad - Cat camel', 1, '12', 0),
+      _ex(`qc_s${sN}d5_mob_rot90`,    'Movilidad - Rotación interna de cadera 90-90', 1, '12/lado', 0),
+      _ex(`qc_s${sN}d5_mob_cobra`,    'Movilidad | Cobra dinámica', 1, '12', 0),
+      _ex(`qc_s${sN}d5_thrusters`,    'Thrusters con resistencia', 3, '10-12', 60),
+      _ex(`qc_s${sN}d5_flex_rod`,     'Flexiones de rodillas', 3, '10-12', 60),
+      _ex(`qc_s${sN}d5_walking_lung`, 'Sandbag | Walking lunges (zancadas caminando)', 3, '10-12/lado', 60),
+      _ex(`qc_s${sN}d5_jalon_uni`,    'Jalón unilateral con resistencia', 3, '10-12/lado', 60),
+      _ex(`qc_s${sN}d5_elev_lat`,     'Elevaciones laterales con resistencia', 3, '12-15/lado', 60),
+      _ex(`qc_s${sN}d5_elev_front`,   'Elevaciones frontales con resistencia', 3, '12-15', 60),
+      _ex(`qc_s${sN}d5_est_homb`,     'Estiramiento - Hombros', 1, '16"/lado', 0),
+      _ex(`qc_s${sN}d5_est_luna`,     'Estiramiento | Media luna en sedestación', 1, '16"/lado', 0),
+      _ex(`qc_s${sN}d5_est_pigeon`,   'Estiramientos - Cadera (Pigeon)', 1, '16"/lado', 0),
+    ],
+    // D6 — HIIT (Versión A o B según semana)
+    6: useD6B
+      ? _hiitDay(`qc_s${sN}d6`, 'Tabata', D6_B)
+      : _hiitDay(`qc_s${sN}d6`, 'Tabata', D6_A),
+  });
+
+  WORKOUT_PLANS.quemando_casa = {
+    id: 'quemando_casa',
+    name: 'Quemando Grasa en Casa',
+    planType: 'phased',
+    weeks: 8,
+    description: 'Plan 8 semanas en casa — fuerza con resistencia, HIIT, Tabata y movilidad. Domingo descanso.',
+    trainingDays: [1, 2, 3, 4, 5, 6],
+    dayMeta: {
+      1: { name: 'Tren Inferior - Fuerza', type: 'strength', muscleGroups: ['Piernas', 'Glúteos'] },
+      2: { name: 'Tren Superior - Fuerza', type: 'strength', muscleGroups: ['Pecho', 'Espalda', 'Hombros'] },
+      3: { name: 'HIIT + Core',            type: 'strength', muscleGroups: ['Cardio', 'Core'] },
+      4: { name: 'Movilidad',              type: 'strength', muscleGroups: ['Movilidad', 'Recuperación'] },
+      5: { name: 'Full Body - Fuerza',     type: 'strength', muscleGroups: ['Full body'] },
+      6: { name: 'HIIT (Tabata)',          type: 'strength', muscleGroups: ['Cardio', 'Full body'] }
+    },
+    weeklySchedule: [
+      buildWeek(1, false),
+      buildWeek(2, false),
+      buildWeek(3, false),
+      buildWeek(4, false),
+      buildWeek(5, true),
+      buildWeek(6, true),
+      buildWeek(7, true),
+      buildWeek(8, true),
+    ]
+  };
+})();
