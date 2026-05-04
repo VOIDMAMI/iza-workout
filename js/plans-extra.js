@@ -5552,7 +5552,14 @@ WORKOUT_PLANS.quemando_gym = {
             d7: D7_var1(4, 'Core | Elevación de piernas en banco', 'elev_pier_b') };
   // BLOQUE C
   W[5]  = { d1: D1_C(5, '20'), d2: D2_C(5), d4: D4_C(5), d5: D5_C(5),
-            d7: D7_var3(5, { coreEx: 'Core | Bicycle twist', coreId: 'bicycle', coreSets: 4, coreReps: '20' }) };
+            d7: [
+              E('s5d7_burpees',   'HIIT | Burpees', 3, '30"', 30),
+              E('s5d7_landmine',  'Landmine thruster', 2, '8', 0),
+              E('s5d7_aussie_pu', 'Australian pull-ups', 3, '10', 0),
+              E('s5d7_ball',      'Ball pushes', 3, '12', 0),
+              E('s5d7_gemelo',    'Gemelo en prensa', 3, '10', 0),
+              E('s5d7_mc',        'Core | Mountain climbers + toques de rodilla', 3, '30"', 30),
+            ] };
   W[6]  = { d1: D1_C(6, '40'), d2: D2_C(6), d4: D4_C(6), d5: D5_C(6),
             d7: D7_var3(6, { coreEx: 'Core | Plancha inversa con toques de rodilla', coreId: 'plancha_inv', coreSets: 3, coreReps: '30"', coreRest: 30, gemelo: true }) };
   W[7]  = { d1: D1_C(7, '40'), d2: D2_C(7), d4: D4_C(7), d5: D5_C(7),
