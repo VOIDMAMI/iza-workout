@@ -4889,9 +4889,21 @@ WORKOUT_PLANS.quemando_gym = {
     { name: 'HIIT | Explosive jumping jacks' },
   ];
 
-  const buildWeek = (sN, useD6B) => ({
-    // D1 — Tren Inferior
-    1: [
+  const buildWeek = (sN, opts) => ({
+    // D1 — Tren Inferior (S8 progresa a mancuernas/peso)
+    1: opts.d1Mancuernas ? [
+      _ex(`qc_s${sN}d1_mob_rotcol`,  'Movilidad - Rotación de columna en cuadrupedia', 1, '12/lado', 0),
+      _ex(`qc_s${sN}d1_mob_cat`,     'Movilidad - Cat camel', 1, '12', 0),
+      _ex(`qc_s${sN}d1_mob_flextob`, 'Movilidad - Flexión de tobillo de rodillas', 1, '12/lado', 0),
+      _ex(`qc_s${sN}d1_sent_peso`,   'Sentadilla con peso', 3, '8-10', 60),
+      _ex(`qc_s${sN}d1_zanc_mc`,     'Zancadas con mancuernas', 3, '10-12/lado', 60),
+      _ex(`qc_s${sN}d1_pm_rumano`,   'Peso muerto rumano con mancuernas', 3, '10-12', 60),
+      _ex(`qc_s${sN}d1_ht_mc`,       'Hip thrust con mancuerna', 3, '10-12', 60),
+      _ex(`qc_s${sN}d1_curl_desliz`, 'Curl de femoral con deslizamiento', 3, '12-15', 60),
+      _ex(`qc_s${sN}d1_gemelo`,      'Gemelo - elevación de talones', 3, '12-15', 60),
+      _ex(`qc_s${sN}d1_est_aduct`,   'Estiramiento - Aductores (Mariposa)', 1, '16"/pierna', 0),
+      _ex(`qc_s${sN}d1_est_glut_eq`, 'Estiramiento | Estiramiento de glúteos en equilibrio', 1, '16"/pierna', 0),
+    ] : [
       _ex(`qc_s${sN}d1_mob_rotcol`,  'Movilidad - Rotación de columna en cuadrupedia', 1, '12/lado', 0),
       _ex(`qc_s${sN}d1_mob_cat`,     'Movilidad - Cat camel', 1, '12', 0),
       _ex(`qc_s${sN}d1_mob_flextob`, 'Movilidad - Flexión de tobillo de rodillas', 1, '12/lado', 0),
@@ -4904,10 +4916,15 @@ WORKOUT_PLANS.quemando_gym = {
       _ex(`qc_s${sN}d1_est_glut`,    'Estiramiento - Glúteo medio', 1, '16"/pierna', 0),
       _ex(`qc_s${sN}d1_est_torsion`, 'Estiramiento | Torsión en sedestación', 1, '16"/pierna', 0),
     ],
-    // D2 — Tren Superior
+    // D2 — Tren Superior (S5-S8 cambian movilidad inicial)
     2: [
-      _ex(`qc_s${sN}d2_mob_cervic`,  'Movilidad - Cervicales', 1, '12', 0),
-      _ex(`qc_s${sN}d2_mob_super`,   'Movilidad - Supermans', 1, '12', 0),
+      ...(opts.d2MobNueva ? [
+        _ex(`qc_s${sN}d2_mob_cat`,     'Movilidad - Cat camel', 1, '12', 0),
+        _ex(`qc_s${sN}d2_mob_flexesc`, 'Movilidad - Flexiones escapulares', 1, '12', 0),
+      ] : [
+        _ex(`qc_s${sN}d2_mob_cervic`,  'Movilidad - Cervicales', 1, '12', 0),
+        _ex(`qc_s${sN}d2_mob_super`,   'Movilidad - Supermans', 1, '12', 0),
+      ]),
       _ex(`qc_s${sN}d2_mob_rotcol`,  'Movilidad - Rotación de columna en T', 1, '12/lado', 0),
       _ex(`qc_s${sN}d2_press_pecho`, 'Press de pecho con resistencia tumbada', 3, '10-12', 60),
       _ex(`qc_s${sN}d2_remo_pie`,    'Remo de pie con resistencia', 3, '10-12', 60),
@@ -4956,7 +4973,7 @@ WORKOUT_PLANS.quemando_gym = {
       _ex(`qc_s${sN}d5_est_pigeon`,   'Estiramientos - Cadera (Pigeon)', 1, '16"/lado', 0),
     ],
     // D6 — HIIT (Versión A o B según semana)
-    6: useD6B
+    6: opts.d6B
       ? _hiitDay(`qc_s${sN}d6`, 'Tabata', D6_B)
       : _hiitDay(`qc_s${sN}d6`, 'Tabata', D6_A),
   });
@@ -4977,14 +4994,14 @@ WORKOUT_PLANS.quemando_gym = {
       6: { name: 'HIIT (Tabata)',          type: 'strength', muscleGroups: ['Cardio', 'Full body'] }
     },
     weeklySchedule: [
-      buildWeek(1, false),
-      buildWeek(2, false),
-      buildWeek(3, false),
-      buildWeek(4, false),
-      buildWeek(5, true),
-      buildWeek(6, true),
-      buildWeek(7, true),
-      buildWeek(8, true),
+      buildWeek(1, { d6B: false, d2MobNueva: false, d1Mancuernas: false }),
+      buildWeek(2, { d6B: false, d2MobNueva: false, d1Mancuernas: false }),
+      buildWeek(3, { d6B: false, d2MobNueva: false, d1Mancuernas: false }),
+      buildWeek(4, { d6B: false, d2MobNueva: false, d1Mancuernas: false }),
+      buildWeek(5, { d6B: true,  d2MobNueva: true,  d1Mancuernas: false }),
+      buildWeek(6, { d6B: true,  d2MobNueva: true,  d1Mancuernas: false }),
+      buildWeek(7, { d6B: true,  d2MobNueva: true,  d1Mancuernas: false }),
+      buildWeek(8, { d6B: true,  d2MobNueva: true,  d1Mancuernas: true  }),
     ]
   };
 })();
