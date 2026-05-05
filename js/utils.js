@@ -194,61 +194,71 @@ function _makeBeepDataUri(freq, durationSec, volume = 0.5) {
   return 'data:audio/wav;base64,' + btoa(binary);
 }
 
-let _tickAudio = null;
-let _alertAudio = null;
-function _getTickAudio() {
-  if (!_tickAudio) {
-    _tickAudio = new Audio(_makeBeepDataUri(700, 0.12, 0.6));
-    _tickAudio.preload = 'auto';
-  }
-  return _tickAudio;
+/**
+ * Web Audio API — se mezcla con la música del sistema (Spotify, Apple
+ * Music, etc.) en categoría "ambient", así que reproducir un beep aquí
+ * NO pausa la música, solo se superpone. iOS bajará el volumen de la
+ * música automáticamente mientras suena el beep.
+ *
+ * Antes usábamos elementos <audio> HTML5 — sonaban más fuerte pero
+ * pausaban Spotify. Si en algún iPhone con cascos no se oyera el beep,
+ * hay que volver al Audio HTML5 para esos casos (ver memoria ios_audio).
+ */
+let _audioCtx = null;
+function _getAudioCtx() {
+  if (_audioCtx) return _audioCtx;
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) return null;
+  _audioCtx = new Ctx();
+  return _audioCtx;
 }
-function _getAlertAudio() {
-  if (!_alertAudio) {
-    _alertAudio = new Audio(_makeBeepDataUri(1000, 0.5, 0.7));
-    _alertAudio.preload = 'auto';
-  }
-  return _alertAudio;
+
+function _beep(freq, durationSec, volume) {
+  const ctx = _getAudioCtx();
+  if (!ctx) return;
+  // Si el contexto está suspendido (iOS antes del primer toque), intenta despertar.
+  if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = 'sine';
+  osc.frequency.value = freq;
+
+  // Envelope con fade-in/out suaves para evitar clicks
+  const fade = Math.min(0.01, durationSec / 4);
+  gain.gain.setValueAtTime(0, now);
+  gain.gain.linearRampToValueAtTime(volume, now + fade);
+  gain.gain.setValueAtTime(volume, now + durationSec - fade);
+  gain.gain.linearRampToValueAtTime(0, now + durationSec);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(now);
+  osc.stop(now + durationSec);
 }
 
 function playAlertSound() {
-  try {
-    const a = _getAlertAudio();
-    a.currentTime = 0;
-    a.play().catch(() => {});
-  } catch (e) {}
+  try { _beep(1000, 0.5, 0.7); } catch (e) {}
 }
 
 function playTickSound() {
-  try {
-    const a = _getTickAudio();
-    a.currentTime = 0;
-    a.play().catch(() => {});
-  } catch (e) {}
+  try { _beep(700, 0.12, 0.6); } catch (e) {}
 }
 
 /**
- * Unlock audio on first user interaction (required by iOS).
- * Plays both clips silently so iOS marks them as user-triggered for later.
+ * Unlock audio on first user interaction (required by iOS for AudioContext).
+ * Crea/reanuda el contexto y reproduce un beep silencioso para autorizar audio.
  */
 function unlockAudio() {
-  [_getTickAudio(), _getAlertAudio()].forEach(a => {
-    try {
-      a.muted = true;
-      const p = a.play();
-      if (p && p.then) {
-        p.then(() => {
-          a.pause();
-          a.currentTime = 0;
-          a.muted = false;
-        }).catch(() => { a.muted = false; });
-      } else {
-        a.pause();
-        a.currentTime = 0;
-        a.muted = false;
-      }
-    } catch (e) {}
-  });
+  try {
+    const ctx = _getAudioCtx();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+    // Beep silencioso para que iOS marque el contexto como autorizado
+    _beep(440, 0.01, 0.0001);
+  } catch (e) {}
 }
 
 /* ---- Wake Lock (keep screen on) ---- */
