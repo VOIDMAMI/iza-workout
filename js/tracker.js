@@ -2,9 +2,15 @@
    IZA WORKOUT — Tracker (Set Logging)
    ============================================ */
 
+const TIMER_STORAGE_KEY = 'iza_active_rest_timer';
+
 const Tracker = {
   timerInterval: null,
   timerSeconds: 0,
+  timerEndAt: 0,         // Date.now() en ms cuando acaba el cronómetro
+  timerDuration: 0,      // segundos totales (para mostrar progreso)
+  timerNotifyTimeout: null,
+  timerFired: false,
 
   /**
    * Toggle a set as completed/uncompleted
@@ -170,9 +176,12 @@ const Tracker = {
     this.stopTimer();
   },
 
-  startTimer(seconds) {
+  startTimer(seconds, opts = {}) {
     this.stopTimer();
-    this.timerSeconds = seconds;
+    this.timerDuration = seconds;
+    this.timerEndAt = opts.resumeEndAt || (Date.now() + seconds * 1000);
+    this.timerSeconds = Math.max(0, Math.ceil((this.timerEndAt - Date.now()) / 1000));
+    this.timerFired = false;
 
     // Update preset buttons
     document.querySelectorAll('.timer-preset-btn').forEach(btn => {
@@ -187,34 +196,79 @@ const Tracker = {
       display.className = 'timer-display';
     }
 
-    this.timerInterval = setInterval(() => {
-      this.timerSeconds--;
+    // Persistir y programar notificación (sobrevive a app en background / pantalla bloqueada)
+    if (!opts.resumeEndAt) {
+      localStorage.setItem(TIMER_STORAGE_KEY, JSON.stringify({
+        endAt: this.timerEndAt,
+        duration: this.timerDuration
+      }));
+      ensureNotificationPermission();
+    }
+    this._scheduleEndNotification();
 
-      if (display) {
-        display.textContent = formatTime(Math.max(0, this.timerSeconds));
+    this.timerInterval = setInterval(() => this._tick(), 250);
+    this._tick();
+  },
 
-        if (this.timerSeconds <= 5 && this.timerSeconds > 0) {
-          display.className = 'timer-display warning';
-        }
+  _tick() {
+    const display = document.getElementById('timer-display');
+    const remaining = Math.max(0, Math.ceil((this.timerEndAt - Date.now()) / 1000));
+    const prev = this.timerSeconds;
+    this.timerSeconds = remaining;
 
-        if (this.timerSeconds === 3 || this.timerSeconds === 2 || this.timerSeconds === 1) {
-          playTickSound();
-        }
+    if (display) {
+      display.textContent = formatTime(remaining);
 
-        if (this.timerSeconds <= 0) {
-          display.className = 'timer-display done';
-          display.textContent = '¡GO!';
-          this.stopTimer();
-
-          // Alert: sound + vibration + notification
-          playAlertSound();
-          vibrate([200, 100, 200, 100, 400]);
-          showRestDoneNotification();
-
-          setTimeout(() => this.hideTimer(), 2000);
-        }
+      if (remaining <= 5 && remaining > 0) {
+        display.className = 'timer-display warning';
       }
-    }, 1000);
+    }
+
+    // Tick sounds en los últimos 3s — solo cuando el segundo cambia
+    if (prev > remaining && (remaining === 3 || remaining === 2 || remaining === 1)) {
+      playTickSound();
+    }
+
+    if (remaining <= 0 && !this.timerFired) {
+      this.timerFired = true;
+      if (display) {
+        display.className = 'timer-display done';
+        display.textContent = '¡GO!';
+      }
+      // Si la pestaña está visible, sonido + vibración aquí.
+      // Si no, la notificación programada (showRestDoneNotification) se encarga.
+      if (document.visibilityState === 'visible') {
+        playAlertSound();
+        vibrate([200, 100, 200, 100, 400]);
+        showRestDoneNotification();
+      }
+      this._clearPersistedTimer();
+      setTimeout(() => this.hideTimer(), 2000);
+    }
+  },
+
+  _scheduleEndNotification() {
+    if (this.timerNotifyTimeout) {
+      clearTimeout(this.timerNotifyTimeout);
+      this.timerNotifyTimeout = null;
+    }
+    const ms = this.timerEndAt - Date.now();
+    if (ms <= 0) return;
+    // setTimeout no se ejecuta con la pantalla bloqueada en móvil, pero
+    // sí se dispara cuando el SO despierta el JS aunque sea brevemente.
+    // La notificación system-level es la garantía real cuando el móvil está bloqueado.
+    this.timerNotifyTimeout = setTimeout(() => {
+      showRestDoneNotification();
+      vibrate([200, 100, 200, 100, 400]);
+      // Si la pestaña no está visible, intenta sonido también (puede fallar en iOS)
+      if (document.visibilityState !== 'visible') {
+        playAlertSound();
+      }
+    }, ms);
+  },
+
+  _clearPersistedTimer() {
+    try { localStorage.removeItem(TIMER_STORAGE_KEY); } catch (e) {}
   },
 
   stopTimer() {
@@ -222,5 +276,27 @@ const Tracker = {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+    if (this.timerNotifyTimeout) {
+      clearTimeout(this.timerNotifyTimeout);
+      this.timerNotifyTimeout = null;
+    }
+    this._clearPersistedTimer();
+  },
+
+  // Llamado al volver a la app — restaura el timer si seguía corriendo
+  resumeIfActive() {
+    try {
+      const raw = localStorage.getItem(TIMER_STORAGE_KEY);
+      if (!raw) return;
+      const { endAt, duration } = JSON.parse(raw);
+      if (!endAt || Date.now() >= endAt + 5000) {
+        // ya pasó hace rato — limpiar y no resucitar
+        this._clearPersistedTimer();
+        return;
+      }
+      const timerContainer = document.getElementById('rest-timer-container');
+      if (timerContainer) timerContainer.classList.remove('hidden');
+      this.startTimer(duration, { resumeEndAt: endAt });
+    } catch (e) {}
   }
 };

@@ -39,9 +39,19 @@ const App = {
       this.navigate(page, false);
     });
 
+    // Reanudar timer de descanso si la app vuelve a primer plano
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        Tracker?.resumeIfActive?.();
+      }
+    });
+
     // Initial route
     const page = location.hash.replace('#', '') || 'home';
     this.navigate(page, false);
+
+    // Reanudar timer si quedaba uno activo de antes (refresh / reapertura)
+    Tracker?.resumeIfActive?.();
   },
 
   _switchPage(page, updateHash = true) {

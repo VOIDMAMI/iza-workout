@@ -288,19 +288,44 @@ async function requestNotificationPermission() {
   return result === 'granted';
 }
 
+// Pide permiso solo una vez por sesión, en respuesta a interacción del usuario.
+let _notifPermissionAsked = false;
+function ensureNotificationPermission() {
+  if (_notifPermissionAsked) return;
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted' || Notification.permission === 'denied') return;
+  _notifPermissionAsked = true;
+  // No await — se resuelve en background. El usuario decide ahora,
+  // y la próxima vez que el timer acabe ya tendrá permiso.
+  Notification.requestPermission().catch(() => {});
+}
+
 function showRestDoneNotification() {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
-  try {
-    const n = new Notification('¡Descanso terminado! 💪', {
-      body: 'Continúa con la siguiente serie',
-      icon: './assets/icons/icon-192.png',
-      badge: './assets/icons/icon-192.png',
-      tag: 'rest-done',
-      requireInteraction: false,
-      silent: false
-    });
-    setTimeout(() => n.close(), 5000);
-  } catch (e) { /* ignore */ }
+
+  const title = '¡Descanso terminado! 💪';
+  const options = {
+    body: 'Continúa con la siguiente serie',
+    icon: './assets/icons/icon-192.png',
+    badge: './assets/icons/icon-192.png',
+    tag: 'rest-done',
+    renotify: true,
+    requireInteraction: false,
+    silent: false,
+    vibrate: [200, 100, 200, 100, 400]
+  };
+
+  // Preferir SW.showNotification (funciona con pantalla bloqueada / app en
+  // background). new Notification() solo funciona con la página visible.
+  if ('serviceWorker' in navigator && navigator.serviceWorker.ready) {
+    navigator.serviceWorker.ready
+      .then(reg => reg.showNotification(title, options))
+      .catch(() => {
+        try { new Notification(title, options); } catch (e) {}
+      });
+  } else {
+    try { new Notification(title, options); } catch (e) {}
+  }
 }
 
 /**
