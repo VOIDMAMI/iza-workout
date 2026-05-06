@@ -239,25 +239,60 @@ function _beep(freq, durationSec, volume) {
   osc.stop(now + durationSec);
 }
 
-function playAlertSound() {
-  try { _beep(1000, 0.5, 0.7); } catch (e) {}
+// Alert final usa <audio> HTML5: suena fuerte y se oye con cascos sí o sí.
+// Pausa Spotify ~0.5s pero solo ocurre al terminar el descanso (1 vez por
+// cronómetro), no cada tick. Ver memoria ios_audio para el contexto.
+let _alertAudio = null;
+function _getAlertAudio() {
+  if (!_alertAudio) {
+    _alertAudio = new Audio(_makeBeepDataUri(1000, 0.5, 0.7));
+    _alertAudio.preload = 'auto';
+  }
+  return _alertAudio;
 }
 
+function playAlertSound() {
+  try {
+    const a = _getAlertAudio();
+    a.currentTime = 0;
+    a.play().catch(() => {});
+  } catch (e) {}
+}
+
+// Ticks 3-2-1 usan Web Audio API: se mezclan con la música (no pausan
+// Spotify). Volumen más bajo, audio ducking automático en iOS.
 function playTickSound() {
   try { _beep(700, 0.12, 0.6); } catch (e) {}
 }
 
 /**
- * Unlock audio on first user interaction (required by iOS for AudioContext).
- * Crea/reanuda el contexto y reproduce un beep silencioso para autorizar audio.
+ * Unlock audio on first user interaction (required by iOS).
+ * Inicializa AudioContext (para ticks) Y reproduce el clip HTML5 en
+ * silencio (para que iOS autorice el alert final).
  */
 function unlockAudio() {
+  // 1. AudioContext para ticks
   try {
     const ctx = _getAudioCtx();
-    if (!ctx) return;
-    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
-    // Beep silencioso para que iOS marque el contexto como autorizado
-    _beep(440, 0.01, 0.0001);
+    if (ctx) {
+      if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+      _beep(440, 0.01, 0.0001);
+    }
+  } catch (e) {}
+
+  // 2. Audio HTML5 para alert final (autorizar reproducción posterior)
+  try {
+    const a = _getAlertAudio();
+    a.muted = true;
+    const p = a.play();
+    if (p && p.then) {
+      p.then(() => { a.pause(); a.currentTime = 0; a.muted = false; })
+       .catch(() => { a.muted = false; });
+    } else {
+      a.pause();
+      a.currentTime = 0;
+      a.muted = false;
+    }
   } catch (e) {}
 }
 
