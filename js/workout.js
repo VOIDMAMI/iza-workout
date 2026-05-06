@@ -40,7 +40,9 @@ const Workout = {
     // Keep screen on during workout
     if (this.currentWorkout && this.currentWorkout.type !== 'rest') {
       requestWakeLock();
-      requestNotificationPermission();
+      // Nota: NO pedimos requestNotificationPermission() aquí porque iOS
+      // PWA solo muestra el popup si la llamada viene de un click directo.
+      // El usuario activa las notificaciones desde el banner del cronómetro.
     }
 
     const container = document.getElementById('page-workout');
@@ -298,6 +300,10 @@ const Workout = {
           <button class="timer-preset-btn" onclick="Tracker.startTimer(90)">1:30</button>
           <button class="timer-preset-btn" onclick="Tracker.startTimer(120)">2:00</button>
           <button class="timer-preset-btn" onclick="Tracker.startTimer(150)">2:30</button>
+        </div>
+        <div id="notif-permission-banner" class="hidden" style="margin-top:var(--space-md); padding:var(--space-sm) var(--space-md); background:rgba(139,92,246,0.08); border:1px solid var(--border-light); border-radius:var(--radius-md); display:flex; align-items:center; gap:var(--space-sm); justify-content:space-between;">
+          <span class="text-xs text-secondary">🔔 Activa las notificaciones para que te avise con el móvil bloqueado</span>
+          <button class="btn btn-primary btn-sm" onclick="Tracker.askNotificationPermission()">Activar</button>
         </div>
       </div>
 

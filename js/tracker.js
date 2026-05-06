@@ -164,10 +164,52 @@ const Tracker = {
     const timerContainer = document.getElementById('rest-timer-container');
     if (!timerContainer) return;
     timerContainer.classList.remove('hidden');
+    this._updateNotifBanner();
     this.startTimer(seconds || 60);
 
     // Scroll to timer
     timerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  },
+
+  _updateNotifBanner() {
+    const banner = document.getElementById('notif-permission-banner');
+    if (!banner) return;
+    const supported = 'Notification' in window;
+    const needsAsk = supported && Notification.permission === 'default';
+    banner.classList.toggle('hidden', !needsAsk);
+  },
+
+  async askNotificationPermission() {
+    if (!('Notification' in window)) {
+      showToast('Tu navegador no soporta notificaciones', 'warning');
+      return;
+    }
+    try {
+      const result = await Notification.requestPermission();
+      if (result === 'granted') {
+        showToast('¡Notificaciones activadas! 🔔');
+        // Notificación de prueba para confirmar que funciona
+        try {
+          if ('serviceWorker' in navigator) {
+            const reg = await navigator.serviceWorker.ready;
+            reg.showNotification('Iza Workout', {
+              body: 'Las notificaciones están listas',
+              icon: './assets/icons/icon-192.png',
+              tag: 'notif-test',
+              silent: true
+            });
+            setTimeout(() => {
+              reg.getNotifications({ tag: 'notif-test' }).then(ns => ns.forEach(n => n.close()));
+            }, 2500);
+          }
+        } catch (e) {}
+      } else if (result === 'denied') {
+        showToast('Notificaciones bloqueadas. Actívalas en Ajustes del móvil.', 'warning');
+      }
+      this._updateNotifBanner();
+    } catch (e) {
+      showToast('No se pudo activar', 'error');
+    }
   },
 
   hideTimer() {
@@ -202,7 +244,6 @@ const Tracker = {
         endAt: this.timerEndAt,
         duration: this.timerDuration
       }));
-      ensureNotificationPermission();
     }
     this._scheduleEndNotification();
 
