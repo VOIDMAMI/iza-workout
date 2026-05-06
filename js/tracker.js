@@ -3,16 +3,9 @@
    ============================================ */
 
 const TIMER_STORAGE_KEY = 'iza_active_rest_timer';
-const TIMER_LOG_KEY = 'iza_timer_debug_log';
 
-function _timerLog(msg) {
-  try {
-    const log = JSON.parse(localStorage.getItem(TIMER_LOG_KEY) || '[]');
-    log.push(`[${new Date().toLocaleTimeString()}] ${msg}`);
-    if (log.length > 50) log.shift();
-    localStorage.setItem(TIMER_LOG_KEY, JSON.stringify(log));
-  } catch (e) {}
-}
+// Limpieza de log de debug usado en versiones previas (v53)
+try { localStorage.removeItem('iza_timer_debug_log'); } catch (e) {}
 
 const Tracker = {
   timerInterval: null,
@@ -251,7 +244,6 @@ const Tracker = {
     this.timerEndAt = opts.resumeEndAt || (Date.now() + seconds * 1000);
     this.timerSeconds = Math.max(0, Math.ceil((this.timerEndAt - Date.now()) / 1000));
     this.timerFired = false;
-    _timerLog(`startTimer ${seconds}s${opts.resumeEndAt ? ' (resume)' : ''}`);
 
     // Update preset buttons
     document.querySelectorAll('.timer-preset-btn').forEach(btn => {
@@ -300,7 +292,6 @@ const Tracker = {
 
     if (remaining <= 0 && !this.timerFired) {
       this.timerFired = true;
-      _timerLog(`_tick alcanzó 0 (visibility=${document.visibilityState})`);
       if (display) {
         display.className = 'timer-display done';
         display.textContent = '¡GO!';
@@ -308,7 +299,6 @@ const Tracker = {
       // Notificación SIEMPRE — el SW.showNotification funciona con la
       // pantalla bloqueada y la app en background. iOS la entrega.
       showRestDoneNotification();
-      _timerLog(`notif enviada via _tick`);
       vibrate([200, 100, 200, 100, 400]);
       // Sonido custom solo si la app está visible (con la pestaña en
       // background iOS no reproduce audio Web).
@@ -331,11 +321,10 @@ const Tracker = {
       this.timerNotifyTimeout = null;
     }
     const ms = this.timerEndAt - Date.now();
-    _timerLog(`schedule setTimeout ${ms}ms (visibility=${document.visibilityState})`);
     if (ms <= 0) return;
+    // Backup: si _tick no llega a ejecutarse (app suspendida), este setTimeout
+    // dispara la notificación. Solo uno de los dos puede disparar (timerFired).
     this.timerNotifyTimeout = setTimeout(() => {
-      _timerLog(`setTimeout disparó (visibility=${document.visibilityState}, fired=${this.timerFired})`);
-      // Solo dispara si _tick aún no lo hizo
       if (!this.timerFired) {
         this.timerFired = true;
         showRestDoneNotification();
@@ -343,7 +332,6 @@ const Tracker = {
         if (document.visibilityState !== 'visible') {
           playAlertSound();
         }
-        _timerLog(`notif enviada via setTimeout`);
       }
     }, ms);
   },
