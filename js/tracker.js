@@ -175,8 +175,25 @@ const Tracker = {
     const banner = document.getElementById('notif-permission-banner');
     if (!banner) return;
     const supported = 'Notification' in window;
-    const needsAsk = supported && Notification.permission === 'default';
-    banner.classList.toggle('hidden', !needsAsk);
+    if (!supported) {
+      banner.classList.add('hidden');
+      return;
+    }
+    const perm = Notification.permission;
+    if (perm === 'granted') {
+      banner.classList.add('hidden');
+    } else if (perm === 'denied') {
+      // Mostrar instrucciones para desbloquear desde Ajustes
+      banner.classList.remove('hidden');
+      banner.innerHTML = `
+        <span class="text-sm text-secondary" style="flex:1;">
+          🔕 Notificaciones bloqueadas. Ve a <strong>Ajustes → Notificaciones → Iza Workout</strong> y actívalas.
+        </span>
+      `;
+    } else {
+      // 'default' — pedir permiso
+      banner.classList.remove('hidden');
+    }
   },
 
   async askNotificationPermission() {

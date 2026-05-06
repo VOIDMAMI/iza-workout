@@ -221,12 +221,29 @@ const App = {
       </div>
 
       <!-- Settings -->
-      <div class="mt-2xl anim-fade-in-up anim-delay-7" style="text-align: center;">
+      <div class="mt-2xl anim-fade-in-up anim-delay-7" style="text-align: center; display:flex; flex-direction:column; gap:var(--space-sm);">
         <button class="btn btn-ghost text-sm" onclick="Storage.exportData()">
           📁 Exportar Datos (Backup)
         </button>
+        <button class="btn btn-ghost text-sm" onclick="App.checkNotifStatus()">
+          🔔 Estado de notificaciones
+        </button>
       </div>
     `;
+  },
+
+  checkNotifStatus() {
+    const lines = [];
+    lines.push('--- DIAGNÓSTICO ---');
+    lines.push('Cache SW: v50 (objetivo)');
+    lines.push('Standalone (PWA): ' + (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone ? 'SÍ ✅' : 'NO ❌'));
+    lines.push('Notification API: ' + ('Notification' in window ? 'SÍ ✅' : 'NO ❌ (iOS < 16.4)'));
+    if ('Notification' in window) {
+      lines.push('Permiso actual: ' + Notification.permission);
+    }
+    lines.push('Service Worker: ' + ('serviceWorker' in navigator ? 'SÍ ✅' : 'NO ❌'));
+    lines.push('User Agent: ' + navigator.userAgent.slice(0, 80));
+    alert(lines.join('\n'));
   },
 
   renderWeekOverview() {
