@@ -234,8 +234,20 @@ const App = {
         <button class="btn btn-ghost text-sm" onclick="App.testNotifIn10s()">
           ⏱ Test notificación en 10s (bloquea el móvil)
         </button>
+        <button class="btn btn-ghost text-sm" onclick="App.showTimerLog()">
+          📋 Ver log del cronómetro
+        </button>
       </div>
     `;
+  },
+
+  showTimerLog() {
+    const log = JSON.parse(localStorage.getItem('iza_timer_debug_log') || '[]');
+    if (log.length === 0) {
+      alert('Log vacío.\nUsa el cronómetro y luego vuelve aquí.');
+      return;
+    }
+    alert('--- LOG CRONÓMETRO ---\n\n' + log.join('\n'));
   },
 
   testNotifNow() {
@@ -261,7 +273,7 @@ const App = {
   checkNotifStatus() {
     const lines = [];
     lines.push('--- DIAGNÓSTICO ---');
-    lines.push('Cache SW: v52 (objetivo)');
+    lines.push('Cache SW: v53 (objetivo)');
     lines.push('Standalone (PWA): ' + (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone ? 'SÍ ✅' : 'NO ❌'));
     lines.push('Notification API: ' + ('Notification' in window ? 'SÍ ✅' : 'NO ❌ (iOS < 16.4)'));
     if ('Notification' in window) {

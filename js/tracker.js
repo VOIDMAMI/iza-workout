@@ -3,6 +3,16 @@
    ============================================ */
 
 const TIMER_STORAGE_KEY = 'iza_active_rest_timer';
+const TIMER_LOG_KEY = 'iza_timer_debug_log';
+
+function _timerLog(msg) {
+  try {
+    const log = JSON.parse(localStorage.getItem(TIMER_LOG_KEY) || '[]');
+    log.push(`[${new Date().toLocaleTimeString()}] ${msg}`);
+    if (log.length > 50) log.shift();
+    localStorage.setItem(TIMER_LOG_KEY, JSON.stringify(log));
+  } catch (e) {}
+}
 
 const Tracker = {
   timerInterval: null,
@@ -241,6 +251,7 @@ const Tracker = {
     this.timerEndAt = opts.resumeEndAt || (Date.now() + seconds * 1000);
     this.timerSeconds = Math.max(0, Math.ceil((this.timerEndAt - Date.now()) / 1000));
     this.timerFired = false;
+    _timerLog(`startTimer ${seconds}s${opts.resumeEndAt ? ' (resume)' : ''}`);
 
     // Update preset buttons
     document.querySelectorAll('.timer-preset-btn').forEach(btn => {
@@ -289,16 +300,25 @@ const Tracker = {
 
     if (remaining <= 0 && !this.timerFired) {
       this.timerFired = true;
+      _timerLog(`_tick alcanzó 0 (visibility=${document.visibilityState})`);
       if (display) {
         display.className = 'timer-display done';
         display.textContent = '¡GO!';
       }
-      // Si la pestaña está visible, sonido + vibración aquí.
-      // Si no, la notificación programada (showRestDoneNotification) se encarga.
+      // Notificación SIEMPRE — el SW.showNotification funciona con la
+      // pantalla bloqueada y la app en background. iOS la entrega.
+      showRestDoneNotification();
+      _timerLog(`notif enviada via _tick`);
+      vibrate([200, 100, 200, 100, 400]);
+      // Sonido custom solo si la app está visible (con la pestaña en
+      // background iOS no reproduce audio Web).
       if (document.visibilityState === 'visible') {
         playAlertSound();
-        vibrate([200, 100, 200, 100, 400]);
-        showRestDoneNotification();
+      }
+      // Cancelar el setTimeout paralelo para no disparar dos notificaciones
+      if (this.timerNotifyTimeout) {
+        clearTimeout(this.timerNotifyTimeout);
+        this.timerNotifyTimeout = null;
       }
       this._clearPersistedTimer();
       setTimeout(() => this.hideTimer(), 2000);
@@ -311,16 +331,19 @@ const Tracker = {
       this.timerNotifyTimeout = null;
     }
     const ms = this.timerEndAt - Date.now();
+    _timerLog(`schedule setTimeout ${ms}ms (visibility=${document.visibilityState})`);
     if (ms <= 0) return;
-    // setTimeout no se ejecuta con la pantalla bloqueada en móvil, pero
-    // sí se dispara cuando el SO despierta el JS aunque sea brevemente.
-    // La notificación system-level es la garantía real cuando el móvil está bloqueado.
     this.timerNotifyTimeout = setTimeout(() => {
-      showRestDoneNotification();
-      vibrate([200, 100, 200, 100, 400]);
-      // Si la pestaña no está visible, intenta sonido también (puede fallar en iOS)
-      if (document.visibilityState !== 'visible') {
-        playAlertSound();
+      _timerLog(`setTimeout disparó (visibility=${document.visibilityState}, fired=${this.timerFired})`);
+      // Solo dispara si _tick aún no lo hizo
+      if (!this.timerFired) {
+        this.timerFired = true;
+        showRestDoneNotification();
+        vibrate([200, 100, 200, 100, 400]);
+        if (document.visibilityState !== 'visible') {
+          playAlertSound();
+        }
+        _timerLog(`notif enviada via setTimeout`);
       }
     }, ms);
   },
