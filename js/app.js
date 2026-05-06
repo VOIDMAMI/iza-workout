@@ -228,14 +228,40 @@ const App = {
         <button class="btn btn-ghost text-sm" onclick="App.checkNotifStatus()">
           🔔 Estado de notificaciones
         </button>
+        <button class="btn btn-ghost text-sm" onclick="App.testNotifNow()">
+          🧪 Test notificación AHORA
+        </button>
+        <button class="btn btn-ghost text-sm" onclick="App.testNotifIn10s()">
+          ⏱ Test notificación en 10s (bloquea el móvil)
+        </button>
       </div>
     `;
+  },
+
+  testNotifNow() {
+    if (!('Notification' in window) || Notification.permission !== 'granted') {
+      alert('Permiso no concedido');
+      return;
+    }
+    showRestDoneNotification();
+    showToast('Notificación enviada — ¿la viste?');
+  },
+
+  testNotifIn10s() {
+    if (!('Notification' in window) || Notification.permission !== 'granted') {
+      alert('Permiso no concedido');
+      return;
+    }
+    alert('La notificación llegará en 10 segundos. BLOQUEA el móvil ahora.');
+    setTimeout(() => {
+      showRestDoneNotification();
+    }, 10000);
   },
 
   checkNotifStatus() {
     const lines = [];
     lines.push('--- DIAGNÓSTICO ---');
-    lines.push('Cache SW: v50 (objetivo)');
+    lines.push('Cache SW: v52 (objetivo)');
     lines.push('Standalone (PWA): ' + (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone ? 'SÍ ✅' : 'NO ❌'));
     lines.push('Notification API: ' + ('Notification' in window ? 'SÍ ✅' : 'NO ❌ (iOS < 16.4)'));
     if ('Notification' in window) {
