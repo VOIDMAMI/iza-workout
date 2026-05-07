@@ -5603,3 +5603,75 @@ WORKOUT_PLANS.quemando_gym = {
     })
   };
 })();
+
+/* ══════════════ CALISTENIA (36 semanas — solo S1 cargada para validación) ══════════════ */
+(function () {
+  const E = (id, name, sets, reps, rest, notes) => _ex(`cal_${id}`, name, sets, reps, rest, notes);
+
+  // Movilidad inicial reutilizable
+  const MOB = (s) => [
+    E(`s${s}_mob_cervic`,  'Movilidad - Cervicales', 2, '15', 0),
+    E(`s${s}_mob_flexesc`, 'Movilidad - Flexiones escapulares', 2, '15', 0),
+    E(`s${s}_mob_super`,   'Movilidad - Supermans', 2, '15', 0),
+  ];
+
+  const W = {};
+
+  // ═══ SEMANA 1 (1 NVL) ═══
+  W[1] = {
+    d1: [
+      ...MOB(1),
+      E('s1d1_hollow',    'Core | Hollow hold', 2, '30"', 60),
+      E('s1d1_aussie',    'Australian pull-ups', 4, '2 diagonales', 120),
+      E('s1d1_flex_elev', 'Flexiones con elevación', 3, '2', 120),
+      E('s1d1_flex_rod',  'Flexiones de rodillas', 3, '5', 90),
+      E('s1d1_fondos',    'Fondos de tríceps en banco', 2, '8', 120),
+      E('s1d1_jalon',     'Jalón al pecho', 2, '10', 90, 'Biserie A'),
+      E('s1d1_press_uni', 'Press de hombro unilateral', 2, '10', 90, 'Biserie A'),
+      E('s1d1_ext_tri',   'Extensión de tríceps en polea', 2, '10', 90, 'Biserie B'),
+      E('s1d1_mangu',     'Movilidad - Manguitos rotadores con resistencia', 2, '10', 90, 'Biserie B'),
+    ],
+    d3: [
+      ...MOB(1).map((ex) => ({ ...ex, id: ex.id.replace('s1_', 's1d3_') })),
+      E('s1d3_plancha',   'Core | Plancha', 1, '30"', 60),
+      E('s1d3_aussie',    'Australian pull-ups', 4, '2 verticales', 120),
+      E('s1d3_flex_elev', 'Flexiones con elevación', 3, '2', 120),
+      E('s1d3_flex_rod',  'Flexiones de rodillas', 3, '5', 90),
+      E('s1d3_elev_front','Elevaciones frontales con mancuernas', 2, '8', 90, 'Biserie A'),
+      E('s1d3_ext_tri',   'Extensión de tríceps en polea', 2, '12', 90, 'Biserie A'),
+      E('s1d3_remo_90',   'Remo a 90 con mancuernas', 2, '10', 90, 'Biserie B'),
+      E('s1d3_curl_bicep','Curl de bíceps con mancuerna', 2, '8', 90, 'Biserie B'),
+    ],
+    d5: [
+      ...MOB(1).map((ex) => ({ ...ex, id: ex.id.replace('s1_', 's1d5_') })),
+      E('s1d5_plancha',   'Core | Plancha', 2, '15', 60),
+      E('s1d5_flex_rod',  'Flexiones de rodillas', 4, '5', 120),
+      E('s1d5_aussie',    'Australian pull-ups', 4, '2 verticales', 120),
+      E('s1d5_fondos',    'Fondos de tríceps en banco', 2, '8', 120),
+      E('s1d5_jalon',     'Jalón al pecho', 2, '10', 90, 'Biserie A'),
+      E('s1d5_press_uni', 'Press de hombro unilateral', 2, '10', 90, 'Biserie A'),
+      E('s1d5_elev_lat',  'Elevaciones laterales con mancuernas', 2, '6', 90, 'Biserie B'),
+      E('s1d5_curl_bicep','Curl de bíceps con mancuerna', 2, '8', 90, 'Biserie B'),
+      E('s1d5_ext_tri',   'Extensión de tríceps en polea', 2, '10', 90),
+      E('s1d5_mangu',     'Movilidad - Manguitos rotadores con resistencia', 2, '8', 90),
+    ],
+  };
+
+  WORKOUT_PLANS.calistenia = {
+    id: 'calistenia',
+    name: 'Calistenia',
+    planType: 'phased',
+    weeks: 36,
+    description: 'Plan 36 semanas de calistenia híbrida (con mancuernas/poleas). 3 días/sem (D1, D3, D5). Niveles progresivos. ⚠️ Solo S1 cargada — pendiente validación.',
+    trainingDays: [1, 3, 5],
+    dayMeta: {
+      1: { name: 'Entreno 1', type: 'strength', muscleGroups: ['Calistenia', 'Full body'] },
+      3: { name: 'Entreno 2', type: 'strength', muscleGroups: ['Calistenia', 'Full body'] },
+      5: { name: 'Entreno 3', type: 'strength', muscleGroups: ['Calistenia', 'Full body'] }
+    },
+    weeklySchedule: Array.from({ length: 36 }, (_, i) => {
+      const w = W[i + 1] || W[1]; // semanas no cargadas todavía: fallback a S1 para que la app no rompa
+      return { 1: w.d1, 3: w.d3, 5: w.d5 };
+    })
+  };
+})();
