@@ -6081,3 +6081,121 @@ WORKOUT_PLANS.quemando_gym = {
     })
   };
 })();
+
+/* ══════════════ WOODS (12 semanas — S1 cargada para validación) ══════════════ */
+(function () {
+  const E = (id, name, sets, reps, rest, notes) => _ex(`woods_${id}`, name, sets, reps, rest, notes);
+
+  const W = {};
+
+  // ═══ SEMANA 1 ═══
+  W[1] = {
+    // S1 D1 - Endurance
+    1: [
+      E('s1d1_mob_rotcol',   'Movilidad - Rotación de columna en cuadrupedia', 2, '6/lado', 0),
+      E('s1d1_mob_rot90',    'Movilidad - Rotación interna de cadera 90-90', 1, '12', 0),
+      E('s1d1_mob_esc',      'Movilidad | Movimientos escapulares', 1, '10', 0),
+      E('s1d1_curl_press',   'Curl de bíceps + press con resistencia', 1, '10', 0),
+      E('s1d1_abd_180',      'Abducción de cadera con resistencia a 180°', 1, '12', 0),
+      E('s1d1_skierg',       'ERGÓMETRO | SkiErg', 4, '300-400m', 0, 'WOD - 4 rondas'),
+      E('s1d1_thruster',     'Thruster con mancuernas', 4, '20 (>5 kg cada una)', 0, 'WOD - 4 rondas'),
+      E('s1d1_burpee_bar',   'FUNCIONAL | Burpee over the bar', 4, '20 saltando mancuerna lateralmente', 0, 'WOD - 4 rondas'),
+      E('s1d1_pm_rumano',    'Peso muerto rumano', 4, '20 - 2 KB >8Kg cada una', 0, 'WOD - 4 rondas'),
+      E('s1d1_farmer',       'FUNCIONAL | Farmer carry o paseo del granjero', 4, '40m - 2 KB >8Kg cada una', 0, 'WOD - 4 rondas'),
+      E('s1d1_wallball',     'Wall ball', 4, '10 (balón máx 7 kg ♀ / 9 kg ♂)', 0, 'WOD - 4 rondas'),
+      E('s1d1_est_aduct',    'Estiramiento | Aductores (Mariposa) en flexión', 1, '30"', 0),
+      E('s1d1_est_espalda',  'Estiramiento - Espalda', 1, '30"', 0),
+      E('s1d1_est_nino',     'Estiramiento | Postura del niño con rodillas separadas', 1, '30"', 0),
+    ],
+    // S1 D2 - Endurance
+    2: [
+      E('s1d2_mob_flexesc',  'Movilidad - Flexiones escapulares', 1, '10', 0),
+      E('s1d2_mob_snow',     'Movilidad - Prone snow angels', 1, '10', 0),
+      E('s1d2_mob_rlunge',   'Movilidad - Runners lunge', 1, '10/lado', 0),
+      E('s1d2_curtsy',       'Curtsy lunges con mancuerna', 1, '10/lado', 0),
+      E('s1d2_dolphin',      'Core | Dolphin plank + knee taps', 1, '20 alternando', 0),
+      E('s1d2_snatch',       'Snatch con disco', 1, '10-15', 0),
+      E('s1d2_sled',         'Sled push o empuje del trineo', 1, '20m', 0, 'AMRAP 30\''),
+      E('s1d2_run',          'RUN | Carrera', 1, '150m', 0, 'AMRAP 30\''),
+      E('s1d2_wallball',     'Wall ball', 1, '20', 0, 'AMRAP 30\''),
+      E('s1d2_step_up',      'FUNCIONAL | Step up over the box', 1, '20 alterno con dos mancuernas', 0, 'AMRAP 30\''),
+      E('s1d2_vups',         'Core | V ups', 1, '20 alternando pierna', 0, 'AMRAP 30\''),
+      E('s1d2_hollow_rock',  'CORE | Hollow rock', 4, 'Máx reps', 10, 'TABATA: 4 rondas, 20" trabajo / 10" descanso'),
+      E('s1d2_plancha',      'Core | Plancha', 4, 'Máx reps', 10, 'TABATA: 4 rondas, 20" trabajo / 10" descanso'),
+      E('s1d2_est_nino',     'Estiramiento | Postura del niño con rodillas separadas', 1, '30"', 0),
+      E('s1d2_est_espalda',  'Estiramiento - Espalda', 1, '30"', 0),
+    ],
+    // S1 D4 - Running y ergómetros
+    4: [
+      E('s1d4_mob_balanceo', 'Movilidad - Balanceo de piernas', 2, '10/pierna', 0),
+      E('s1d4_mob_hip_car',  'Movilidad - Hip CAR', 1, '12/lado', 0),
+      E('s1d4_mob_rlunge',   'Movilidad - Runners lunge with reach', 1, '10/lado', 0),
+      E('s1d4_skipping',     'Técnica de carrera | Skipping alto', 1, '30 completas', 0),
+      E('s1d4_plancha_lat',  'Estabilidad | Plancha lateral modificada con pierna elevada', 1, '40"/lado', 0),
+      E('s1d4_knee_taps',    'Core | Knee to toe taps', 1, '20 alternando', 0),
+      E('s1d4_pallof',       'Core | Press Pallof con resistencia', 2, '10/lado', 0),
+      E('s1d4_run',          'RUN | Carrera', 4, '500m al 60-70%', 0, 'WOD - 4 rondas'),
+      E('s1d4_skierg',       'ERGÓMETRO | SkiErg', 4, '500m', 0, 'WOD - 4 rondas'),
+      E('s1d4_rowerg',       'ERGÓMETRO | RowErg', 4, '500m', 0, 'WOD - 4 rondas'),
+      E('s1d4_est_glut',     'Estiramiento - Glúteo medio', 1, '20"', 0),
+      E('s1d4_est_pigeon',   'Estiramientos - Cadera (Pigeon)', 1, '20"/lado', 0),
+      E('s1d4_est_mariposa', 'Estiramiento | Media mariposa en torsión', 1, '20"/lado', 0),
+    ],
+    // S1 D5 - Performance
+    5: [
+      E('s1d5_mob_balanceo', 'Movilidad - Balanceo de piernas', 2, '10/pierna', 0),
+      E('s1d5_bird_dog',     'Core | Bird dog reach', 1, '20 alternando', 0),
+      E('s1d5_mob_flex_tob', 'Movilidad - Flexión de tobillo de rodillas', 2, '10/pierna', 0),
+      E('s1d5_buenos_dias',  'Buenos días con resistencia', 1, '15', 0),
+      E('s1d5_goblet',       'Sentadilla goblet con elevación de talones', 1, '12', 0),
+      E('s1d5_drunken_mc',   'Core | Drunken mountain climbers', 1, '40 completas', 0),
+      E('s1d5_run_1',        'RUN | Carrera', 3, '300m', 0, 'WOD: 3 rondas o máx 45\''),
+      E('s1d5_sentadilla',   'Sentadilla libre | barra alta', 3, '20', 0, 'WOD: 3 rondas o máx 45\''),
+      E('s1d5_run_2',        'RUN | Carrera', 3, '300m', 0, 'WOD: 3 rondas o máx 45\''),
+      E('s1d5_burpees',      'HIIT | Burpees', 3, '20', 0, 'WOD: 3 rondas o máx 45\''),
+      E('s1d5_run_3',        'RUN | Carrera', 3, '300m', 0, 'WOD: 3 rondas o máx 45\''),
+      E('s1d5_pm_rumano',    'Peso muerto rumano', 3, '20', 0, 'WOD: 3 rondas o máx 45\''),
+      E('s1d5_run_4',        'RUN | Carrera', 3, '300m', 0, 'WOD: 3 rondas o máx 45\''),
+      E('s1d5_wallball_amrap','FUNCIONAL | Wallball', 1, 'Máximas repeticiones', 0, 'AMRAP final 2\''),
+    ],
+    // S1 D6 — DESCANSO en S1 (Cardio LISS empieza en S2)
+    6: null,
+  };
+
+  // ═══ SEMANAS 2-12 — placeholder (pendiente de cargar tras validación) ═══
+  // Por ahora reusan S1 D1-D5 + Cardio LISS para D6 (que sí existe en S2-S12)
+  const CARDIO_LISS = [
+    _ex('woods_cardio_liss', 'Cardio LISS', 1, '60\'', 0, 'Jogging, trekking, nadar, bici, etc'),
+  ];
+  for (let s = 2; s <= 12; s++) {
+    W[s] = {
+      1: W[1][1], // placeholder
+      2: W[1][2], // placeholder
+      4: W[1][4], // placeholder
+      5: W[1][5], // placeholder
+      6: CARDIO_LISS,
+    };
+  }
+
+  WORKOUT_PLANS.woods = {
+    id: 'woods',
+    name: 'Woods',
+    planType: 'phased',
+    weeks: 12,
+    description: 'Plan 12 semanas estilo CrossFit/funcional con WOD, AMRAP, Tabata, ergómetros (SkiErg, RowErg), trineo, wall ball y KB. S1 = 4 días. S2-S12 = 5 días (añade Cardio LISS 60\' los D6). ⚠️ Solo S1 cargada — pendiente validación.',
+    trainingDays: [1, 2, 4, 5, 6],
+    dayMeta: {
+      1: { name: 'Endurance / Fuerza',  type: 'strength', muscleGroups: ['Funcional', 'Full body'] },
+      2: { name: 'Endurance',           type: 'strength', muscleGroups: ['Funcional', 'Cardio'] },
+      4: { name: 'Running / Fuerza',    type: 'strength', muscleGroups: ['Cardio', 'Full body'] },
+      5: { name: 'Performance',         type: 'strength', muscleGroups: ['Funcional', 'Full body'] },
+      6: { name: 'Cardio LISS',         type: 'strength', muscleGroups: ['Cardio'] }
+    },
+    weeklySchedule: Array.from({ length: 12 }, (_, i) => {
+      const w = W[i + 1];
+      const out = { 1: w[1], 2: w[2], 4: w[4], 5: w[5] };
+      if (w[6]) out[6] = w[6];
+      return out;
+    })
+  };
+})();
