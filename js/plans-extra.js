@@ -6056,8 +6056,8 @@ WORKOUT_PLANS.quemando_gym = {
   ];
 
   const W = {};
-  // S30 — Fase A pero D5 vacío en source. Lo dejamos vacío.
-  W[30] = { d1: FASE_A_D1(30), d3: FASE_A_D3(30), d5: [] };
+  // S30 — Fase A completa (D5 igual al de S31/S32, confirmado por imágenes)
+  W[30] = { d1: FASE_A_D1(30), d3: FASE_A_D3(30), d5: FASE_A_D5(30) };
   W[31] = { d1: FASE_A_D1(31), d3: FASE_A_D3(31), d5: FASE_A_D5(31) };
   W[32] = { d1: FASE_A_D1(32), d3: FASE_A_D3(32), d5: FASE_A_D5(32) };
   // S33-S36 — Fase B EXTRA
