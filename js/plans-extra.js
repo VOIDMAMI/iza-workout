@@ -5604,73 +5604,479 @@ WORKOUT_PLANS.quemando_gym = {
   };
 })();
 
-/* ══════════════ CALISTENIA (36 semanas — solo S1 cargada para validación) ══════════════ */
+/* ══════════════ EMPEZANDO EN CALISTENIA (29 semanas — 8 niveles) ══════════════ */
 (function () {
-  const E = (id, name, sets, reps, rest, notes) => _ex(`cal_${id}`, name, sets, reps, rest, notes);
+  const E = (id, name, sets, reps, rest, notes) => _ex(`ec_${id}`, name, sets, reps, rest, notes);
 
-  // Movilidad inicial reutilizable
-  const MOB = (s) => [
-    E(`s${s}_mob_cervic`,  'Movilidad - Cervicales', 2, '15', 0),
-    E(`s${s}_mob_flexesc`, 'Movilidad - Flexiones escapulares', 2, '15', 0),
-    E(`s${s}_mob_super`,   'Movilidad - Supermans', 2, '15', 0),
+  // Movilidad inicial reutilizable (todos los niveles 1-8)
+  const MOB = (sid) => [
+    E(`${sid}_mob_cervic`,  'Movilidad - Cervicales', 2, '15', 0),
+    E(`${sid}_mob_flexesc`, 'Movilidad - Flexiones escapulares', 2, '15', 0),
+    E(`${sid}_mob_super`,   'Movilidad - Supermans', 2, '15', 0),
+  ];
+
+  // ─────── NIVEL 1 (S1-S4) ───────
+  // Progresión: Australian/Flex.elev S1=2, S2=3, S3=4, S4=5 (D1/D3) / 6 (D5)
+  const NVL1_D1 = (s, aussieReps, flexReps) => [
+    ...MOB(`s${s}d1`),
+    E(`s${s}d1_hollow`,    'Core | Hollow hold', 2, '30"', 60),
+    E(`s${s}d1_aussie`,    'Australian pull-ups', 4, `${aussieReps} diagonales`, 120),
+    E(`s${s}d1_flex_elev`, 'Flexiones con elevación', 3, `${flexReps}`, 120),
+    E(`s${s}d1_flex_rod`,  'Flexiones de rodillas', 3, '5', 90),
+    E(`s${s}d1_fondos`,    'Fondos de tríceps en banco', 2, '8', 120),
+    E(`s${s}d1_jalon`,     'Jalón al pecho', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d1_press_uni`, 'Press de hombro unilateral', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d1_ext_tri`,   'Extensión de tríceps en polea', 2, '10', 90, 'Biserie B'),
+    E(`s${s}d1_mangu`,     'Movilidad - Manguitos rotadores con resistencia', 2, '10', 90, 'Biserie B'),
+  ];
+  const NVL1_D3 = (s, aussieReps, flexReps) => [
+    ...MOB(`s${s}d3`),
+    E(`s${s}d3_plancha`,   'Core | Plancha', 1, '30"', 60),
+    E(`s${s}d3_aussie`,    'Australian pull-ups', 4, `${aussieReps} verticales`, 120),
+    E(`s${s}d3_flex_elev`, 'Flexiones con elevación', 3, `${flexReps}`, 120),
+    E(`s${s}d3_flex_rod`,  'Flexiones de rodillas', 3, '5', 90),
+    E(`s${s}d3_elev_front`,'Elevaciones frontales con mancuernas', 2, '8', 90, 'Biserie A'),
+    E(`s${s}d3_ext_tri`,   'Extensión de tríceps en polea', 2, '12', 90, 'Biserie A'),
+    E(`s${s}d3_remo_90`,   'Remo a 90 con mancuernas', 2, '10', 90, 'Biserie B'),
+    E(`s${s}d3_curl_bicep`,'Curl de bíceps con mancuerna', 2, '8', 90, 'Biserie B'),
+  ];
+  const NVL1_D5 = (s, aussieReps, flexRodSets) => [
+    ...MOB(`s${s}d5`),
+    E(`s${s}d5_plancha`,   'Core | Plancha', 2, '15', 60),
+    E(`s${s}d5_flex_rod`,  'Flexiones de rodillas', flexRodSets, '5', 120),
+    E(`s${s}d5_aussie`,    'Australian pull-ups', 4, `${aussieReps} verticales`, 120),
+    E(`s${s}d5_fondos`,    'Fondos de tríceps en banco', 2, '8', 120),
+    E(`s${s}d5_jalon`,     'Jalón al pecho', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d5_press_uni`, 'Press de hombro unilateral', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d5_elev_lat`,  'Elevaciones laterales con mancuernas', 2, '6', 90, 'Biserie B'),
+    E(`s${s}d5_curl_bicep`,'Curl de bíceps con mancuerna', 2, '8', 90, 'Biserie B'),
+    E(`s${s}d5_ext_tri`,   'Extensión de tríceps en polea', 2, '10', 90),
+    E(`s${s}d5_mangu`,     'Movilidad - Manguitos rotadores con resistencia', 2, '8', 90),
+  ];
+
+  // ─────── NIVEL 2 (S5-S8) ───────
+  // Progresión Dominada escapular: S5=3, S6=4, S7=5, S8=5
+  // Australian D1/D3 verticales: S5=3, S6=3, S7=4, S8=4
+  const NVL2_D1 = (s, escReps, aussieReps) => [
+    ...MOB(`s${s}d1`),
+    E(`s${s}d1_hollow`,     'Core | Hollow hold', 2, '30"', 60),
+    E(`s${s}d1_dom_esc`,    'Dominada escapular', 4, `${escReps}`, 120),
+    E(`s${s}d1_aussie`,     'Australian pull-ups', 4, `${aussieReps} verticales`, 120),
+    E(`s${s}d1_flex_elev`,  'Flexiones con elevación', 3, '5', 150),
+    E(`s${s}d1_flex_neg`,   'Flexiones de rodillas negativas', 3, '2 (3 segundos)', 150),
+    E(`s${s}d1_colgar`,     'Colgarse en la barra', 2, '20"', 60),
+    E(`s${s}d1_jalon`,      'Jalón al pecho', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d1_press_uni`,  'Press de hombro unilateral', 2, '10', 90, 'Biserie A'),
+  ];
+  const NVL2_D3 = (s, aussieReps) => [
+    ...MOB(`s${s}d3`),
+    E(`s${s}d3_plancha`,    'Core | Plancha', 2, '30"', 60),
+    E(`s${s}d3_aussie`,     'Australian pull-ups', 4, `${aussieReps} verticales`, 120),
+    E(`s${s}d3_flex_elev`,  'Flexiones con elevación', 3, '4', 150),
+    E(`s${s}d3_flex_neg`,   'Flexiones negativas', 3, '2 (3 segundos)', 150),
+    E(`s${s}d3_colgar`,     'Colgarse en la barra', 2, '20"', 90),
+    E(`s${s}d3_ext_tri`,    'Extensión de tríceps en polea', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d3_mangu`,      'Movilidad - Manguitos rotadores con resistencia', 2, '8', 90, 'Biserie A'),
+  ];
+  const NVL2_D5 = (s) => [
+    ...MOB(`s${s}d5`),
+    E(`s${s}d5_plancha`,    'Core | Plancha', 2, '30"', 60),
+    E(`s${s}d5_dom_esc`,    'Dominada escapular', 4, '4', 120),
+    E(`s${s}d5_aussie`,     'Australian pull-ups', 4, '4 horizontales', 120),
+    E(`s${s}d5_flex_elev`,  'Flexiones con elevación', 3, '4', 150),
+    E(`s${s}d5_fondos`,     'Fondos de tríceps en banco', 2, '10', 60),
+    E(`s${s}d5_elev_front`, 'Elevaciones frontales con mancuernas', 2, '8', 90, 'Biserie A'),
+    E(`s${s}d5_elev_lat`,   'Elevaciones laterales con mancuernas', 2, '12', 90, 'Biserie A'),
+    E(`s${s}d5_remo_90`,    'Remo a 90 con mancuernas', 2, '10', 90, 'Biserie B'),
+    E(`s${s}d5_curl_bicep`, 'Curl de bíceps con mancuerna', 2, '8', 90, 'Biserie B'),
+  ];
+
+  // ─────── NIVEL 3 (S9-S12) ───────
+  const NVL3_D1 = (s) => [
+    ...MOB(`s${s}d1`),
+    E(`s${s}d1_hollow`,     'Core | Hollow hold', 2, '30"', 60),
+    E(`s${s}d1_dom_iso`,    'Dominada Isométrica Arriba', 3, '5 segundos', 60),
+    E(`s${s}d1_dom_esc`,    'Dominada escapular', 3, '5', 120),
+    E(`s${s}d1_dom_gomas`,  'Dominadas con gomas', 3, '3', 120),
+    E(`s${s}d1_flex_neg`,   'Flexiones de rodillas negativas', 5, '1 (3 segundos)', 20),
+    E(`s${s}d1_flex_elev`,  'Flexiones con elevación', 3, '6', 150),
+    E(`s${s}d1_jalon`,      'Jalón al pecho', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d1_press_uni`,  'Press de hombro unilateral', 2, '10', 90, 'Biserie A'),
+  ];
+  const NVL3_D3 = (s) => [
+    ...MOB(`s${s}d3`),
+    E(`s${s}d3_plancha`,    'Core | Plancha', 2, '15', 0),
+    E(`s${s}d3_flex_no_rom`,'Flexiones (sin rango completo)', 3, '3', 150),
+    E(`s${s}d3_flex_neg`,   'Flexiones negativas', 3, '2 (3 segundos)', 150),
+    E(`s${s}d3_aussie`,     'Australian pull-ups', 3, '5 horizontales', 120),
+    E(`s${s}d3_colgar`,     'Colgarse en la barra', 2, '30"', 60),
+    E(`s${s}d3_ext_tri`,    'Extensión de tríceps en polea', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d3_mangu`,      'Movilidad - Manguitos rotadores con resistencia', 2, '8', 90, 'Biserie A'),
+  ];
+  const NVL3_D5 = (s) => [
+    ...MOB(`s${s}d5`),
+    E(`s${s}d5_plancha`,    'Core | Plancha', 2, '15', 0),
+    E(`s${s}d5_dom_iso`,    'Dominada Isométrica Arriba', 3, '5 segundos', 60),
+    E(`s${s}d5_flex_no_rom`,'Flexiones (sin rango completo)', 3, '3', 150),
+    E(`s${s}d5_dom_gomas`,  'Dominadas con gomas', 3, '3', 120),
+    E(`s${s}d5_dom_esc`,    'Dominada escapular', 2, '5', 60),
+    E(`s${s}d5_aussie`,     'Australian pull-ups', 2, '6 horizontales', 120),
+    E(`s${s}d5_fondos`,     'Fondos de tríceps en banco', 2, '10', 60),
+    E(`s${s}d5_remo_90`,    'Remo a 90 con mancuernas', 2, '10', 90, 'Biserie A'),
+    E(`s${s}d5_curl_bicep`, 'Curl de bíceps con mancuerna', 2, '8', 90, 'Biserie A'),
+  ];
+
+  // ─────── NIVEL 4 (S13-S16) ───────
+  const NVL4_D1 = (s) => [
+    ...MOB(`s${s}d1`),
+    E(`s${s}d1_hollow`,     'Core | Hollow hold', 2, '30"', 60),
+    E(`s${s}d1_dom_neg`,    'Dominadas negativas', 3, '1 (4 segundos)', 90),
+    E(`s${s}d1_dom_iso`,    'Dominada Isométrica Arriba', 2, '7 segundos', 60),
+    E(`s${s}d1_dom_gomas`,  'Dominadas con gomas', 2, '5', 90),
+    E(`s${s}d1_dom_esc`,    'Dominada escapular', 2, '5', 120),
+    E(`s${s}d1_colgar`,     'Colgarse en la barra', 2, '45 segundos', 90),
+    E(`s${s}d1_jalon`,      'Jalón al pecho', 2, '12', 90, 'Biserie A'),
+    E(`s${s}d1_press_uni`,  'Press de hombro unilateral', 2, '12', 90, 'Biserie A'),
+    E(`s${s}d1_remo_90`,    'Remo a 90 con mancuernas', 2, '16', 90, 'Biserie A'),
+  ];
+  const NVL4_D3 = (s) => [
+    ...MOB(`s${s}d3`),
+    E(`s${s}d3_plancha`,    'Core | Plancha', 2, '45"', 60),
+    E(`s${s}d3_fondo_iso`,  'Fondo Isométrico arriba', 3, '20 segundos', 20),
+    E(`s${s}d3_flex_max`,   'Flexiones', 2, 'Las que puedas', 150),
+    E(`s${s}d3_flex_neg`,   'Flexiones negativas', 2, '2 (3 segundos)', 150, 'Biserie A'),
+    E(`s${s}d3_flex_iso_ab`,'Flexión Isométrica Abajo', 2, '2 (3 segundos)', 150, 'Biserie A'),
+    E(`s${s}d3_flex_elev`,  'Flexiones con elevación', 2, '8', 150),
+    E(`s${s}d3_aussie`,     'Australian pull-ups', 3, '5 horizontales', 120),
+    E(`s${s}d3_ext_tri`,    'Extensión de tríceps en polea', 2, '16', 90, 'Biserie B'),
+    E(`s${s}d3_mangu`,      'Movilidad - Manguitos rotadores con resistencia', 2, '10', 90, 'Biserie B'),
+  ];
+  const NVL4_D5 = (s) => [
+    ...MOB(`s${s}d5`),
+    E(`s${s}d5_plancha`,    'Core | Plancha', 2, '45"', 60),
+    E(`s${s}d5_dom_neg`,    'Dominadas negativas', 3, '1 (4 segundos)', 90),
+    E(`s${s}d5_dom_iso`,    'Dominada Isométrica Arriba', 2, '7 segundos', 60),
+    E(`s${s}d5_flex_max`,   'Flexiones', 2, 'Las que puedas', 150),
+    E(`s${s}d5_flex_neg`,   'Flexiones negativas', 2, '2 (3 segundos)', 150, 'Biserie A'),
+    E(`s${s}d5_flex_iso_ab`,'Flexión Isométrica Abajo', 2, '2 (3 segundos)', 150, 'Biserie A'),
+    E(`s${s}d5_fondo_iso`,  'Fondo Isométrico arriba', 3, '20 segundos', 60),
+    E(`s${s}d5_dom_gomas`,  'Dominadas con gomas', 3, '5', 90),
+    E(`s${s}d5_colgar`,     'Colgarse en la barra', 1, '45 segundos', 90),
+  ];
+
+  // ─────── NIVEL 5 (S17-S20) ───────
+  const NVL5_D1 = (s) => [
+    ...MOB(`s${s}d1`),
+    E(`s${s}d1_hollow`,     'Core | Hollow hold', 2, '45"', 60),
+    E(`s${s}d1_dom_iso90`,  'Dominadas isométricas a 90 grados', 4, '3 segundos', 120),
+    E(`s${s}d1_dom_iso`,    'Dominada Isométrica Arriba', 3, '3 segundos', 120, 'Biserie A'),
+    E(`s${s}d1_dom_neg`,    'Dominadas negativas', 3, '3 segundos', 120),
+    E(`s${s}d1_dom_gomas`,  'Dominadas con gomas', 3, '6', 90),
+    E(`s${s}d1_colgar`,     'Colgarse en la barra', 2, '45 segundos (con arrancadas)', 90),
+    E(`s${s}d1_jalon`,      'Jalón al pecho', 2, '16', 90, 'Biserie B'),
+    E(`s${s}d1_press_uni`,  'Press de hombro unilateral', 2, '12', 90, 'Biserie B'),
+    E(`s${s}d1_remo_90`,    'Remo a 90 con mancuernas', 2, '20', 90, 'Biserie B'),
+  ];
+  const NVL5_D3 = (s) => [
+    ...MOB(`s${s}d3`),
+    E(`s${s}d3_plancha`,    'Core | Plancha', 2, '50"', 60),
+    E(`s${s}d3_dom_iso90`,  'Dominadas isométricas a 90 grados', 3, '3 segundos', 120),
+    E(`s${s}d3_neg_fondo`,  'Negativa de Fondo', 5, '2 (4 segundos)', 120),
+    E(`s${s}d3_fondos_goma`,'Fondos con goma', 3, '6', 120),
+    E(`s${s}d3_flex_max`,   'Flexiones', 3, '6', 150),
+    E(`s${s}d3_flex_neg`,   'Flexiones negativas', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d3_flex_iso_ab`,'Flexión Isométrica Abajo', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d3_aussie`,     'Australian pull-ups', 2, '8', 120),
+    E(`s${s}d3_ext_tri`,    'Extensión de tríceps en polea', 2, '20', 90, 'Biserie B'),
+    E(`s${s}d3_mangu`,      'Movilidad - Manguitos rotadores con resistencia', 2, '12', 90, 'Biserie B'),
+  ];
+  const NVL5_D5 = (s) => [
+    ...MOB(`s${s}d5`),
+    E(`s${s}d5_plancha`,    'Core | Plancha', 2, '50"', 60),
+    E(`s${s}d5_dom_neg`,    'Dominadas negativas', 2, '2 (5 segundos)', 90),
+    E(`s${s}d5_neg_fondo`,  'Negativa de Fondo', 5, '2 (4 segundos)', 20),
+    E(`s${s}d5_fondos_goma`,'Fondos con goma', 3, '6', 120),
+    E(`s${s}d5_flex_max`,   'Flexiones', 3, '6', 150),
+    E(`s${s}d5_flex_neg`,   'Flexiones negativas', 2, '3 segundos', 150, 'Biserie B'),
+    E(`s${s}d5_flex_iso_ab`,'Flexión Isométrica Abajo', 2, '3 segundos', 150, 'Biserie B'),
+    E(`s${s}d5_dom_gomas`,  'Dominadas con gomas', 2, '6', 90),
+    E(`s${s}d5_colgar`,     'Colgarse en la barra', 1, '45 segundos (con arrancadas)', 90),
+  ];
+
+  // ─────── NIVEL 6 (S21-S24) ───────
+  const NVL6_D1 = (s) => [
+    ...MOB(`s${s}d1`),
+    E(`s${s}d1_hollow`,      'Core | Hollow hold', 2, '30"', 60),
+    E(`s${s}d1_dom_minisalto`, 'Dominadas con mini salto', 4, 'Las que puedas', 120),
+    E(`s${s}d1_dom_iso`,      'Dominada Isométrica Arriba', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d1_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d1_dom_neg`,      'Dominadas negativas', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d1_dom_gomas`,    'Dominadas con gomas', 3, '6', 90),
+    E(`s${s}d1_aussie`,       'Australian pull-ups', 3, '10 horizontales', 120),
+    E(`s${s}d1_colgar`,       'Colgarse en la barra', 2, '30 segundos (con arrancadas)', 90),
+    E(`s${s}d1_jalon`,        'Jalón al pecho', 2, '16', 90, 'Biserie B'),
+    E(`s${s}d1_press_uni`,    'Press de hombro unilateral', 2, '12', 90, 'Biserie B'),
+    E(`s${s}d1_remo_90`,      'Remo a 90 con mancuernas', 2, '20', 90, 'Biserie B'),
+    E(`s${s}d1_curl_bicep`,   'Curl de bíceps con mancuerna', 2, '12', 90, 'Biserie B'),
+  ];
+  const NVL6_D3 = (s) => [
+    ...MOB(`s${s}d3`),
+    E(`s${s}d3_plancha`,      'Core | Plancha', 2, '50"', 60),
+    E(`s${s}d3_dom_iso`,      'Dominada Isométrica Arriba', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d3_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d3_dom_neg`,      'Dominadas negativas', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d3_neg_fondo`,    'Negativa de Fondo', 2, '2 (4 segundos)', 150, 'Biserie B'),
+    E(`s${s}d3_fondo_iso`,    'Fondo Isométrico arriba', 2, '2 (4 segundos)', 150, 'Biserie B'),
+    E(`s${s}d3_dom_gomas`,    'Dominadas con gomas', 2, '6', 90),
+    E(`s${s}d3_fondos_goma`,  'Fondos con goma', 2, '6', 120),
+    E(`s${s}d3_flex_max`,     'Flexiones', 2, '6', 150),
+    E(`s${s}d3_flex_neg`,     'Flexiones negativas', 2, '2 (3 segundos)', 150, 'Biserie B'),
+  ];
+  const NVL6_D5 = (s) => [
+    ...MOB(`s${s}d5`),
+    E(`s${s}d5_plancha`,      'Core | Plancha', 2, '50"', 60),
+    E(`s${s}d5_neg_fondo`,    'Negativa de Fondo', 2, '2 (4 segundos)', 150, 'Biserie A'),
+    E(`s${s}d5_fondo_iso`,    'Fondo Isométrico arriba', 2, '2 (4 segundos)', 150, 'Biserie A'),
+    E(`s${s}d5_flex_max`,     'Flexiones', 2, '6', 150),
+    E(`s${s}d5_flex_neg`,     'Flexiones negativas', 2, '2 (3 segundos)', 150, 'Biserie B'),
+    E(`s${s}d5_flex_iso_ab`,  'Flexión Isométrica Abajo', 2, '2 (3 segundos)', 150, 'Biserie B'),
+    E(`s${s}d5_dom_gomas`,    'Dominadas con gomas', 2, '6', 90),
+    E(`s${s}d5_fondos_goma`,  'Fondos con goma', 2, '6', 120),
+    E(`s${s}d5_colgar`,       'Colgarse en la barra', 1, '45 segundos (con arrancadas)', 90),
+  ];
+
+  // ─────── NIVEL 7 (S25-S28) ───────
+  const NVL7_D1 = (s) => [
+    ...MOB(`s${s}d1`),
+    E(`s${s}d1_hollow`,       'Core | Hollow hold', 2, '30"', 60),
+    E(`s${s}d1_dom_full`,     'Dominadas', 3, '1 (intento)', 150),
+    E(`s${s}d1_dom_minisalto`, 'Dominadas con mini salto', 3, '3', 120),
+    E(`s${s}d1_dom_no_rom`,   'Dominadas sin rango completo', 3, '3', 120),
+    E(`s${s}d1_dom_iso`,      'Dominada Isométrica Arriba', 2, '5 segundos', 150, 'Biserie A'),
+    E(`s${s}d1_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '5 segundos', 150, 'Biserie A'),
+    E(`s${s}d1_dom_neg`,      'Dominadas negativas', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d1_dom_gomas`,    'Dominadas con gomas', 3, '6', 90),
+    E(`s${s}d1_aussie`,       'Australian pull-ups', 3, '10', 120),
+    E(`s${s}d1_colgar`,       'Colgarse en la barra', 2, '30 segundos (con arrancadas)', 90),
+    E(`s${s}d1_curl_bicep`,   'Curl de bíceps con mancuerna', 2, '12', 90, 'Biserie B'),
+    E(`s${s}d1_mangu`,        'Movilidad - Manguitos rotadores con resistencia', 2, '12', 90, 'Biserie B'),
+  ];
+  const NVL7_D3 = (s) => [
+    ...MOB(`s${s}d3`),
+    E(`s${s}d3_plancha`,      'Core | Plancha', 2, '50"', 60),
+    E(`s${s}d3_fondos_paral`, 'Fondos de tríceps en paralelas', 3, 'Los que puedas y al rango que puedas', 150),
+    E(`s${s}d3_neg_fondo`,    'Negativa de Fondo', 3, '2 (3 segundos)', 150, 'Biserie A'),
+    E(`s${s}d3_fondo_iso`,    'Fondo Isométrico arriba', 3, '2 (3 segundos)', 150, 'Biserie A'),
+    E(`s${s}d3_fondos_goma`,  'Fondos con goma', 2, '8', 150),
+    E(`s${s}d3_flex_max`,     'Flexiones', 3, '10', 150),
+    E(`s${s}d3_flex_neg`,     'Flexiones negativas', 2, '5 segundos', 150, 'Biserie B'),
+    E(`s${s}d3_flex_iso_ab`,  'Flexión Isométrica Abajo', 2, '5 segundos', 150, 'Biserie B'),
+    E(`s${s}d3_colgar`,       'Colgarse en la barra', 2, '45 segundos (con arrancadas)', 90),
+  ];
+  const NVL7_D5 = (s) => [
+    ...MOB(`s${s}d5`),
+    E(`s${s}d5_plancha`,      'Core | Plancha', 2, '50"', 60),
+    E(`s${s}d5_dom_iso`,      'Dominada Isométrica Arriba', 3, '5 segundos', 150, 'Biserie A'),
+    E(`s${s}d5_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d5_dom_neg`,      'Dominadas negativas', 2, '3 segundos', 150, 'Biserie A'),
+    E(`s${s}d5_neg_fondo`,    'Negativa de Fondo', 2, '3 segundos', 150, 'Biserie B'),
+    E(`s${s}d5_fondo_iso`,    'Fondo Isométrico arriba', 2, '5 segundos', 150, 'Biserie B'),
+    E(`s${s}d5_dom_gomas`,    'Dominadas con gomas', 2, '6', 90),
+    E(`s${s}d5_fondos_goma`,  'Fondos con goma', 2, '6', 120),
+    E(`s${s}d5_flex_max`,     'Flexiones', 2, '8', 150),
+  ];
+
+  // ─────── NIVEL 8 (S29) ───────
+  const NVL8_D1 = (s) => [
+    ...MOB(`s${s}d1`),
+    E(`s${s}d1_hollow`,       'Core | Hollow hold', 2, '30"', 60),
+    E(`s${s}d1_dom_full`,     'Dominadas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d1_dom_minisalto`, 'Dominadas con mini salto', 4, '4', 150),
+    E(`s${s}d1_dom_no_rom`,   'Dominadas sin rango completo', 3, '3', 120),
+    E(`s${s}d1_dom_iso`,      'Dominada Isométrica Arriba', 2, '5 segundos', 120, 'Biserie A'),
+    E(`s${s}d1_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '5 segundos', 120, 'Biserie A'),
+    E(`s${s}d1_dom_neg`,      'Dominadas negativas', 2, '3 segundos', 120, 'Biserie A'),
+    E(`s${s}d1_dom_gomas`,    'Dominadas con gomas', 3, '6', 90),
+    E(`s${s}d1_aussie`,       'Australian pull-ups', 2, '10', 120),
+    E(`s${s}d1_colgar`,       'Colgarse en la barra', 1, '1 minuto', 90),
+  ];
+  const NVL8_D3 = (s) => [
+    ...MOB(`s${s}d3`),
+    E(`s${s}d3_plancha`,      'Core | Plancha', 2, '1 minuto', 60),
+    E(`s${s}d3_fondos_paral`, 'Fondos de tríceps en paralelas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d3_neg_fondo`,    'Negativa de Fondo', 3, '2 (3 segundos)', 120, 'Biserie A'),
+    E(`s${s}d3_fondo_iso`,    'Fondo Isométrico arriba', 3, '2 (5 segundos)', 120, 'Biserie A'),
+    E(`s${s}d3_fondos_goma`,  'Fondos con goma', 2, '8', 120),
+    E(`s${s}d3_flex_max`,     'Flexiones', 3, '10', 120),
+    E(`s${s}d3_flex_neg`,     'Flexiones negativas', 2, '5 segundos', 120, 'Biserie B'),
+    E(`s${s}d3_flex_iso_ab`,  'Flexión Isométrica Abajo', 2, '5 segundos', 120, 'Biserie B'),
+    E(`s${s}d3_colgar`,       'Colgarse en la barra', 1, '1 minuto', 60),
+  ];
+  const NVL8_D5 = (s) => [
+    ...MOB(`s${s}d5`),
+    E(`s${s}d5_plancha`,      'Core | Plancha', 2, '1 minuto', 60),
+    E(`s${s}d5_dom_no_rom`,   'Dominadas sin rango completo', 3, '3', 120),
+    E(`s${s}d5_dom_iso`,      'Dominada Isométrica Arriba', 2, '5 segundos', 120, 'Biserie A'),
+    E(`s${s}d5_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '5 segundos', 120, 'Biserie A'),
+    E(`s${s}d5_dom_neg`,      'Dominadas negativas', 2, '3 segundos', 120, 'Biserie A'),
+    E(`s${s}d5_neg_fondo`,    'Negativa de Fondo', 2, '3 segundos', 120, 'Biserie B'),
+    E(`s${s}d5_fondo_iso`,    'Fondo Isométrico arriba', 2, '5 segundos', 120, 'Biserie B'),
+    E(`s${s}d5_flex_max`,     'Flexiones', 3, '10', 120),
+    E(`s${s}d5_curl_bicep`,   'Curl de bíceps con mancuerna', 2, '12', 60, 'Biserie C'),
+    E(`s${s}d5_mangu`,        'Movilidad - Manguitos rotadores con resistencia', 2, '12', 60, 'Biserie C'),
+  ];
+
+  // ═══ Construir las 29 semanas ═══
+  const W = {};
+  // Nivel 1 — progresión Australian/FlexElev: S1=2, S2=3, S3=4, S4=5
+  // D5 Australian S1=2, S2=3, S3=4, S4=6 y FlexRod S4=4×5
+  const N1 = [{a:2,f:2,fr:3},{a:3,f:3,fr:3},{a:4,f:4,fr:3},{a:5,f:6,fr:4}];
+  for (let i = 0; i < 4; i++) {
+    const s = i + 1;
+    W[s] = {
+      d1: NVL1_D1(s, N1[i].a, N1[i].f),
+      d3: NVL1_D3(s, N1[i].a, N1[i].f),
+      d5: NVL1_D5(s, i === 3 ? 6 : N1[i].a, N1[i].fr),
+    };
+  }
+  // Nivel 2 — progresión Dom escapular S5=3, S6=4, S7=5, S8=5; Aussie S5=3, S6=3, S7=4, S8=4
+  const N2 = [{esc:3,a:3},{esc:4,a:3},{esc:5,a:4},{esc:5,a:4}];
+  for (let i = 0; i < 4; i++) {
+    const s = i + 5;
+    W[s] = { d1: NVL2_D1(s, N2[i].esc, N2[i].a), d3: NVL2_D3(s, N2[i].a), d5: NVL2_D5(s) };
+  }
+  // Niveles 3-7 (4 semanas cada uno con plantilla estable)
+  for (let s = 9; s <= 12; s++) W[s] = { d1: NVL3_D1(s), d3: NVL3_D3(s), d5: NVL3_D5(s) };
+  for (let s = 13; s <= 16; s++) W[s] = { d1: NVL4_D1(s), d3: NVL4_D3(s), d5: NVL4_D5(s) };
+  for (let s = 17; s <= 20; s++) W[s] = { d1: NVL5_D1(s), d3: NVL5_D3(s), d5: NVL5_D5(s) };
+  for (let s = 21; s <= 24; s++) W[s] = { d1: NVL6_D1(s), d3: NVL6_D3(s), d5: NVL6_D5(s) };
+  for (let s = 25; s <= 28; s++) W[s] = { d1: NVL7_D1(s), d3: NVL7_D3(s), d5: NVL7_D5(s) };
+  // Nivel 8 — solo S29
+  W[29] = { d1: NVL8_D1(29), d3: NVL8_D3(29), d5: NVL8_D5(29) };
+
+  WORKOUT_PLANS.empezando_calistenia = {
+    id: 'empezando_calistenia',
+    name: 'Empezando en Calistenia',
+    planType: 'phased',
+    weeks: 29,
+    description: 'Plan 29 semanas de calistenia híbrida (con mancuernas/poleas) en 8 niveles progresivos. 3 días/sem (D1, D3, D5).',
+    trainingDays: [1, 3, 5],
+    dayMeta: {
+      1: { name: 'Entreno 1', type: 'strength', muscleGroups: ['Calistenia', 'Pull/Push'] },
+      3: { name: 'Entreno 2', type: 'strength', muscleGroups: ['Calistenia', 'Pull/Push'] },
+      5: { name: 'Entreno 3', type: 'strength', muscleGroups: ['Calistenia', 'Pull/Push'] }
+    },
+    weeklySchedule: Array.from({ length: 29 }, (_, i) => {
+      const w = W[i + 1];
+      return { 1: w.d1, 3: w.d3, 5: w.d5 };
+    })
+  };
+})();
+
+/* ══════════════ TU ENTRENO DE CALISTENIA AVANZADA (7 semanas) ══════════════ */
+(function () {
+  const E = (id, name, sets, reps, rest, notes) => _ex(`ca_${id}`, name, sets, reps, rest, notes);
+
+  // Fase A (S30-S32) — base
+  const FASE_A_D1 = (s) => [
+    E(`s${s}d1_hollow`,       'Core | Hollow hold', 2, '30"', 60),
+    E(`s${s}d1_dom_full`,     'Dominadas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d1_dom_minisalto`, 'Dominadas con mini salto', 2, '4', 150),
+    E(`s${s}d1_dom_no_rom`,   'Dominadas sin rango completo', 3, '3', 120),
+    E(`s${s}d1_dom_iso`,      'Dominada Isométrica Arriba', 2, '2 (5 segundos)', 120, 'Biserie A'),
+    E(`s${s}d1_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '2 (5 segundos)', 120, 'Biserie A'),
+    E(`s${s}d1_dom_neg`,      'Dominadas negativas', 2, '2 (3 segundos)', 120, 'Biserie A'),
+    E(`s${s}d1_dom_gomas`,    'Dominadas con gomas', 3, '6', 90),
+    E(`s${s}d1_aussie`,       'Australian pull-ups', 2, '10 horizontales', 120),
+    E(`s${s}d1_colgar`,       'Colgarse en la barra', 1, '1 minuto', 90),
+  ];
+  const FASE_A_D3 = (s) => [
+    E(`s${s}d3_plancha`,      'Core | Plancha', 2, '1 minuto', 60),
+    E(`s${s}d3_fondos_paral`, 'Fondos de tríceps en paralelas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d3_neg_fondo`,    'Negativa de Fondo', 3, '2 (3 segundos)', 120, 'Biserie A'),
+    E(`s${s}d3_fondo_iso`,    'Fondo Isométrico arriba', 3, '2 (5 segundos)', 120, 'Biserie A'),
+    E(`s${s}d3_fondos_goma`,  'Fondos con goma', 2, '8', 120),
+    E(`s${s}d3_flex_max`,     'Flexiones', 3, '10', 120),
+    E(`s${s}d3_flex_neg`,     'Flexiones negativas', 2, '2 (5 segundos)', 120, 'Biserie B'),
+    E(`s${s}d3_flex_iso_ab`,  'Flexión Isométrica Abajo', 2, '2 (5 segundos)', 120, 'Biserie B'),
+    E(`s${s}d3_colgar`,       'Colgarse en la barra', 1, '1 minuto', 60),
+  ];
+  // S30 D5 vacío en source — añadimos D5 desde S31 (Entreno 3)
+  const FASE_A_D5 = (s) => [
+    E(`s${s}d5_plancha`,      'Core | Plancha', 2, '1 minuto', 60),
+    E(`s${s}d5_dom_full`,     'Dominadas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d5_fondos_paral`, 'Fondos de tríceps en paralelas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d5_dom_no_rom`,   'Dominadas sin rango completo', 3, '3', 120),
+    E(`s${s}d5_dom_iso`,      'Dominada Isométrica Arriba', 2, '2 (5 segundos)', 120, 'Biserie A'),
+    E(`s${s}d5_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '2 (5 segundos)', 120, 'Biserie A'),
+    E(`s${s}d5_dom_neg`,      'Dominadas negativas', 2, '2 (3 segundos)', 120, 'Biserie A'),
+    E(`s${s}d5_neg_fondo`,    'Negativa de Fondo', 2, '2 (3 segundos)', 120, 'Biserie B'),
+    E(`s${s}d5_fondo_iso`,    'Fondo Isométrico arriba', 2, '2 (5 segundos)', 120, 'Biserie B'),
+    E(`s${s}d5_flex_max`,     'Flexiones', 3, '10', 120),
+    E(`s${s}d5_curl_bicep`,   'Curl de bíceps con mancuerna', 2, '12', 60, 'Biserie C'),
+    E(`s${s}d5_mangu`,        'Movilidad - Manguitos rotadores con resistencia', 2, '12', 60, 'Biserie C'),
+  ];
+
+  // Fase B — EXTRA (S33-S36) más volumen
+  const FASE_B_D1 = (s) => [
+    E(`s${s}d1_hollow`,       'Core | Hollow hold', 2, '45"', 60),
+    E(`s${s}d1_dom_full`,     'Dominadas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d1_dom_no_rom`,   'Dominadas sin rango completo', 3, '4', 120),
+    E(`s${s}d1_dom_iso`,      'Dominada Isométrica Arriba', 3, '2 (5 segundos)', 120, 'Biserie A'),
+    E(`s${s}d1_dom_iso90`,    'Dominadas isométricas a 90 grados', 3, '2 (5 segundos)', 120, 'Biserie A'),
+    E(`s${s}d1_dom_neg`,      'Dominadas negativas', 3, '2 (3 segundos)', 120, 'Biserie A'),
+    E(`s${s}d1_dom_gomas`,    'Dominadas con gomas', 2, '6 (observar técnica)', 90),
+    E(`s${s}d1_aussie`,       'Australian pull-ups', 2, '8 horizontales', 120, 'Biserie B'),
+    E(`s${s}d1_flex_max`,     'Flexiones', 2, '8', 120, 'Biserie B'),
+    E(`s${s}d1_colgar`,       'Colgarse en la barra', 2, '1 minuto', 60),
+  ];
+  const FASE_B_D3 = (s) => [
+    E(`s${s}d3_plancha`,      'Core | Plancha', 2, '1 minuto', 60),
+    E(`s${s}d3_fondos_paral`, 'Fondos de tríceps en paralelas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d3_neg_fondo`,    'Negativa de Fondo', 3, '3 (3 segundos)', 120, 'Biserie A'),
+    E(`s${s}d3_fondo_iso`,    'Fondo Isométrico arriba', 3, '3 (6 segundos)', 120, 'Biserie A'),
+    E(`s${s}d3_fondos_goma`,  'Fondos con goma', 2, '8 (observa la técnica)', 120),
+    E(`s${s}d3_flex_pliom`,   'Flexiones pliométricas', 3, '10', 120),
+    E(`s${s}d3_colgar`,       'Colgarse en la barra', 1, '1 minuto', 60),
+  ];
+  const FASE_B_D5 = (s) => [
+    E(`s${s}d5_plancha`,      'Core | Plancha', 2, '1\'', 60, 'Biserie A'),
+    E(`s${s}d5_crunch`,       'Core | Crunch', 2, '10', 60, 'Biserie A'),
+    E(`s${s}d5_dom_full`,     'Dominadas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d5_fondos_paral`, 'Fondos de tríceps en paralelas', 1, 'Acumula las que puedas', 150),
+    E(`s${s}d5_dom_iso`,      'Dominada Isométrica Arriba', 2, '2 (5 segundos)', 120, 'Biserie B'),
+    E(`s${s}d5_dom_iso90`,    'Dominadas isométricas a 90 grados', 2, '2 (5 segundos)', 120, 'Biserie B'),
+    E(`s${s}d5_dom_neg`,      'Dominadas negativas', 2, '2 (3 segundos)', 120, 'Biserie B'),
+    E(`s${s}d5_neg_fondo`,    'Negativa de Fondo', 3, '2 (3 segundos)', 120, 'Biserie C'),
+    E(`s${s}d5_fondo_iso`,    'Fondo Isométrico arriba', 3, '2 (5 segundos)', 120, 'Biserie C'),
+    E(`s${s}d5_fondos_goma`,  'Fondos con goma', 3, '5', 150, 'Biserie D'),
+    E(`s${s}d5_dom_gomas`,    'Dominadas con gomas', 3, '5', 150, 'Biserie D'),
+    E(`s${s}d5_curl_bicep`,   'Curl de bíceps con mancuerna', 2, '12', 60, 'Biserie E'),
+    E(`s${s}d5_mangu`,        'Movilidad - Manguitos rotadores con resistencia', 2, '12', 60, 'Biserie E'),
   ];
 
   const W = {};
+  // S30 — Fase A pero D5 vacío en source. Lo dejamos vacío.
+  W[30] = { d1: FASE_A_D1(30), d3: FASE_A_D3(30), d5: [] };
+  W[31] = { d1: FASE_A_D1(31), d3: FASE_A_D3(31), d5: FASE_A_D5(31) };
+  W[32] = { d1: FASE_A_D1(32), d3: FASE_A_D3(32), d5: FASE_A_D5(32) };
+  // S33-S36 — Fase B EXTRA
+  for (let s = 33; s <= 36; s++) W[s] = { d1: FASE_B_D1(s), d3: FASE_B_D3(s), d5: FASE_B_D5(s) };
 
-  // ═══ SEMANA 1 (1 NVL) ═══
-  W[1] = {
-    d1: [
-      ...MOB(1),
-      E('s1d1_hollow',    'Core | Hollow hold', 2, '30"', 60),
-      E('s1d1_aussie',    'Australian pull-ups', 4, '2 diagonales', 120),
-      E('s1d1_flex_elev', 'Flexiones con elevación', 3, '2', 120),
-      E('s1d1_flex_rod',  'Flexiones de rodillas', 3, '5', 90),
-      E('s1d1_fondos',    'Fondos de tríceps en banco', 2, '8', 120),
-      E('s1d1_jalon',     'Jalón al pecho', 2, '10', 90, 'Biserie A'),
-      E('s1d1_press_uni', 'Press de hombro unilateral', 2, '10', 90, 'Biserie A'),
-      E('s1d1_ext_tri',   'Extensión de tríceps en polea', 2, '10', 90, 'Biserie B'),
-      E('s1d1_mangu',     'Movilidad - Manguitos rotadores con resistencia', 2, '10', 90, 'Biserie B'),
-    ],
-    d3: [
-      ...MOB(1).map((ex) => ({ ...ex, id: ex.id.replace('s1_', 's1d3_') })),
-      E('s1d3_plancha',   'Core | Plancha', 1, '30"', 60),
-      E('s1d3_aussie',    'Australian pull-ups', 4, '2 verticales', 120),
-      E('s1d3_flex_elev', 'Flexiones con elevación', 3, '2', 120),
-      E('s1d3_flex_rod',  'Flexiones de rodillas', 3, '5', 90),
-      E('s1d3_elev_front','Elevaciones frontales con mancuernas', 2, '8', 90, 'Biserie A'),
-      E('s1d3_ext_tri',   'Extensión de tríceps en polea', 2, '12', 90, 'Biserie A'),
-      E('s1d3_remo_90',   'Remo a 90 con mancuernas', 2, '10', 90, 'Biserie B'),
-      E('s1d3_curl_bicep','Curl de bíceps con mancuerna', 2, '8', 90, 'Biserie B'),
-    ],
-    d5: [
-      ...MOB(1).map((ex) => ({ ...ex, id: ex.id.replace('s1_', 's1d5_') })),
-      E('s1d5_plancha',   'Core | Plancha', 2, '15', 60),
-      E('s1d5_flex_rod',  'Flexiones de rodillas', 4, '5', 120),
-      E('s1d5_aussie',    'Australian pull-ups', 4, '2 verticales', 120),
-      E('s1d5_fondos',    'Fondos de tríceps en banco', 2, '8', 120),
-      E('s1d5_jalon',     'Jalón al pecho', 2, '10', 90, 'Biserie A'),
-      E('s1d5_press_uni', 'Press de hombro unilateral', 2, '10', 90, 'Biserie A'),
-      E('s1d5_elev_lat',  'Elevaciones laterales con mancuernas', 2, '6', 90, 'Biserie B'),
-      E('s1d5_curl_bicep','Curl de bíceps con mancuerna', 2, '8', 90, 'Biserie B'),
-      E('s1d5_ext_tri',   'Extensión de tríceps en polea', 2, '10', 90),
-      E('s1d5_mangu',     'Movilidad - Manguitos rotadores con resistencia', 2, '8', 90),
-    ],
-  };
-
-  WORKOUT_PLANS.calistenia = {
-    id: 'calistenia',
-    name: 'Calistenia',
+  WORKOUT_PLANS.calistenia_avanzada = {
+    id: 'calistenia_avanzada',
+    name: 'Tu Entreno de Calistenia Avanzada',
     planType: 'phased',
-    weeks: 36,
-    description: 'Plan 36 semanas de calistenia híbrida (con mancuernas/poleas). 3 días/sem (D1, D3, D5). Niveles progresivos. ⚠️ Solo S1 cargada — pendiente validación.',
+    weeks: 7,
+    description: 'Continuación del plan de calistenia (semanas 30-36 originales). Fase A base (3 sem) + Fase B EXTRA con más volumen (4 sem). 3 días/sem.',
     trainingDays: [1, 3, 5],
     dayMeta: {
-      1: { name: 'Entreno 1', type: 'strength', muscleGroups: ['Calistenia', 'Full body'] },
-      3: { name: 'Entreno 2', type: 'strength', muscleGroups: ['Calistenia', 'Full body'] },
-      5: { name: 'Entreno 3', type: 'strength', muscleGroups: ['Calistenia', 'Full body'] }
+      1: { name: 'Entreno 1', type: 'strength', muscleGroups: ['Calistenia', 'Pull'] },
+      3: { name: 'Entreno 2', type: 'strength', muscleGroups: ['Calistenia', 'Push'] },
+      5: { name: 'Entreno 3', type: 'strength', muscleGroups: ['Calistenia', 'Pull/Push'] }
     },
-    weeklySchedule: Array.from({ length: 36 }, (_, i) => {
-      const w = W[i + 1] || W[1]; // semanas no cargadas todavía: fallback a S1 para que la app no rompa
+    weeklySchedule: Array.from({ length: 7 }, (_, i) => {
+      const w = W[i + 30];
       return { 1: w.d1, 3: w.d3, 5: w.d5 };
     })
   };
