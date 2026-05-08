@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iza-workout-v59';
+const CACHE_NAME = 'iza-workout-v60';
 const ASSETS = [
   './',
   './index.html',
