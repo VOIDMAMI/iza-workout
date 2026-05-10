@@ -7142,3 +7142,194 @@ WORKOUT_PLANS.quemando_gym = {
     })
   };
 })();
+
+/* ══════════════ ATLETA (12 semanas — 2 bloques × 6 sem) ══════════════ */
+(function () {
+  const E = (id, name, sets, reps, rest, notes) => _ex(`atl_${id}`, name, sets, reps, rest, notes);
+
+  // ─────── BLOQUE 1 (S1-S6): BASE — acondicionamiento técnico + fuerza ───────
+  const B1_D1 = (s) => [
+    E(`s${s}d1_caminar`,    'Caminar con inclinación (cinta)', 1, '4-5 minutos', 0),
+    E(`s${s}d1_mob_flex_tob','Movilidad - Flexión de tobillo de rodillas', 2, '8/lado', 0),
+    E(`s${s}d1_mob_rot90`,  'Movilidad - Rotación interna de cadera 90-90', 1, '6/lado', 0),
+    E(`s${s}d1_puente_uni`, 'Puente de glúteos unilateral', 2, '5/lado', 0),
+    E(`s${s}d1_goblet_pausa','Sentadilla goblet con doble pausa', 2, '4 (sin peso)', 0),
+    E(`s${s}d1_sent_aprox`, 'Sentadilla libre | barra alta (aproximación)', 1, '2-3', 0),
+    E(`s${s}d1_sent`,       'Sentadilla libre | barra alta', 3, '8-10', 90),
+    E(`s${s}d1_reverse_lung','Reverse lunge / Zancadas traseras con mancuernas', 2, '10-12', 90),
+    E(`s${s}d1_pm_rumano',  'Peso muerto rumano con mancuernas', 2, '8-10', 90),
+    E(`s${s}d1_curl_fem`,   'Curl de femoral', 3, '10-12', 0, 'Descanso 3 (literal en imagen)'),
+    E(`s${s}d1_abd_maq`,    'Abducción de cadera en máquina', 3, '12-15', 60),
+    E(`s${s}d1_gemelo`,     'Gemelo en prensa', 2, '10', 60, 'Superserie'),
+    E(`s${s}d1_wall_tib`,   'Wall Tibial Raises', 2, '12', 60, 'Superserie'),
+  ];
+  const B1_D2 = (s) => [
+    E(`s${s}d2_rowerg`,     'ERGÓMETRO | RowErg', 1, '4 minutos suave', 0),
+    E(`s${s}d2_scap_pu`,    'Flexiones escapulares (Scap push-up)', 2, '8', 0),
+    E(`s${s}d2_band_pull`,  'Aperturas con banda (Band pull apart)', 2, '12-15', 0),
+    E(`s${s}d2_mangu`,      'Movilidad - Manguitos rotadores con resistencia', 2, '10', 0),
+    E(`s${s}d2_press_inc_w`,'Press banca inclinado con mancuernas', 1, '2 (calentamiento)', 0),
+    E(`s${s}d2_press_inc`,  'Press banca inclinado con mancuernas', 3, '6-8', 90),
+    E(`s${s}d2_jalon`,      'Jalón al pecho', 3, '8-12', 90),
+    E(`s${s}d2_flex_rod`,   'Flexiones de rodillas', 3, '9-10 (pausa abajo + subida explosiva)', 90),
+    E(`s${s}d2_remo_90`,    'Remo a 90 con mancuernas', 3, '8-10', 90),
+    E(`s${s}d2_elev_lat`,   'Elevaciones laterales con mancuernas', 3, '12-15', 60),
+    E(`s${s}d2_facepull`,   'Facepull en polea', 3, '12-15', 60),
+    E(`s${s}d2_curl_bicep`, 'Curl de bíceps con mancuerna', 2, '12-15', 60, 'Superserie'),
+    E(`s${s}d2_ext_tri`,    'Extensión de tríceps en polea', 2, '12-15', 60, 'Superserie'),
+  ];
+  const B1_D3 = (s) => [
+    E(`s${s}d3_run_warm`,   'Calentamiento | Correr a trote suave', 1, '4-5 minutos', 0),
+    E(`s${s}d3_ankling`,    'Ankling drill (ejercicio de tobillos)', 2, '15-20m', 0),
+    E(`s${s}d3_a_march`,    'A-march - Marcha A', 2, '15-20m', 0),
+    E(`s${s}d3_pogo`,       'Pogo jumps en el sitio', 3, '15-20', 50),
+    E(`s${s}d3_snap_down`,  'Snap down to stick (desaceleración con aterrizaje)', 3, '4', 60),
+    E(`s${s}d3_box_jump`,   'Box jump', 3, '4', 80),
+    E(`s${s}d3_skater`,     'HIIT | Skater jumps', 3, '5/lado', 60),
+    E(`s${s}d3_line_hops`,  'Line hops adelante-atrás', 2, '15"', 45, '2-3 series'),
+    E(`s${s}d3_step_land`,  'Step landing unilateral', 2, '4/lado', 60),
+    E(`s${s}d3_plancha_lat`,'Core | Plancha lateral', 2, '20"/lado', 45),
+  ];
+  const B1_D4 = (s) => [
+    E(`s${s}d4_bici`,       'Bicicleta estática', 1, '4 minutos', 0),
+    E(`s${s}d4_monster`,    'Monster walks', 2, '10-12', 0),
+    E(`s${s}d4_zanc_iso`,   'Zancada isométrica', 1, '20"/lado', 0),
+    E(`s${s}d4_pogo`,       'Pogo jumps en el sitio', 2, '12-15', 0),
+    E(`s${s}d4_sent_cajon`, 'Sentadilla al cajón', 3, '6-8 subida explosiva', 90),
+    E(`s${s}d4_pm_sumo_kb`, 'Peso muerto sumo con kettlebell', 3, '8-12', 90),
+    E(`s${s}d4_hip_thrust`, 'Hip Thrust', 3, '8-10', 90),
+    E(`s${s}d4_patada`,     'Patada de glúteo', 3, '10-12', 90),
+    E(`s${s}d4_curl_fem`,   'Curl de femoral', 2, '10-12 unilateral', 60),
+    E(`s${s}d4_gemelo`,     'Gemelo con mancuernas sentada', 2, '12-15', 60),
+  ];
+  const B1_D6 = (s) => [
+    E(`s${s}d6_run_warm`,   'Calentamiento | Correr a trote suave', 1, '5 minutos', 0),
+    E(`s${s}d6_a_march`,    'A-march - Marcha A', 2, '20m', 0),
+    E(`s${s}d6_skipping`,   'Técnica de carrera | Skipping alto', 2, '20m', 30),
+    E(`s${s}d6_dribble`,    'Dribble run', 2, '20m', 0),
+    E(`s${s}d6_wall_drill`, 'Wall drill', 2, '4/lado', 0),
+    E(`s${s}d6_sprint_acc`, 'Correr | Sprint (aceleraciones progresivas)', 2, '20-30m', 30),
+    E(`s${s}d6_cuestas`,    'Correr | Cuestas', 6, '8-10"', 90),
+    E(`s${s}d6_sprint_30`,  'Correr | Sprint', 4, '30m subiendo velocidad', 90),
+    E(`s${s}d6_marcha`,     'Correr | Marcha', 4, '15-20m', 60),
+    E(`s${s}d6_db_rdl`,     'DB Assisted Single Leg RDL', 3, '8/lado', 60),
+    E(`s${s}d6_walking_lung','SANDBAG | Walking lunges', 3, '8/lado', 60),
+    E(`s${s}d6_deadbugs`,   'Core | Deadbugs', 2, '6/lado', 45),
+    E(`s${s}d6_farmer`,     'FUNCIONAL | Farmer carry', 2, '20m', 45),
+  ];
+  const B1_D7 = (s) => [
+    E(`s${s}d7_mob_flex_tob','Movilidad - Flexión de tobillo en bipedestación', 2, '8/lado', 0),
+    E(`s${s}d7_hip_lift`,   '90/90 hip lift con pies en pared', 2, '5 respiraciones', 0),
+    E(`s${s}d7_mob_rot90`,  'Movilidad - Rotación interna de cadera 90-90', 2, '6/lado', 0),
+    E(`s${s}d7_mob_aduct`,  'Movilidad - Aductores con kettlebell', 2, '8/lado', 0),
+    E(`s${s}d7_mob_flex_rod','Movilidad - Flexión de tobillo de rodillas', 2, '25" isométrico', 0),
+    E(`s${s}d7_isquios`,    'Movilización de isquios (Hamstring Flossing)', 2, '6/lado', 0),
+    E(`s${s}d7_mob_rotcol`, 'Movilidad - Rotación de columna en cuadrupedia', 2, '6/lado', 0),
+    E(`s${s}d7_deadbugs`,   'Core | Deadbugs', 2, '6/lado', 0),
+  ];
+
+  // ─────── BLOQUE 2 (S7-S12): ATLÉTICO — fuerza pesada + sprints + funcional ───────
+  const B2_D1 = (s) => [
+    E(`s${s}d1_bici`,       'Bicicleta estática', 1, '5 minutos', 0),
+    E(`s${s}d1_mob_flex_tob','Movilidad - Flexión de tobillo en bipedestación', 2, '8/lado', 0),
+    E(`s${s}d1_mob_rot90`,  'Movilidad - Rotación interna de cadera 90-90', 1, '8/lado', 0),
+    E(`s${s}d1_ffe_split`,  'Zancada con pie delantero elevado (Front foot elevated split squat)', 2, '6/lado', 0),
+    E(`s${s}d1_sent_aprox`, 'Sentadilla libre | barra alta (aproximación)', 1, '2-3', 0),
+    E(`s${s}d1_sent`,       'Sentadilla libre | barra alta', 4, '6-8', 120),
+    E(`s${s}d1_ffe_split_w','Zancada con mancuerna y pie delantero elevado', 3, '8-12/lado', 90),
+    E(`s${s}d1_pm_uni`,     'Peso muerto rumano unilateral con mancuernas', 3, '10-12/lado', 120),
+    E(`s${s}d1_goblet_elev`,'Sentadilla goblet con elevación de talones', 3, '10-12', 90),
+    E(`s${s}d1_curl_fem`,   'Curl de femoral', 3, '10-12', 60),
+    E(`s${s}d1_abd_polea`,  'Abducción en polea', 2, '15-20/lado', 60),
+    E(`s${s}d1_gemelo`,     'Gemelo en prensa', 2, '15', 60, 'Superserie'),
+    E(`s${s}d1_wall_tib`,   'Wall Tibial Raises', 2, '12', 60, 'Superserie'),
+  ];
+  const B2_D2 = (s) => [
+    E(`s${s}d2_rowerg`,     'ERGÓMETRO | RowErg', 1, '4 minutos', 0),
+    E(`s${s}d2_scap_pu`,    'Flexiones escapulares (Scap push-up)', 2, '10', 0),
+    E(`s${s}d2_band_pull`,  'Aperturas con banda (Band pull apart)', 2, '15', 0),
+    E(`s${s}d2_mangu`,      'Movilidad - Manguitos rotadores con resistencia', 2, '12', 0),
+    E(`s${s}d2_press_lm`,   'Press landmine de rodillas', 4, '7-10/lado', 120),
+    E(`s${s}d2_jalon`,      'Jalón al pecho', 4, '8-10', 120),
+    E(`s${s}d2_press_inc`,  'Press banca inclinado con mancuernas', 3, '8-10', 90),
+    E(`s${s}d2_remo_seal`,  'Remo seal', 3, '8-10', 90),
+    E(`s${s}d2_elev_lat`,   'Elevaciones laterales con apoyo en banco', 3, '12-15', 60),
+    E(`s${s}d2_facepull`,   'Facepull en polea', 3, '12-15', 60),
+    E(`s${s}d2_curl_bicep`, 'Curl de bíceps unilateral en polea', 2, '12-15/lado', 60),
+    E(`s${s}d2_ext_tri`,    'Extensión de tríceps en polea', 2, '12-15/lado', 60),
+  ];
+  const B2_D3 = (s) => [
+    E(`s${s}d3_run_warm`,   'Calentamiento | Correr a trote suave', 1, '5 minutos', 0),
+    E(`s${s}d3_ankling`,    'Ankling drill (ejercicio de tobillos)', 2, '20m', 0),
+    E(`s${s}d3_a_march`,    'A-march - Marcha A', 2, '20m', 0),
+    E(`s${s}d3_pogo`,       'Pogo jumps en el sitio', 3, '15m', 60),
+    E(`s${s}d3_snap_down`,  'Snap down to stick (desaceleración con aterrizaje)', 3, '4', 70),
+    E(`s${s}d3_low_hurdle`, 'Salto sobre valla pequeña aterrizaje controlado (Low hurdle hop to stick)', 3, '4', 80),
+    E(`s${s}d3_skater`,     'HIIT | Skater jumps', 3, '5/lado', 90),
+    E(`s${s}d3_alt_bounds`, 'Saltos / zancadas alternas (Alternating bounds)', 3, '20m', 105),
+    E(`s${s}d3_drop_lat`,   'Salto lateral con pausa (Drop to lateral bound)', 3, '4/lado', 90),
+    E(`s${s}d3_copenh`,     'Aductores - Plancha Copenhague', 3, '20-25 segundos', 60),
+  ];
+  const B2_D4 = (s) => [
+    E(`s${s}d4_bici`,       'Bicicleta estática', 1, '4 minutos', 0),
+    E(`s${s}d4_monster`,    'Monster walks', 2, '12', 0),
+    E(`s${s}d4_zanc_iso`,   'Zancada isométrica', 1, '20"/lado', 0),
+    E(`s${s}d4_pogo`,       'Pogo jumps en el sitio', 2, '15 suaves', 0),
+    E(`s${s}d4_step_up`,    'Step up con mancuerna', 3, '6/lado', 90),
+    E(`s${s}d4_kb_swing`,   'Kettlebell swing', 4, '8', 90),
+    E(`s${s}d4_hip_thrust`, 'Hip Thrust', 3, '10', 90),
+    E(`s${s}d4_gemelo`,     'Gemelo con mancuernas sentada', 3, '12-15', 60),
+  ];
+  const B2_D6 = (s) => [
+    E(`s${s}d6_run_warm`,   'Calentamiento | Correr a trote suave', 1, '5 minutos', 0),
+    E(`s${s}d6_skipping`,   'Técnica de carrera | Skipping alto', 2, '20 metros', 0),
+    E(`s${s}d6_sprint_30`,  'Correr | Sprint', 3, '30-40 metros', 0),
+    E(`s${s}d6_cuestas`,    'Correr | Cuestas', 6, '10-12 segundos', 105),
+    E(`s${s}d6_sprint_40`,  'Correr | Sprint', 4, '40m de progresión + 20m rápidos', 150),
+    E(`s${s}d6_sled`,       'Sled push o empuje del trineo', 4, '15-20 metros', 90),
+    E(`s${s}d6_pm_uni`,     'Peso muerto rumano unilateral con mancuernas', 3, '8/lado', 60),
+    E(`s${s}d6_walking_lung','SANDBAG | Walking lunges', 3, '8/lado', 60),
+    E(`s${s}d6_colgar`,     'Colgarse en la barra', 3, 'Subir las piernas 10-12', 60),
+  ];
+  const B2_D7 = (s) => [
+    E(`s${s}d7_mob_flex_tob','Movilidad - Flexión de tobillo en bipedestación', 2, '8/lado', 0),
+    E(`s${s}d7_hip_lift`,   '90/90 hip lift con pies en pared', 2, '5 respiraciones', 0),
+    E(`s${s}d7_wall_tib`,   'Wall Tibial Raises', 2, '15', 0),
+    E(`s${s}d7_mob_rot90`,  'Movilidad - Rotación interna de cadera 90-90', 2, '6/lado', 0),
+    E(`s${s}d7_mob_aduct`,  'Movilidad - Aductores con kettlebell', 2, '8/lado', 0),
+    E(`s${s}d7_mob_flex_rod','Movilidad - Flexión de tobillo de rodillas', 2, '25 segundos/lado', 0),
+    E(`s${s}d7_mob_rotcol`, 'Movilidad - Rotación de columna en cuadrupedia', 2, '6/lado', 0),
+    E(`s${s}d7_deadbugs`,   'Core | Deadbugs', 2, '6/lado', 0),
+    E(`s${s}d7_plancha_lat`,'Core | Plancha lateral', 2, '20 segundos/lado', 0),
+  ];
+
+  // Construir las 12 semanas (S1-S6 = Bloque 1, S7-S12 = Bloque 2)
+  const W = {};
+  for (let s = 1; s <= 6; s++) {
+    W[s] = { 1: B1_D1(s), 2: B1_D2(s), 3: B1_D3(s), 4: B1_D4(s), 6: B1_D6(s), 7: B1_D7(s) };
+  }
+  for (let s = 7; s <= 12; s++) {
+    W[s] = { 1: B2_D1(s), 2: B2_D2(s), 3: B2_D3(s), 4: B2_D4(s), 6: B2_D6(s), 7: B2_D7(s) };
+  }
+
+  WORKOUT_PLANS.atleta = {
+    id: 'atleta',
+    name: 'Atleta',
+    planType: 'phased',
+    weeks: 12,
+    description: 'Plan 12 semanas de alto rendimiento multidisciplinar (fuerza + pliometría + sprints + funcional). 6 días/sem (D5 descanso). Bloque 1 (S1-S6): BASE — acondicionamiento técnico + fuerza. Bloque 2 (S7-S12): ATLÉTICO — fuerza pesada + drills pliométricos + sprints + sled/sandbag. La progresión se aplica vía peso/intensidad (mismo plan repetido 6 sem por bloque).',
+    trainingDays: [1, 2, 3, 4, 6, 7],
+    dayMeta: {
+      1: { name: 'Tren Inferior - Fuerza',         type: 'strength', muscleGroups: ['Piernas', 'Glúteos'] },
+      2: { name: 'Tren Superior',                  type: 'strength', muscleGroups: ['Pecho', 'Espalda', 'Hombros'] },
+      3: { name: 'Pliometría y Drills',            type: 'strength', muscleGroups: ['Pliometría', 'Coordinación'] },
+      4: { name: 'Tren Inferior Explosivo',        type: 'strength', muscleGroups: ['Piernas', 'Potencia'] },
+      6: { name: 'Sprints y Funcional',            type: 'strength', muscleGroups: ['Velocidad', 'Cardio'] },
+      7: { name: 'Movilidad (opcional)',           type: 'strength', muscleGroups: ['Movilidad', 'Recuperación'] }
+    },
+    weeklySchedule: Array.from({ length: 12 }, (_, i) => {
+      const w = W[i + 1];
+      return { 1: w[1], 2: w[2], 3: w[3], 4: w[4], 6: w[6], 7: w[7] };
+    })
+  };
+})();
