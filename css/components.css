@@ -542,6 +542,265 @@
   text-align: center;
 }
 
+/* ============================================
+   Create Workout CTA (home)
+   ============================================ */
+.create-workout-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-base) var(--space-lg);
+  margin: var(--space-md) 0;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+  transition: all var(--transition-base);
+}
+
+.create-workout-cta:hover,
+.create-workout-cta:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(124, 58, 237, 0.5);
+}
+
+.create-workout-cta-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.create-workout-cta-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.create-workout-cta-title {
+  font-size: var(--font-md);
+  font-weight: 800;
+}
+
+.create-workout-cta-sub {
+  font-size: var(--font-xs);
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+/* ============================================
+   Creator (vista crear)
+   ============================================ */
+.creator-section {
+  margin: var(--space-lg) 0;
+}
+
+.creator-label {
+  font-size: var(--font-sm);
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-md);
+}
+
+.creator-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.creator-chip {
+  padding: 10px 18px;
+  background: var(--bg-primary);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: inherit;
+}
+
+.creator-chip:hover { border-color: var(--primary-light); }
+
+.creator-chip.active {
+  background: var(--gradient-primary);
+  color: #fff;
+  border-color: var(--primary-dark);
+  box-shadow: 0 2px 10px rgba(124, 58, 237, 0.4);
+}
+
+.creator-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  user-select: none;
+}
+
+.creator-toggle.disabled { opacity: 0.55; cursor: not-allowed; }
+
+.creator-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.creator-toggle-slider {
+  position: relative;
+  width: 44px;
+  height: 26px;
+  background: var(--surface-hover);
+  border-radius: 13px;
+  flex-shrink: 0;
+  transition: background var(--transition-base);
+}
+
+.creator-toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform var(--transition-base);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.creator-toggle input:checked + .creator-toggle-slider {
+  background: var(--gradient-primary);
+}
+
+.creator-toggle input:checked + .creator-toggle-slider::after {
+  transform: translateX(18px);
+}
+
+.creator-toggle-label {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.creator-preview-card {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--bg-primary);
+  border: 2px solid var(--primary-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.creator-preview-header {
+  margin-bottom: var(--space-base);
+}
+
+.creator-preview-title {
+  font-size: var(--font-xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.creator-preview-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.creator-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-base);
+}
+
+.creator-preview-ex {
+  padding: var(--space-md);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+}
+
+.creator-preview-ex-name {
+  font-size: var(--font-base);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.creator-preview-ex-meta {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.creator-preview-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.creator-preview-actions .btn { flex: 1; }
+
+/* ============================================
+   My Workout Card (entrenos guardados)
+   ============================================ */
+.my-workout-card {
+  padding: var(--space-base);
+  background: var(--bg-primary);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+}
+
+.my-workout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.my-workout-name {
+  font-size: var(--font-base);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.my-workout-meta {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  margin-top: 4px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.my-workout-delete {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-size: var(--font-sm);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.my-workout-delete:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
 .exercise-sets {
   display: flex;
   flex-direction: column;

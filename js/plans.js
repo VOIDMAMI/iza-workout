@@ -47,6 +47,17 @@ const Plans = {
     const container = document.getElementById('page-entrenos');
     if (!container) return;
 
+    const myWorkouts = Storage.getMyWorkouts();
+    const myWorkoutsHtml = myWorkouts.length ? `
+      <div class="section-header mt-xl">
+        <h3 class="section-title">🔧 Mis entrenos</h3>
+        <span class="text-xs text-tertiary">${myWorkouts.length} guardado${myWorkouts.length > 1 ? 's' : ''}</span>
+      </div>
+      <div class="express-list anim-fade-in-up">
+        ${myWorkouts.map(w => this._renderMyWorkoutCard(w)).join('')}
+      </div>
+    ` : '';
+
     container.innerHTML = `
       <div class="page-header anim-fade-in">
         <h1 class="page-title">Entrenos</h1>
@@ -60,6 +71,8 @@ const Plans = {
         ${this._renderProgramCategories()}
       </div>
 
+      ${myWorkoutsHtml}
+
       <div class="section-header mt-xl">
         <h3 class="section-title">Entrenos Express</h3>
         <span class="text-xs text-tertiary">Sesiones sueltas</span>
@@ -68,6 +81,39 @@ const Plans = {
         ${this._renderExpressCategories()}
       </div>
     `;
+  },
+
+  _renderMyWorkoutCard(w) {
+    const tags = (w.muscleGroups || []).map(g => `<span class="badge badge-primary">${g}</span>`).join('');
+    return `
+      <div class="my-workout-card">
+        <div class="my-workout-header">
+          <div style="flex:1; min-width:0;">
+            <div class="my-workout-name">${w.name}</div>
+            <div class="my-workout-meta">${w.exercises.length} ejercicios · ${tags}</div>
+          </div>
+          <button class="my-workout-delete" onclick="Plans.deleteMyWorkout('${w.id}')" aria-label="Eliminar">✕</button>
+        </div>
+        <button class="btn btn-primary btn-full btn-md mt-sm" onclick="Plans.startMyWorkout('${w.id}')">
+          ▶ Empezar
+        </button>
+      </div>
+    `;
+  },
+
+  startMyWorkout(id) {
+    const w = Storage.getMyWorkouts().find(x => x.id === id);
+    if (!w) return;
+    Workout.backPage = 'entrenos';
+    App._switchPage('workout');
+    Workout.render(w, new Date());
+  },
+
+  deleteMyWorkout(id) {
+    if (!confirm('¿Eliminar este entreno guardado?')) return;
+    Storage.deleteMyWorkout(id);
+    vibrate(30);
+    this.render();
   },
 
   _renderProgramCategories() {

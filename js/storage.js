@@ -9,7 +9,8 @@ const STORAGE_KEYS = {
   SETTINGS: 'iza_settings',
   STREAK: 'iza_streak',
   SELECTED_PLAN: 'iza_selected_plan',
-  PLAN_START_DATES: 'iza_plan_start_dates'
+  PLAN_START_DATES: 'iza_plan_start_dates',
+  MY_WORKOUTS: 'iza_my_workouts'
 };
 
 const Storage = {
@@ -324,6 +325,30 @@ const Storage = {
     const now = new Date();
     const week = Math.floor((now - start) / (7 * 24 * 60 * 60 * 1000)) + 1;
     return Math.min(Math.max(week, 1), plan.weeks || 12);
+  },
+
+  /* ---- My Workouts (entrenos generados guardados) ---- */
+
+  getMyWorkouts() {
+    return this._get(STORAGE_KEYS.MY_WORKOUTS) || [];
+  },
+
+  saveGeneratedWorkout(workout) {
+    const list = this.getMyWorkouts();
+    // Crea una copia con un ID estable (no temporal)
+    const stable = {
+      ...workout,
+      id: 'mywo_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+      savedAt: new Date().toISOString()
+    };
+    list.unshift(stable);
+    this._set(STORAGE_KEYS.MY_WORKOUTS, list);
+    return stable;
+  },
+
+  deleteMyWorkout(id) {
+    const list = this.getMyWorkouts().filter(w => w.id !== id);
+    this._set(STORAGE_KEYS.MY_WORKOUTS, list);
   },
 
   /* ---- Export / Import ---- */
