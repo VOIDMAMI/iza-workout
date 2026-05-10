@@ -2,15 +2,50 @@
    IZA WORKOUT — Plans (Entrenos) Module
    ============================================ */
 
+// Categorías de programas (orden = orden visual en pantalla)
+const PROGRAM_CATEGORIES = [
+  { id: 'EMPEZANDO',     name: 'Empezando de 0',  emoji: '🌱' },
+  { id: 'FUERZA',        name: 'Fuerza',          emoji: '💪' },
+  { id: 'CARRERA',       name: 'Carrera',         emoji: '🏃' },
+  { id: 'HIBRIDOS',      name: 'Híbridos',        emoji: '⚡' },
+  { id: 'PERDIDA_GRASA', name: 'Pérdida de Grasa',emoji: '🔥' },
+];
+
+// Mapeo plan → categoría
+const PROGRAM_PLAN_CATEGORY = {
+  // EMPEZANDO DE 0
+  empezando_rutina:    'EMPEZANDO',
+  empezando_gym:       'EMPEZANDO',
+  empezando_cero_20:   'EMPEZANDO',
+  empezando_calistenia:'EMPEZANDO',
+  personas_poco_tiempo:'EMPEZANDO',
+  // FUERZA
+  fuerza_avanzado:     'FUERZA',
+  fuertes_intermedias: 'FUERZA',
+  calistenia_avanzada: 'FUERZA',
+  gluteos_mamasota:    'FUERZA',
+  // CARRERA
+  carrera_5km:         'CARRERA',
+  // HÍBRIDOS
+  hibrido_fuerza_carrera:'HIBRIDOS',
+  woods:               'HIBRIDOS',
+  atleta:              'HIBRIDOS',
+  // PÉRDIDA DE GRASA
+  perdida_grasa:       'PERDIDA_GRASA',
+  perdida_grasa_2_0:   'PERDIDA_GRASA',
+  quema_grasa_comp:    'PERDIDA_GRASA',
+  quemando_gym:        'PERDIDA_GRASA',
+  quemando_casa:       'PERDIDA_GRASA',
+};
+
 const Plans = {
   expandedPlan: null,
-  expandedCategory: null,
+  expandedCategory: null,        // Express
+  expandedProgramCat: null,      // Programas
 
   render() {
     const container = document.getElementById('page-entrenos');
     if (!container) return;
-
-    const plans = Object.values(WORKOUT_PLANS);
 
     container.innerHTML = `
       <div class="page-header anim-fade-in">
@@ -21,8 +56,8 @@ const Plans = {
       <div class="section-header">
         <h3 class="section-title">Programas</h3>
       </div>
-      <div class="plans-list anim-fade-in-up anim-delay-1">
-        ${plans.map(p => this._renderPlanCard(p)).join('')}
+      <div class="express-list anim-fade-in-up anim-delay-1">
+        ${this._renderProgramCategories()}
       </div>
 
       <div class="section-header mt-xl">
@@ -33,6 +68,42 @@ const Plans = {
         ${this._renderExpressCategories()}
       </div>
     `;
+  },
+
+  _renderProgramCategories() {
+    const allPlans = Object.values(WORKOUT_PLANS);
+    return PROGRAM_CATEGORIES.map(cat => {
+      const plans = allPlans.filter(p => PROGRAM_PLAN_CATEGORY[p.id] === cat.id);
+      if (plans.length === 0) return '';
+      const isExpanded = this.expandedProgramCat === cat.id;
+      return `
+        <div class="express-cat ${isExpanded ? 'expanded' : ''}">
+          <div class="express-cat-header" onclick="Plans.toggleProgramCat('${cat.id}')">
+            <div class="express-cat-icon">${cat.emoji}</div>
+            <div class="express-cat-info">
+              <div class="express-cat-name">${cat.name}</div>
+              <div class="express-cat-meta">${plans.length} programa${plans.length > 1 ? 's' : ''}</div>
+            </div>
+            <div class="plan-card-chevron ${isExpanded ? 'expanded' : ''}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+          ${isExpanded ? `
+            <div class="plans-list" style="padding: var(--space-md);">
+              ${plans.map(p => this._renderPlanCard(p)).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+  },
+
+  toggleProgramCat(catId) {
+    this.expandedProgramCat = this.expandedProgramCat === catId ? null : catId;
+    // Si se cierra la categoría, también cierro cualquier plan expandido dentro
+    if (!this.expandedProgramCat) this.expandedPlan = null;
+    vibrate(20);
+    this.render();
   },
 
   _renderExpressCategories() {
