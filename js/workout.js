@@ -237,10 +237,16 @@ const Workout = {
             <div style="flex:1; min-width:0;">
               <div class="exercise-name">
                 <span class="exercise-name-text">${ex.name}</span>
-                <button class="btn-search-ex" onclick="Workout.searchExercise(event, '${searchQuery.replace(/'/g, "\\'")}')">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-                  Buscar ejercicio
-                </button>
+                <div class="exercise-actions">
+                  <button class="btn-search-ex" onclick="Workout.searchExercise(event, '${searchQuery.replace(/'/g, "\\'")}')">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+                    Buscar ejercicio
+                  </button>
+                  <button class="btn-swap-ex" onclick="Workout.openSwapModal(event, '${ex.id}')" aria-label="Cambiar ejercicio">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                    Cambiar
+                  </button>
+                </div>
               </div>
               <div class="exercise-meta">
                 <span>${ex.sets} series × ${ex.reps}</span>
@@ -399,5 +405,94 @@ const Workout = {
     } else {
       window.open(webUrl, '_blank', 'noopener');
     }
+  },
+
+  /* ====================
+     Swap de ejercicio (solo sesión)
+     ==================== */
+  openSwapModal(event, exerciseId) {
+    event.stopPropagation();
+    event.preventDefault();
+    vibrate(20);
+
+    const ex = this.currentWorkout?.exercises?.find(e => e.id === exerciseId);
+    if (!ex) return;
+
+    // Limpia un nombre como "Sentadilla libre | barra alta (aproximación)" → "Sentadilla libre barra alta"
+    const cleanName = ex.name.replace(/\s*\|\s*/g, ' ').replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
+    const { pattern, muscle, list } = (typeof getAlternatives === 'function')
+      ? getAlternatives(cleanName, 6)
+      : { pattern: 'other', muscle: '', list: [] };
+
+    const labelByPattern = {
+      'hip-dominant': 'Dominante de cadera',
+      'hinge': 'Bisagra de cadera',
+      'knee-dominant': 'Dominante de rodilla',
+      'push-horizontal': 'Empuje horizontal',
+      'push-vertical': 'Empuje vertical',
+      'pull-vertical': 'Tracción vertical',
+      'pull-horizontal': 'Tracción horizontal',
+      'shoulder-iso': 'Hombro analítico',
+      'arm-iso': muscle === 'tríceps' ? 'Tríceps analítico' : 'Bíceps analítico',
+      'core': 'Core',
+      'calf': 'Gemelos',
+      'cardio': 'Cardio',
+      'mobility': 'Movilidad',
+      'other': 'Alternativas'
+    };
+    const patternLabel = labelByPattern[pattern] || 'Alternativas';
+
+    const optionsHtml = list.length
+      ? list.map(name => `
+          <button class="swap-option" onclick="Workout.swapExercise('${exerciseId}', this.dataset.name)" data-name="${name.replace(/"/g, '&quot;')}">
+            <span class="swap-option-text">${name}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        `).join('')
+      : `<div class="swap-empty">No tengo alternativas equivalentes para este ejercicio. Mantén el original o búscalo en TikTok.</div>`;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'swap-modal-overlay';
+    overlay.id = 'swap-modal-overlay';
+    overlay.innerHTML = `
+      <div class="swap-modal" onclick="event.stopPropagation()">
+        <div class="swap-modal-header">
+          <div>
+            <div class="swap-modal-title">Cambiar ejercicio</div>
+            <div class="swap-modal-subtitle">${patternLabel} · solo esta sesión</div>
+          </div>
+          <button class="swap-modal-close" onclick="Workout.closeSwapModal()" aria-label="Cerrar">✕</button>
+        </div>
+        <div class="swap-modal-current">
+          <span class="text-xs text-tertiary">Actual</span>
+          <div class="swap-modal-current-name">${ex.name}</div>
+        </div>
+        <div class="swap-options">
+          ${optionsHtml}
+        </div>
+      </div>
+    `;
+    overlay.addEventListener('click', () => this.closeSwapModal());
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+  },
+
+  closeSwapModal() {
+    const overlay = document.getElementById('swap-modal-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('visible');
+    setTimeout(() => overlay.remove(), 200);
+  },
+
+  swapExercise(exerciseId, newName) {
+    if (!this.currentWorkout || !newName) return;
+    const ex = this.currentWorkout.exercises.find(e => e.id === exerciseId);
+    if (!ex) return;
+
+    ex.name = newName; // mutación in-memory (solo esta sesión)
+    vibrate(40);
+    showToast('Ejercicio cambiado para esta sesión');
+    this.closeSwapModal();
+    this.refreshView();
   }
 };
