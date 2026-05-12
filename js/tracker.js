@@ -299,12 +299,11 @@ const Tracker = {
       // Notificación SIEMPRE — el SW.showNotification funciona con la
       // pantalla bloqueada y la app en background. iOS la entrega.
       showRestDoneNotification();
-      vibrate([200, 100, 200, 100, 400]);
-      // Sonido custom solo si la app está visible (con la pestaña en
-      // background iOS no reproduce audio Web).
-      if (document.visibilityState === 'visible') {
-        playAlertSound();
-      }
+      vibrate([200, 100, 200, 100, 400, 100, 200]);
+      // Sonido SIEMPRE: 3 pitidos. Si la app está en background iOS puede
+      // que no lo reproduzca, pero lo intentamos (PWA instaladas a veces sí
+      // pueden). La notificación con sound es el respaldo.
+      playAlertSound();
       // Cancelar el setTimeout paralelo para no disparar dos notificaciones
       if (this.timerNotifyTimeout) {
         clearTimeout(this.timerNotifyTimeout);
@@ -328,10 +327,9 @@ const Tracker = {
       if (!this.timerFired) {
         this.timerFired = true;
         showRestDoneNotification();
-        vibrate([200, 100, 200, 100, 400]);
-        if (document.visibilityState !== 'visible') {
-          playAlertSound();
-        }
+        vibrate([200, 100, 200, 100, 400, 100, 200]);
+        // Intentar reproducir aunque la app esté en background
+        playAlertSound();
       }
     }, ms);
   },

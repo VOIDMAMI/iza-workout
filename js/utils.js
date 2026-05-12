@@ -251,12 +251,21 @@ function _getAlertAudio() {
   return _alertAudio;
 }
 
+// Reproduce 3 pitidos consecutivos para que sea más audible en el gym.
+// Usa el audio HTML5 pre-cargado (suena fuerte aunque haya música/cascos).
 function playAlertSound() {
-  try {
-    const a = _getAlertAudio();
-    a.currentTime = 0;
-    a.play().catch(() => {});
-  } catch (e) {}
+  const beepOnce = () => {
+    try {
+      const a = _getAlertAudio();
+      a.currentTime = 0;
+      const p = a.play();
+      if (p && p.catch) p.catch(() => {});
+    } catch (e) {}
+  };
+  // 3 pitidos separados ~600ms (el clip dura 0.5s)
+  beepOnce();
+  setTimeout(beepOnce, 600);
+  setTimeout(beepOnce, 1200);
 }
 
 // Ticks 3-2-1 usan Web Audio API: se mezclan con la música (no pausan
