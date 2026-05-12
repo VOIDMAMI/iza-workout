@@ -4,117 +4,189 @@
    Se fusionan en WORKOUT_PLANS al cargar.
    ============================================ */
 
-/* ══════════════ CARRERA 5KM (3 semanas) ══════════════ */
+/* ══════════════ CARRERA 5KM (12 semanas) ══════════════ */
+// Helpers locales para construir días repetitivos del plan
+function _c5kMovD1() {
+  return [
+    _ex('c5k_m_balanceo',  'Movilidad | Balanceo de piernas',            1, '10/pierna', 0),
+    _ex('c5k_m_flex_sed',  'Movilidad | Flexión de tobillo sedestación', 1, '10/pierna', 0),
+    _ex('c5k_m_squat_rod', 'Sentadilla + rodilla al pecho',              1, '5/lado',    0),
+  ];
+}
+function _c5kMovD3() {
+  return [
+    _ex('c5k_m_hip_car',   'Movilidad | Hip CAR',                          1, '10/pierna', 0),
+    _ex('c5k_m_flex_bip',  'Movilidad | Flexión de tobillo bipedestación', 1, '8/lado',    0),
+    _ex('c5k_m_balanceo',  'Movilidad | Balanceo de piernas',              1, '10/pierna', 0),
+  ];
+}
+function _c5kMovD5() {
+  return [
+    _ex('c5k_m_rlunge', 'Movilidad | Runners lunge', 1, '8/lado', 0),
+  ];
+}
+function _c5kPrevD4() {
+  return [
+    _ex('c5k_m_rockback', 'Movilidad | Leg Rockback',                  2, '9/lado', 90),
+    _ex('c5k_m_flex_sed', 'Movilidad | Flexión de tobillo sedestación', 2, '9/lado', 90),
+    _ex('c5k_gemelo_mc',  'Gemelo con mancuernas sentada',              2, '9',      90),
+  ];
+}
+function _c5kPrevD6() {
+  return [
+    _ex('c5k_m_rockback', 'Movilidad | Leg Rockback',          2, '9/lado',   90),
+    _ex('c5k_ext_dedo',   'Extensión del dedo gordo del pie',  2, '9/lado',   90),
+    _ex('c5k_gemelo_mc',  'Gemelo con mancuernas sentada',     2, '9/lado',   90),
+    _ex('c5k_fr_cuad',    'Foam roller | Cuádriceps',          2, '9',        90),
+    _ex('c5k_step_up',    'Step up con mancuerna',             2, '9/pierna', 90),
+    _ex('c5k_pistol_box', 'Squat box unilateral (pistol)',     2, '9/pierna', 90),
+  ];
+}
+// CaCo: bloque "X min corriendo + Y min andando" repetido `rounds` rondas
+function _c5kCaco(week, day, rounds, runMin, walkMin, totalMin) {
+  const id = 'c5k_s' + week + '_d' + day + '_caco';
+  const reps = runMin + ' min correr + ' + walkMin + ' min andar';
+  const notes = totalMin + ' min total. Correr a intensidad conversacional (que te permita hablar).';
+  return _ex(id, 'Correr (Ca-Co)', rounds, reps, 0, notes);
+}
+
 WORKOUT_PLANS.carrera_5km = {
   id: 'carrera_5km',
   name: 'Carrera 5KM',
   planType: 'phased',
-  weeks: 3,
-  description: 'Plan de 3 semanas para correr 5km (método Ca-Co + trabajo preventivo)',
+  weeks: 12,
+  description: 'Plan de 12 semanas para correr 5km — método Ca-Co (caminar-correr) + movilidad + trabajo preventivo de lesiones',
   trainingDays: [1, 3, 4, 5, 6],
   dayMeta: {
-    1: { name: 'Ca-Co + Movilidad',            type: 'running',  muscleGroups: ['Cardio', 'Movilidad'] },
-    3: { name: 'Ca-Co + Movilidad',            type: 'running',  muscleGroups: ['Cardio', 'Movilidad'] },
-    4: { name: 'Prevención de lesiones',       type: 'strength', muscleGroups: ['Gemelos', 'Tobillo', 'Cadera'] },
-    5: { name: 'Ca-Co + Movilidad',            type: 'running',  muscleGroups: ['Cardio', 'Movilidad'] },
-    6: { name: 'Prevención de lesiones',       type: 'strength', muscleGroups: ['Gemelos', 'Cuádriceps', 'Piernas'] }
+    1: { name: 'Ca-Co + Movilidad',      type: 'running',  muscleGroups: ['Cardio', 'Movilidad'] },
+    3: { name: 'Ca-Co + Movilidad',      type: 'running',  muscleGroups: ['Cardio', 'Movilidad'] },
+    4: { name: 'Prevención de lesiones', type: 'strength', muscleGroups: ['Gemelos', 'Tobillo', 'Cadera'] },
+    5: { name: 'Ca-Co + Movilidad',      type: 'running',  muscleGroups: ['Cardio', 'Movilidad'] },
+    6: { name: 'Prevención de lesiones', type: 'strength', muscleGroups: ['Gemelos', 'Cuádriceps', 'Piernas'] }
   },
   weeklySchedule: [
     // S1
     {
-      1: [
-        _ex('c5k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/pierna', 0),
-        _ex('c5k_m_flex_sed',  'Movilidad | Flexión de tobillo sedestación', 1, '10/pierna', 0),
-        _ex('c5k_m_squat_rod', 'Sentadilla + rodilla al pecho', 1, '5/lado', 0),
-        _ex('c5k_caco',        'Correr (Ca-Co)', 3, '1 min correr + 9 min andar', 0, '30 min total. Intensidad conversacional.'),
-      ],
-      3: [
-        _ex('c5k_m_hip_car',  'Movilidad | Hip CAR', 1, '10/pierna', 0),
-        _ex('c5k_m_flex_bip', 'Movilidad | Flexión de tobillo bipedestación', 1, '8/lado', 0),
-        _ex('c5k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/pierna', 0),
-        _ex('c5k_caco',       'Correr (Ca-Co)', 4, '1 min correr + 7 min andar', 0, '32 min total'),
-      ],
-      4: [
-        _ex('c5k_m_rockback', 'Movilidad | Leg Rockback', 2, '9/lado', 90),
-        _ex('c5k_m_flex_sed', 'Movilidad | Flexión de tobillo sedestación', 2, '9/lado', 90),
-        _ex('c5k_gemelo_mc',  'Gemelo con mancuernas sentada', 2, '9', 90),
-      ],
-      5: [
-        _ex('c5k_m_rlunge', 'Movilidad | Runners lunge', 1, '8/lado', 0),
-        _ex('c5k_caco',     'Correr (Ca-Co)', 5, '1 min correr + 5 min andar', 0, '30 min total'),
-      ],
-      6: [
-        _ex('c5k_m_rockback', 'Movilidad | Leg Rockback', 2, '9/lado', 90),
-        _ex('c5k_ext_dedo',   'Extensión del dedo gordo', 2, '9/lado', 90),
-        _ex('c5k_gemelo_mc',  'Gemelo con mancuernas sentada', 2, '9/lado', 90),
-        _ex('c5k_fr_cuad',    'Foam roller | Cuádriceps', 2, '9', 90),
-        _ex('c5k_step_up',    'Step up con mancuerna', 2, '9/pierna', 90),
-        _ex('c5k_pistol_box', 'Squat box unilateral (pistol)', 2, '9/pierna', 90),
-      ]
+      1: [..._c5kMovD1(), _c5kCaco(1, 1, 3, 1, 9, 30)],
+      3: [..._c5kMovD3(), _c5kCaco(1, 3, 4, 1, 7, 32)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(1, 5, 5, 1, 5, 30)],
+      6: _c5kPrevD6()
     },
     // S2
     {
-      1: [
-        _ex('c5k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/pierna', 0),
-        _ex('c5k_m_flex_sed', 'Movilidad | Flexión de tobillo sedestación', 1, '10/pierna', 0),
-        _ex('c5k_m_squat_rod','Sentadilla + rodilla al pecho', 1, '5/lado', 0),
-        _ex('c5k_caco',       'Correr (Ca-Co)', 6, '1 min correr + 4 min andar', 0, '30 min total'),
-      ],
-      3: [
-        _ex('c5k_m_hip_car',  'Movilidad | Hip CAR', 1, '10/pierna', 0),
-        _ex('c5k_m_flex_bip', 'Movilidad | Flexión de tobillo bipedestación', 1, '8/lado', 0),
-        _ex('c5k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/pierna', 0),
-        _ex('c5k_caco',       'Correr (Ca-Co)', 7, '1 min correr + 3 min andar', 0, '28 min total'),
-      ],
-      4: [
-        _ex('c5k_m_rockback', 'Movilidad | Leg Rockback', 2, '9/lado', 90),
-        _ex('c5k_m_flex_sed', 'Movilidad | Flexión de tobillo sedestación', 2, '9/lado', 90),
-        _ex('c5k_gemelo_mc',  'Gemelo con mancuernas sentada', 2, '9', 90),
-      ],
-      5: [
-        _ex('c5k_m_rlunge', 'Movilidad | Runners lunge', 1, '8/lado', 0),
-        _ex('c5k_caco',     'Correr (Ca-Co)', 10, '1 min correr + 2 min andar', 0, '30 min total'),
-      ],
-      6: [
-        _ex('c5k_m_rockback', 'Movilidad | Leg Rockback', 2, '9/lado', 90),
-        _ex('c5k_ext_dedo',   'Extensión del dedo gordo', 2, '9/lado', 90),
-        _ex('c5k_gemelo_mc',  'Gemelo con mancuernas sentada', 2, '9/lado', 90),
-        _ex('c5k_fr_cuad',    'Foam roller | Cuádriceps', 2, '9', 90),
-        _ex('c5k_step_up',    'Step up con mancuerna', 2, '9/pierna', 90),
-        _ex('c5k_pistol_box', 'Squat box unilateral (pistol)', 2, '9/pierna', 90),
-      ]
+      1: [..._c5kMovD1(), _c5kCaco(2, 1, 6,  1, 4, 30)],
+      3: [..._c5kMovD3(), _c5kCaco(2, 3, 7,  1, 3, 28)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(2, 5, 10, 1, 2, 30)],
+      6: _c5kPrevD6()
     },
     // S3
     {
+      1: [..._c5kMovD1(), _c5kCaco(3, 1, 3, 2, 9, 33)],
+      3: [..._c5kMovD3(), _c5kCaco(3, 3, 3, 2, 8, 30)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(3, 5, 4, 2, 6, 32)],
+      6: _c5kPrevD6()
+    },
+    // S4
+    {
+      1: [..._c5kMovD1(), _c5kCaco(4, 1, 5, 2, 4, 30)],
+      3: [..._c5kMovD3(), _c5kCaco(4, 3, 6, 2, 3, 28)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(4, 5, 7, 2, 2, 28)],
+      6: _c5kPrevD6()
+    },
+    // S5
+    {
+      1: [..._c5kMovD1(), _c5kCaco(5, 1, 3, 3, 7, 30)],
+      3: [..._c5kMovD3(), _c5kCaco(5, 3, 3, 3, 6, 27)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(5, 5, 4, 3, 5, 32)],
+      6: _c5kPrevD6()
+    },
+    // S6
+    {
+      1: [..._c5kMovD1(), _c5kCaco(6, 1, 4, 3, 4, 28)],
+      3: [..._c5kMovD3(), _c5kCaco(6, 3, 5, 3, 3, 30)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(6, 5, 6, 3, 2, 30)],
+      6: _c5kPrevD6()
+    },
+    // S7
+    {
+      1: [..._c5kMovD1(), _c5kCaco(7, 1, 3, 4, 6, 30)],
+      3: [..._c5kMovD3(), _c5kCaco(7, 3, 3, 4, 5, 27)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(7, 5, 4, 4, 4, 32)],
+      6: _c5kPrevD6()
+    },
+    // S8
+    {
+      1: [..._c5kMovD1(), _c5kCaco(8, 1, 4, 4, 3, 28)],
+      3: [..._c5kMovD3(), _c5kCaco(8, 3, 5, 4, 2, 30)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(8, 5, 6, 4, 1, 30)],
+      6: _c5kPrevD6()
+    },
+    // S9
+    {
+      1: [..._c5kMovD1(), _c5kCaco(9, 1, 5, 5, 1, 30)],
+      3: [..._c5kMovD3(), _c5kCaco(9, 3, 4, 6, 1, 28)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(9, 5, 4, 7, 1, 32)],
+      6: _c5kPrevD6()
+    },
+    // S10
+    {
+      1: [..._c5kMovD1(), _c5kCaco(10, 1, 3, 8,  1, 27)],
+      3: [..._c5kMovD3(), _c5kCaco(10, 3, 3, 9,  1, 30)],
+      4: _c5kPrevD4(),
+      5: [..._c5kMovD5(), _c5kCaco(10, 5, 3, 10, 1, 33)],
+      6: _c5kPrevD6()
+    },
+    // S11 — bloques largos casi continuos
+    {
       1: [
-        _ex('c5k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/pierna', 0),
-        _ex('c5k_m_flex_sed', 'Movilidad | Flexión de tobillo sedestación', 1, '10/pierna', 0),
-        _ex('c5k_m_squat_rod','Sentadilla + rodilla al pecho', 1, '5/lado', 0),
-        _ex('c5k_caco',       'Correr (Ca-Co)', 3, '2 min correr + 9 min andar', 0, '33 min total'),
+        ..._c5kMovD1(),
+        _ex('c5k_s11_d1_run',  'Correr',  2, '12 min',  0, 'Intensidad conversacional.'),
+        _ex('c5k_s11_d1_walk', 'Caminar', 1, '1 min',   0, 'Paso ligero entre los dos bloques de carrera. Total ~27 min.'),
       ],
       3: [
-        _ex('c5k_m_hip_car',  'Movilidad | Hip CAR', 1, '10/pierna', 0),
-        _ex('c5k_m_flex_bip', 'Movilidad | Flexión de tobillo bipedestación', 1, '8/lado', 0),
-        _ex('c5k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/pierna', 0),
-        _ex('c5k_caco',       'Correr (Ca-Co)', 3, '2 min correr + 8 min andar', 0, '30 min total'),
+        ..._c5kMovD3(),
+        _ex('c5k_s11_d3_run',  'Correr',  2, '13 min',  0, 'Intensidad conversacional.'),
+        _ex('c5k_s11_d3_walk', 'Caminar', 1, '1 min',   0, 'Paso ligero entre los dos bloques. Total ~30 min.'),
       ],
-      4: [
-        _ex('c5k_m_rockback', 'Movilidad | Leg Rockback', 2, '9/lado', 90),
-        _ex('c5k_m_flex_sed', 'Movilidad | Flexión de tobillo sedestación', 2, '9/lado', 90),
-        _ex('c5k_gemelo_mc',  'Gemelo con mancuernas sentada', 2, '9', 90),
-      ],
+      4: _c5kPrevD4(),
       5: [
-        _ex('c5k_m_rlunge', 'Movilidad | Runners lunge', 1, '8/lado', 0),
-        _ex('c5k_caco',     'Correr (Ca-Co)', 4, '2 min correr + 6 min andar', 0, '32 min total'),
+        ..._c5kMovD5(),
+        _ex('c5k_s11_d5_run1', 'Correr',  1, '18 min',  0, 'Intensidad conversacional.'),
+        _ex('c5k_s11_d5_walk', 'Caminar', 1, '1 min',   0, 'Paso ligero.'),
+        _ex('c5k_s11_d5_run2', 'Correr',  1, '12 min',  0, 'Continúa. Total ~31 min.'),
       ],
-      6: [
-        _ex('c5k_m_rockback', 'Movilidad | Leg Rockback', 2, '9/lado', 90),
-        _ex('c5k_ext_dedo',   'Extensión del dedo gordo', 2, '9/lado', 90),
-        _ex('c5k_gemelo_mc',  'Gemelo con mancuernas sentada', 2, '9/lado', 90),
-        _ex('c5k_fr_cuad',    'Foam roller | Cuádriceps', 2, '9', 90),
-        _ex('c5k_step_up',    'Step up con mancuerna', 2, '9/pierna', 90),
-        _ex('c5k_pistol_box', 'Squat box unilateral (pistol)', 2, '9/pierna', 90),
-      ]
+      6: _c5kPrevD6()
+    },
+    // S12 — semana final: bloques largos + prueba 5KM
+    {
+      1: [
+        ..._c5kMovD1(),
+        _ex('c5k_s12_d1_run1', 'Correr',  1, '20 min',  0, 'Intensidad conversacional.'),
+        _ex('c5k_s12_d1_walk', 'Caminar', 1, '1 min',   0, 'Paso ligero.'),
+        _ex('c5k_s12_d1_run2', 'Correr',  1, '10 min',  0, 'Continúa. Total ~31 min.'),
+      ],
+      3: [
+        ..._c5kMovD3(),
+        _ex('c5k_s12_d3_run1', 'Correr',                 1, '24 min', 0, 'Intensidad conversacional.'),
+        _ex('c5k_s12_d3_walk1','Caminar',                1, '1 min',  0, 'Paso ligero.'),
+        _ex('c5k_s12_d3_run2', 'Correr ritmo alto (150 ppm)', 1, '6 min',  0, 'Sube intensidad — 150 pulsaciones por minuto.'),
+        _ex('c5k_s12_d3_walk2','Caminar',                1, '1 min',  0, 'Paso ligero. Total ~32 min.'),
+      ],
+      4: _c5kPrevD4(),
+      5: [
+        _ex('c5k_m_rlunge',  'Movilidad | Runners lunge', 1, '8/lado', 0),
+        _ex('c5k_5km_final', 'Carrera 5KM — Prueba final', 1, '30 min', 0, '🎯 ¡A por los 5KM continuos! Intensidad conversacional.'),
+      ],
+      6: _c5kPrevD6()
     }
   ]
 };
