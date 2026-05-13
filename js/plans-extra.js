@@ -7884,3 +7884,208 @@ WORKOUT_PLANS.quemando_gym = {
     ]
   };
 })();
+
+/* ══════════════ CARRERA 42KM — MARATÓN COMPLETO (12 semanas) ══════════════
+   D1: Técnica de zancada / Cuestas / Intervalos / Cambios de ritmo
+   D2: Preventivo 1 (8 ejercicios: capitán Morgan, toe yoga, wall tibial, etc.)
+   D3: Cuestas / Interválicos / Carrera continua / Tempo Run
+   D4: Preventivo 2 (7 ejercicios: gemelos ISO, plyo pogo box, arch lift, etc.)
+   D5, D7: descanso
+   D6: Tirada larga (21km en S1 hasta 42km en S12)
+*/
+(function () {
+  // Calentamiento y vuelta a la calma — distintos al 21km (50-60% FCmáx, <150ppm)
+  function c42Warm() {
+    return _ex('c42k_warm', 'Calentamiento | Correr a trote suave', 1, '7 min', 0, '50-60% FCmáx.');
+  }
+  function c42Cool() {
+    return _ex('c42k_cool', 'Vuelta a la calma | Correr a trote suave', 1, '5 min', 0, 'Por debajo de 150 ppm.');
+  }
+  // Técnica de zancada "Circular" 8×30seg (D1 común S1-S3, S10)
+  function tecZancada(w) {
+    return _ex('c42k_s' + w + '_tec', 'Técnica de carrera | Circular', 8, '30 seg', 0, 'Máx Intensidad. 1 min descanso en el sitio entre series.');
+  }
+  // Cuestas 6-8° inclinación, X series de 10seg (2min desc en sitio)
+  function cuestas(w, d, reps) {
+    return _ex('c42k_s' + w + '_d' + d + '_cuesta', 'Correr | Cuestas (6-8° inclinación)', reps, '10 seg', 0, 'Máx Intensidad. 2 min descanso en el sitio entre series.');
+  }
+  // Sprint en pista — X series de 30seg, 1min30seg desc andando
+  function sprints30(w, d, reps) {
+    return _ex('c42k_s' + w + '_d' + d + '_spr30', 'Correr | Sprint', reps, '30 seg', 0, 'Máx Intensidad. 1min 30seg descanso andando entre series.');
+  }
+  // Intervalos N×Xm (90-100% FCmáx)
+  function intervalsM(w, d, reps, distM, recRule) {
+    return _ex('c42k_s' + w + '_d' + d + '_int', 'Correr | Sprint', reps, distM + ' m', 0, '90-100% FCmáx. ' + recRule + ' entre series.');
+  }
+  // Carrera continua fácil — 1 serie X km a 60-70% FCmáx
+  function runCont(w, d, km) {
+    return _ex('c42k_s' + w + '_d' + d + '_run', 'Correr', 1, km + ' km', 0, '60-70% FCmáx.');
+  }
+  // Tempo Run — 1 serie X km a 75% FCmáx
+  function tempoRun(w, km) {
+    return _ex('c42k_s' + w + '_d3_tempo', 'Correr | Tempo Run', 1, km + ' km', 0, '75% FCmáx.');
+  }
+
+  // Preventivo 1 (D2) — 8 ejercicios
+  function prev1() {
+    return [
+      _ex('c42k_p1_capmorgan', 'Capitán Morgan con Fitball',  2, '7-10',     60),
+      _ex('c42k_p1_toeyoga',   'Toe Yoga',                    2, '7-10',     60),
+      _ex('c42k_p1_walltibia', 'Wall Tibial Raises',          2, '7-10',     90),
+      _ex('c42k_p1_spanish',   'Spanish Squat ISO HOLD',      2, '15-20 seg',60),
+      _ex('c42k_p1_curlrev',   'Curl Nórdico Reverse',        2, '7-10',     90),
+      _ex('c42k_p1_seatedjump','Seated Squat Jump',           2, '4-6',      90),
+      _ex('c42k_p1_rntsplit',  'RNT Split Squat',             2, '5-6/lado', 60),
+      _ex('c42k_p1_firehyd',   'Fire Hydrants',               2, '8-10/lado',45),
+    ];
+  }
+  // Preventivo 2 (D4) — 7 ejercicios
+  function prev2() {
+    return [
+      _ex('c42k_p2_gemiso',    'Gemelos ISO HOLD',                   2, '10-20 seg',60),
+      _ex('c42k_p2_pogo',      'Plyo Pogo Jumps Box',                2, '10-15',    60),
+      _ex('c42k_p2_archlift',  'Arch Lift',                          2, '8-10',     60),
+      _ex('c42k_p2_cmj',       'Saltos CMJ asistidos',               2, '3-6',      90),
+      _ex('c42k_p2_hacksquat', 'DB Hack Squat con Fitball',          2, '6-10',     90),
+      _ex('c42k_p2_slrdl',     'DB Assisted Single Leg RDL',         2, '8-10/lado',60),
+      _ex('c42k_p2_glutebrid', 'BD Single Leg Glute Bridge ISO HOLD',2, '10-15 seg',60),
+    ];
+  }
+
+  WORKOUT_PLANS.carrera_42km = {
+    id: 'carrera_42km',
+    name: 'Maratón 42KM',
+    planType: 'phased',
+    weeks: 12,
+    description: 'Plan de 12 semanas para completar una maratón (42km) — combina técnica, cuestas, intervalos, tempo y tiradas larguísimas progresivas + doble trabajo preventivo (D2 y D4)',
+    trainingDays: [1, 2, 3, 4, 6],
+    dayMeta: {
+      1: { name: 'Técnica / Cuestas / Intervalos', type: 'running',  muscleGroups: ['Cardio', 'Técnica'] },
+      2: { name: 'Preventivo 1',                   type: 'strength', muscleGroups: ['Pie', 'Tobillo', 'Glúteo'] },
+      3: { name: 'Carrera / Cuestas / Tempo',      type: 'running',  muscleGroups: ['Cardio', 'Resistencia'] },
+      4: { name: 'Preventivo 2',                   type: 'strength', muscleGroups: ['Gemelo', 'Cuádriceps', 'Femoral'] },
+      6: { name: 'Tirada larga',                   type: 'running',  muscleGroups: ['Cardio', 'Resistencia'] }
+    },
+    weeklySchedule: [
+      // S1 — D3 interválicos en lugar de carrera continua
+      {
+        1: [c42Warm(), tecZancada(1), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), sprints30(1, 3, 8), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(), runCont(1, 6, 21), c42Cool()]
+      },
+      // S2
+      {
+        1: [c42Warm(), tecZancada(2), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), runCont(2, 3, 10), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(),
+            _ex('c42k_s2_d6_a', 'Correr (suave)',   8, '1 km', 0, '75% FCmáx.'),
+            _ex('c42k_s2_d6_b', 'Correr (medio)',   8, '1 km', 0, '60-70% FCmáx tras cada serie.'),
+            c42Cool()]
+      },
+      // S3
+      {
+        1: [c42Warm(), tecZancada(3), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), cuestas(3, 3, 4), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(), runCont(3, 6, 24), c42Cool()]
+      },
+      // S4
+      {
+        1: [c42Warm(), cuestas(4, 1, 8), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), runCont(4, 3, 12), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(),
+            _ex('c42k_s4_d6_a', 'Correr (suave)', 6, '2 km', 0, '60-70% FCmáx.'),
+            _ex('c42k_s4_d6_b', 'Correr (medio)', 6, '1 km', 0, '75-80% FCmáx tras cada serie.'),
+            c42Cool()]
+      },
+      // S5
+      {
+        1: [c42Warm(), cuestas(5, 1, 10), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), intervalsM(5, 3, 16, 200, '1min 30seg andando'), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(), runCont(5, 6, 27), c42Cool()]
+      },
+      // S6
+      {
+        1: [c42Warm(), cuestas(6, 1, 8), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), intervalsM(6, 3, 15, 200, '1min 30seg andando'), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(), runCont(6, 6, 30), c42Cool()]
+      },
+      // S7
+      {
+        1: [c42Warm(), intervalsM(7, 1, 14, 400, '2 min descanso en el sitio'), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), runCont(7, 3, 15), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(),
+            _ex('c42k_s7_d6_a', 'Correr (suave)', 4, '4 km', 0, '60-70% FCmáx.'),
+            _ex('c42k_s7_d6_b', 'Correr (medio)', 4, '1 km', 0, '75-80% FCmáx tras cada serie.'),
+            c42Cool()]
+      },
+      // S8
+      {
+        1: [c42Warm(), cuestas(8, 1, 8), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), intervalsM(8, 3, 10, 800, '2 min andando'), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(), runCont(8, 6, 33), c42Cool()]
+      },
+      // S9
+      {
+        1: [c42Warm(), cuestas(9, 1, 8), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), tempoRun(9, 10), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(), runCont(9, 6, 36), c42Cool()]
+      },
+      // S10 — tapering empieza (vuelve a técnica zancada y reduce volumen D3)
+      {
+        1: [c42Warm(), tecZancada(10), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), runCont(10, 3, 8), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(),
+            _ex('c42k_s10_d6_a', 'Correr (suave)', 4, '5 km', 0, '75% FCmáx.'),
+            _ex('c42k_s10_d6_b', 'Correr (medio)', 4, '1 km', 0, '75-80% FCmáx tras cada serie.'),
+            c42Cool()]
+      },
+      // S11
+      {
+        1: [c42Warm(), cuestas(11, 1, 8), c42Cool()],
+        2: prev1(),
+        3: [c42Warm(), tempoRun(11, 12), c42Cool()],
+        4: prev2(),
+        6: [c42Warm(),
+            _ex('c42k_s11_d6_run', 'Correr', 1, '15-18 km', 0, '60-70% FCmáx.'),
+            c42Cool()]
+      },
+      // S12 — semana final: cambios de ritmo + técnica, cuestas y MARATÓN
+      {
+        1: [c42Warm(),
+            _ex('c42k_s12_d1_a',   'Correr (fuerte)',          5, '2 min', 0, '80-90% FCmáx. Alternando con 1 min suave.'),
+            _ex('c42k_s12_d1_b',   'Correr (suave)',           5, '1 min', 0, '60-70% FCmáx tras cada serie.'),
+            _ex('c42k_s12_d1_tec', 'Técnica de carrera | Circular', 4, '30 seg', 0, '1 min descanso entre series.'),
+            c42Cool()],
+        2: prev1(),
+        3: [
+            _ex('c42k_s12_d3_warm', 'Calentamiento | Correr a trote suave', 1, '20-30 min', 0, 'Activación previa a la maratón. 50-60% FCmáx.'),
+            cuestas(12, 3, 4),
+            c42Cool()],
+        4: prev2(),
+        6: [
+            _ex('c42k_final_run', '🎯 MARATÓN — Correr 42 KM', 1, '42 km', 0, '70-80% FCmáx. ¡DÍA DE CARRERA! Disfruta cada km — todo el trabajo tiene su recompensa.'),
+        ]
+      }
+    ]
+  };
+})();
