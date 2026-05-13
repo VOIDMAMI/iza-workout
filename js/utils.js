@@ -251,21 +251,18 @@ function _getAlertAudio() {
   return _alertAudio;
 }
 
-// Reproduce 3 pitidos consecutivos para que sea más audible en el gym.
-// Usa el audio HTML5 pre-cargado (suena fuerte aunque haya música/cascos).
+// Reproduce 3 pitidos consecutivos para avisar de fin de descanso.
+// Usa Web Audio API (igual que los ticks) → se MEZCLA con la música,
+// NO pausa Spotify ni música del sistema. iOS hace audio ducking
+// automático (baja un poco el volumen de la música mientras suena).
+// Frecuencia 1000 Hz, duración 0.35s, volumen 0.85 para que se oiga claro.
 function playAlertSound() {
   const beepOnce = () => {
-    try {
-      const a = _getAlertAudio();
-      a.currentTime = 0;
-      const p = a.play();
-      if (p && p.catch) p.catch(() => {});
-    } catch (e) {}
+    try { _beep(1000, 0.35, 0.85); } catch (e) {}
   };
-  // 3 pitidos separados ~600ms (el clip dura 0.5s)
   beepOnce();
-  setTimeout(beepOnce, 600);
-  setTimeout(beepOnce, 1200);
+  setTimeout(beepOnce, 500);
+  setTimeout(beepOnce, 1000);
 }
 
 // Ticks 3-2-1 usan Web Audio API: se mezclan con la música (no pausan
