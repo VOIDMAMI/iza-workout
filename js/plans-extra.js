@@ -7601,3 +7601,286 @@ WORKOUT_PLANS.quemando_gym = {
     ]
   };
 })();
+
+/* ══════════════ CARRERA 21KM — MEDIA MARATÓN (12 semanas) ══════════════
+   D1: Sprints / técnica / cambios de ritmo / tempo
+   D2: Trabajo preventivo de lesiones C
+   D3: Carrera continua / cuestas / tempo / intervalos
+   D4, D5: descanso
+   D6: Carrera larga (continua o cambios de ritmo) — ¡tirada larga!
+   D7: Trabajo preventivo de lesiones D
+*/
+(function () {
+  // ---- Movilidad: bloques reutilizables ----
+  function movRunBal() {
+    // S1-S2 D1: Runners lunge + Balanceo
+    return [
+      _ex('c21k_m_runlunge', 'Movilidad | Runners lunge',      1, '10/lado', 0),
+      _ex('c21k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/lado', 0),
+    ];
+  }
+  function movFull() {
+    // Cossak + Runners + Balanceo (S3+ D1, D3, D6)
+    return [
+      _ex('c21k_m_cossak',   'Movilidad | Cossak squat',        1, '8/lado',  0),
+      _ex('c21k_m_runlunge', 'Movilidad | Runners lunge',       1, '10/lado', 0),
+      _ex('c21k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/lado', 0),
+    ];
+  }
+  function movS1D3() {
+    // Runners lunge + Sentadilla sin peso + Balanceo (solo S1 D3)
+    return [
+      _ex('c21k_m_runlunge', 'Movilidad | Runners lunge',       1, '10/lado', 0),
+      _ex('c21k_squat_np',   'Sentadilla sin peso',             1, '10',      0),
+      _ex('c21k_m_balanceo', 'Movilidad | Balanceo de piernas', 1, '10/lado', 0),
+    ];
+  }
+  function warmup7() {
+    return _ex('c21k_warm7', 'Calentamiento | Correr a trote suave', 1, '7 min', 0, 'Intensidad conversacional.');
+  }
+  function cooldown5() {
+    return _ex('c21k_cool5', 'Vuelta a la calma | Correr a trote suave', 1, '5 min', 0, 'Intensidad conversacional.');
+  }
+  function cooldown7() {
+    return _ex('c21k_cool7', 'Vuelta a la calma | Correr a trote suave', 1, '7 min', 0, 'Intensidad conversacional.');
+  }
+  // Técnica de zancada 8×30" (D1 común)
+  function tecnicaZancada(w) {
+    return _ex('c21k_s' + w + '_d1_zancada', 'Correr | Sprint', 8, '30"', 0, 'Máxima amplitud de zancada. 1 minuto descanso en el sitio tras cada serie.');
+  }
+  // Cuestas/Sprints
+  function cuestas(w, reps) {
+    return _ex('c21k_s' + w + '_d3_cuesta', 'Correr | Sprint en cuesta', reps, '30"', 0, 'Sprint cuesta arriba. 1\'-1\'30" descanso en el sitio entre series.');
+  }
+  // Carrera continua con FCmáx (formato "X km a Y% FCmáx")
+  function runCont(w, d, km, fcmax) {
+    return _ex('c21k_s' + w + '_d' + d + '_run', 'Correr', 1, km + ' km', 0, fcmax + ' FCmáx.');
+  }
+  // Tempo: X min aumentando ritmo progresivamente
+  function tempoRun(w, mins, fcmax) {
+    return _ex('c21k_s' + w + '_tempo', 'Correr', 1, mins + ' min aumentando el ritmo progresivamente', 0, fcmax + ' FCmáx.');
+  }
+  // Cambios de ritmo D1 (3 × 8min + 2min, total 30 min — S5/S6)
+  function cambios30S5() {
+    return [
+      _ex('c21k_s5_d1_a', 'Correr (fuerte)', 3, '8 min', 0, '90-95% FCmáx. Alternando con los 2 min suaves.'),
+      _ex('c21k_s5_d1_b', 'Correr (suave)',  3, '2 min', 0, '66-75% FCmáx. Alternando.'),
+    ];
+  }
+  function cambios30S6() {
+    // Idéntico que S5 pero IDs únicos
+    return [
+      _ex('c21k_s6_d1_a', 'Correr (fuerte)', 3, '8 min', 0, '90-95% FCmáx. Alternando con los 2 min suaves.'),
+      _ex('c21k_s6_d1_b', 'Correr (suave)',  3, '2 min', 0, '66-75% FCmáx. Alternando.'),
+    ];
+  }
+  // S9 D1: 6×(3min 80-95% + 2min 75-85%) = 30 min
+  function cambios30S9() {
+    return [
+      _ex('c21k_s9_d1_a', 'Correr (fuerte)', 6, '3 min', 0, '80-95% FCmáx. Alternando con los 2 min suaves.'),
+      _ex('c21k_s9_d1_b', 'Correr (medio)',  6, '2 min', 0, '75-85% FCmáx. Alternando.'),
+    ];
+  }
+  // D6 Cambios de ritmo "duro" S2 (3km 66-75 + 1km 90%) × 3 = 12km
+  function cambios12S2() {
+    return [
+      _ex('c21k_s2_d6_a', 'Correr (rodaje)', 3, '3 km', 0, '66-75% FCmáx.'),
+      _ex('c21k_s2_d6_b', 'Correr (fuerte)', 3, '1 km', 0, '90% FCmáx.'),
+    ];
+  }
+  // S4 D6 — 6×(1km 90% + 1km 75-85%) = 12 km
+  function cambios12S4() {
+    return [
+      _ex('c21k_s4_d6_a', 'Correr (fuerte)', 6, '2 km', 0, '90% FCmáx.'),
+      _ex('c21k_s4_d6_b', 'Correr (medio)',  6, '1 km', 0, '75-85% FCmáx.'),
+    ];
+  }
+  // S6 D6 — 4×(2km 90% + 1km 75-85%) = 12 km
+  function cambios12S6() {
+    return [
+      _ex('c21k_s6_d6_a', 'Correr (fuerte)', 4, '2 km', 0, '90% FCmáx.'),
+      _ex('c21k_s6_d6_b', 'Correr (medio)',  4, '1 km', 0, '75-85% FCmáx.'),
+    ];
+  }
+  // S8 D6 — 3×(3km 90% + 1km 75-85%) = 12 km
+  function cambios12S8() {
+    return [
+      _ex('c21k_s8_d6_a', 'Correr (fuerte)', 3, '3 km', 0, '90% FCmáx.'),
+      _ex('c21k_s8_d6_b', 'Correr (medio)',  3, '1 km', 0, '75-85% FCmáx.'),
+    ];
+  }
+  // S10 D6 — 3×(4km 90% + 1km 75-85%) = 15 km
+  function cambios15S10() {
+    return [
+      _ex('c21k_s10_d6_a', 'Correr (fuerte)', 3, '4 km', 0, '90% FCmáx.'),
+      _ex('c21k_s10_d6_b', 'Correr (medio)',  3, '1 km', 0, '75-85% FCmáx.'),
+    ];
+  }
+  // Tempo D3 S6: 8km aumentando ritmo
+  function tempo8(w) {
+    return _ex('c21k_s' + w + '_d3_tempo', 'Correr', 1, '8 km aumentando el ritmo progresivamente', 0, '66-75% FCmáx inicial.');
+  }
+  // Preventivo C (D2) — series y reps según semana
+  function prevC(sets, reps) {
+    return [
+      _ex('c21k_pc_gemelo',   'Gemelo | Elevación de talones',                sets, reps,           90),
+      _ex('c21k_pc_flexbip',  'Movilidad | Flexión de tobillo en bipedestación', sets, reps,        90),
+      _ex('c21k_pc_kbll',     'Movilidad | Kettlebell leg lift over',         sets, reps + '/lado', 90),
+      _ex('c21k_pc_fr_cuad',  'Foam roller | Cuádriceps',                     sets, reps,           90),
+      _ex('c21k_pc_fr_glute', 'Foam roller | Glúteo medio',                   sets, reps + '/lado', 90),
+      _ex('c21k_pc_bulgara',  'Sentadilla búlgara con salto',                 sets, reps + '/lado', 90),
+    ];
+  }
+  // Preventivo D (D7) — series y reps según semana. Solo S1 lleva Core Deadbugs.
+  function prevD(sets, reps, withCore) {
+    const list = [];
+    if (withCore) {
+      list.push(_ex('c21k_pd_deadbug', 'Core | Deadbugs', 1, '8/lado', 0));
+    }
+    list.push(
+      _ex('c21k_pd_flexpeso',  'Movilidad | Flexión de tobillo con peso', sets, reps + (sets >= 3 ? '' : '/lado'), 90),
+      _ex('c21k_pd_glutebrid', 'Glute bridge unilateral sin peso',         sets, reps + '/lado', 90),
+      _ex('c21k_pd_fr_planta', 'Foam roller | Planta del pie',             sets, reps + '/lado', 90),
+      _ex('c21k_pd_cmj',       'Saltos CMJ asistidos',                     sets, reps,           90),
+      _ex('c21k_pd_squat',     'Sentadilla sin peso',                      sets, reps,           90),
+      _ex('c21k_pd_curl',      'Curl de femoral con fitball',              sets, reps,           90)
+    );
+    return list;
+  }
+
+  WORKOUT_PLANS.carrera_21km = {
+    id: 'carrera_21km',
+    name: 'Media Maratón 21KM',
+    planType: 'phased',
+    weeks: 12,
+    description: 'Plan de 12 semanas para completar una media maratón (21km) — combina técnica, cuestas, intervalos, tempo y tiradas largas progresivas + trabajo preventivo de lesiones',
+    trainingDays: [1, 2, 3, 6, 7],
+    dayMeta: {
+      1: { name: 'Sprints / Técnica / Cambios', type: 'running',  muscleGroups: ['Cardio', 'Técnica'] },
+      2: { name: 'Prevención de lesiones',      type: 'strength', muscleGroups: ['Tobillo', 'Glúteo medio'] },
+      3: { name: 'Cuestas / Tempo / Intervalos', type: 'running', muscleGroups: ['Cardio', 'Resistencia'] },
+      6: { name: 'Tirada larga',                type: 'running',  muscleGroups: ['Cardio', 'Resistencia'] },
+      7: { name: 'Prevención de lesiones',      type: 'strength', muscleGroups: ['Pie', 'Cuádriceps', 'Femoral'] }
+    },
+    weeklySchedule: [
+      // S1
+      {
+        1: [...movRunBal(), warmup7(), tecnicaZancada(1), cooldown5()],
+        2: prevC(2, '9'),
+        3: [...movS1D3(), warmup7(), cuestas(1, 9), cooldown5()],
+        6: [...movFull(), warmup7(), runCont(1, 6, 10, '66-75%'), cooldown5()],
+        7: prevD(2, '9', true)  // S1 incluye Core Deadbugs
+      },
+      // S2
+      {
+        1: [...movRunBal(), warmup7(), tecnicaZancada(2), cooldown5()],
+        2: prevC(2, '9'),
+        3: [...movFull(), warmup7(), runCont(2, 3, 5, '66-75%'), cooldown5()],
+        6: [...movFull(), warmup7(), ...cambios12S2(), cooldown5()],
+        7: prevD(2, '9', false)
+      },
+      // S3
+      {
+        1: [...movRunBal(), warmup7(), tecnicaZancada(3), cooldown5()],
+        2: prevC(2, '9'),
+        3: [...movFull(), warmup7(), cuestas(3, 12), cooldown5()],
+        6: [...movFull(), warmup7(), runCont(3, 6, 14, '66-75%'), cooldown5()],
+        7: prevD(2, '9', false)
+      },
+      // S4
+      {
+        1: [...movFull(), warmup7(), tecnicaZancada(4), cooldown5()],
+        2: prevC(2, '9'),
+        3: [...movFull(), warmup7(), runCont(4, 3, 7, '66-75%'), cooldown5()],
+        6: [...movFull(), warmup7(), ...cambios12S4(), cooldown5()],
+        7: prevD(2, '9', false)
+      },
+      // S5
+      {
+        1: [...movFull(), warmup7(), ...cambios30S5(), cooldown5()],
+        2: prevC(2, '9'),
+        3: [...movFull(), warmup7(),
+            _ex('c21k_s5_d3_sprint', 'Correr | Sprint', 16, '200 m sprint', 0, '97-100% FCmáx.'),
+            _ex('c21k_s5_d3_rec',    'Descanso en el sitio', 16, 'mismo tiempo que tardes en recorrer los 200 m', 0, 'Tras cada serie.'),
+            cooldown5()],
+        6: [...movFull(), warmup7(), runCont(5, 6, 16, '66-75%'), cooldown5()],
+        7: prevD(2, '9', false)
+      },
+      // S6
+      {
+        1: [...movFull(), warmup7(), ...cambios30S6(), cooldown5()],
+        2: prevC(2, '9'),
+        3: [...movFull(), warmup7(), tempo8(6), cooldown5()],
+        6: [...movFull(), warmup7(), ...cambios12S6(), cooldown5()],
+        7: prevD(2, '9', false)
+      },
+      // S7 — preventivos suben a 3×10
+      {
+        1: [...movFull(), warmup7(), tempoRun(7, 25, '90-95%'), cooldown5()],
+        2: prevC(3, '10'),
+        3: [...movFull(), warmup7(),
+            _ex('c21k_s7_d3_sprint', 'Correr | Sprint', 7, '200 m', 0, '97-100% FCmáx.'),
+            _ex('c21k_s7_d3_rec',    'Descanso en el sitio', 7, 'mismo tiempo que tardes en recorrer los 200 m', 0, 'Tras cada serie.'),
+            cooldown7()],
+        6: [...movFull(), warmup7(), runCont(7, 6, 18, '66-75%'), cooldown5()],
+        7: prevD(3, '10', false)
+      },
+      // S8
+      {
+        1: [...movFull(), warmup7(), tecnicaZancada(8), cooldown5()],
+        2: prevC(3, '10'),
+        3: [...movFull(), warmup7(), runCont(8, 3, 9, '66-75%'), cooldown5()],
+        6: [...movFull(), warmup7(), ...cambios12S8(), cooldown5()],
+        7: prevD(3, '10', false)
+      },
+      // S9
+      {
+        1: [...movFull(), warmup7(), ...cambios30S9(), cooldown5()],
+        2: prevC(3, '10'),
+        3: [...movFull(), warmup7(),
+            _ex('c21k_s9_d3_sprint', 'Correr | Sprint', 8, '200 m', 0, '97-100% FCmáx.'),
+            _ex('c21k_s9_d3_rec',    'Descanso en el sitio', 8, 'doble del tiempo que tardes en recorrer los 200 m', 0, 'Tras cada serie.'),
+            cooldown5()],
+        6: [...movFull(), warmup7(), runCont(9, 6, 20, '66-75%'), cooldown5()],
+        7: prevD(3, '10', false)
+      },
+      // S10
+      {
+        1: [...movFull(), warmup7(),
+            _ex('c21k_s10_d1_sprint', 'Correr | Sprint', 10, '200 m', 0, '97-100% FCmáx.'),
+            _ex('c21k_s10_d1_rec',    'Descanso en el sitio', 10, 'doble del tiempo que tardes en recorrer los 200 m', 0, 'Tras cada serie.'),
+            cooldown5()],
+        2: prevC(3, '10'),
+        3: [...movFull(), warmup7(), runCont(10, 3, 10, '66-75%'), cooldown5()],
+        6: [...movFull(), warmup7(), ...cambios15S10(), cooldown5()],
+        7: prevD(3, '10', false)
+      },
+      // S11
+      {
+        1: [...movFull(), warmup7(), tempoRun(11, 35, '90-95%'), cooldown5()],
+        2: prevC(3, '10'),
+        3: [...movFull(), warmup7(),
+            _ex('c21k_s11_d3_sprint', 'Correr | Sprint', 9, '200 m', 0, '97-100% FCmáx.'),
+            _ex('c21k_s11_d3_rec',    'Descanso en el sitio', 9, 'doble del tiempo que tardes en recorrer los 200 m', 0, 'Tras cada serie.'),
+            cooldown5()],
+        6: [...movFull(), warmup7(), runCont(11, 6, 14, '66-75%'), cooldown5()],
+        7: prevD(3, '10', false)
+      },
+      // S12 — semana final: activación + media maratón
+      {
+        1: [...movFull(), warmup7(), tecnicaZancada(12), cooldown5()],
+        2: prevC(3, '10'),
+        3: [...movFull(),
+            _ex('c21k_s12_activ_warm',   'Calentamiento | Correr a trote suave', 1, '20-30 minutos', 0, 'Activación previa a la Carrera Final.'),
+            _ex('c21k_s12_activ_sprint', 'Correr | Sprint cuesta arriba',         8, '10"',           0, 'Máxima intensidad.'),
+            _ex('c21k_s12_activ_rec',    'Descanso',                              8, '2 minutos',     0, 'Tras cada sprint.'),
+            cooldown7()],
+        6: [
+          _ex('c21k_final_warm', 'Calentamiento | Correr a trote suave', 1, '1 km', 0, '¡¡HA LLEGADO EL DÍA!! Todo el trabajo tiene su recompensa.'),
+          _ex('c21k_final_run',  '🎯 MEDIA MARATÓN — Correr 21 KM', 1, '21 km', 0, '¡A disfrutar! Comparte cómo te ha ido.'),
+        ],
+        7: prevD(3, '10', false)
+      }
+    ]
+  };
+})();

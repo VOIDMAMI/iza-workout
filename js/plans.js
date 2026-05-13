@@ -27,6 +27,7 @@ const PROGRAM_PLAN_CATEGORY = {
   // CARRERA
   carrera_5km:         'CARRERA',
   carrera_10km:        'CARRERA',
+  carrera_21km:        'CARRERA',
   // HÍBRIDOS
   hibrido_fuerza_carrera:'HIBRIDOS',
   woods:               'HIBRIDOS',
