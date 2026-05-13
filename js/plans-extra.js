@@ -7405,3 +7405,199 @@ WORKOUT_PLANS.quemando_gym = {
     })
   };
 })();
+
+/* ══════════════ CARRERA 10KM (12 semanas) ══════════════
+   Entreno orientado a correr 10km — combina:
+     D1: Intervalos (HIIT Calf jumps + sprints o carrera continua)
+     D2: Trabajo preventivo de lesiones A
+     D3: Carrera continua corta o series largas (ritmo alto)
+     D5: Carrera larga (140-155 ppm, ritmo conversacional)
+     D6: Trabajo preventivo de lesiones B
+     D4 y D7: descanso
+*/
+(function () {
+  // ---- Bloques movilidad reutilizables ----
+  function movD1() {
+    return [
+      _ex('c10k_m_runlunge',  'Movilidad | Runners lunge', 1, '10/lado', 0),
+      _ex('c10k_hiit_calf',   'HIIT | Calf jumps',         1, '10 saltos + 1 min descanso + 10 saltos', 0, 'Bloque pliométrico previo a los intervalos.'),
+    ];
+  }
+  function movD3() {
+    return [
+      _ex('c10k_m_flex_tob',  'Movilidad | Flexión de tobillo en sedestación', 1, '10/lado', 0),
+      _ex('c10k_hiit_side',   'HIIT | Side bound launches',                    1, '5/lado',  0, 'Saltos laterales preparativos.'),
+    ];
+  }
+  function movD5() {
+    return [
+      _ex('c10k_m_hipcar',     'Movilidad | Hip CAR',           1, '10/lado', 0),
+      _ex('c10k_m_balanceo',   'Movilidad | Balanceo de piernas', 1, '10/lado', 0),
+    ];
+  }
+  function warmup() {
+    return _ex('c10k_warm', 'Calentamiento | Correr a trote suave', 1, '7 min', 0, 'Intensidad conversacional.');
+  }
+  function cooldown() {
+    return _ex('c10k_cool', 'Vuelta a la calma | Correr a trote suave', 1, '5 min', 0, 'Intensidad conversacional.');
+  }
+  // Carrera continua: 1 serie, distancia, ppm. ID único por semana/día.
+  function runCont(w, d, km, ppm) {
+    return _ex('c10k_s' + w + '_d' + d + '_run', 'Correr', 1, km + ' km', 0, ppm);
+  }
+  // Intervalos: N series de Xm sprint + 1 min trote suave entre.
+  function intervals(w, d, reps, distM, intensidad) {
+    return [
+      _ex('c10k_s' + w + '_d' + d + '_sprint', 'Correr | Sprint', reps, distM + ' m', 0, 'Intensidad ' + intensidad + '.'),
+      _ex('c10k_s' + w + '_d' + d + '_trote',  'Trote suave (recuperación)', reps, '1 min', 0, '1 minuto tras cada serie.'),
+    ];
+  }
+  // Series largas: N series × X km a 170 ppm con 1min trote entre.
+  function longSeries(w, d, reps, km) {
+    return [
+      _ex('c10k_s' + w + '_d' + d + '_long', 'Correr | Serie larga', reps, km + ' km', 0, 'Intensidad 170 ppm.'),
+      _ex('c10k_s' + w + '_d' + d + '_trote', 'Trote suave (recuperación)', reps, '1 min', 0, '1 minuto tras cada serie.'),
+    ];
+  }
+  // Preventivo A (D2)
+  function prevA() {
+    return [
+      _ex('c10k_p_rockback',  'Movilidad | Leg Rockback',         2, '9/lado', 90),
+      _ex('c10k_p_dedo',      'Extensión del dedo gordo del pie', 2, '9/pie',  90),
+      _ex('c10k_p_gemelo',    'Gemelo con disco',                 2, '9',      90),
+      _ex('c10k_p_fr_cuad',   'Foam roller | Cuádriceps',         2, '9',      90),
+      _ex('c10k_p_stepup',    'Step up con mancuerna',            2, '9',      90),
+      _ex('c10k_p_pistol',    'Pistol squat con apoyo a dos manos',2, '9/lado',90),
+    ];
+  }
+  // Preventivo B (D6)
+  function prevB() {
+    return [
+      _ex('c10k_p_fr_planta', 'Foam roller | Planta del pie',     2, '9/lado', 90),
+      _ex('c10k_p_dedo',      'Extensión del dedo gordo del pie', 2, '9/pie',  90),
+      _ex('c10k_p_flex_peso', 'Movilidad | Flexión de tobillo con peso', 2, '9/lado', 90),
+      _ex('c10k_p_cmj',       'Saltos CMJ asistidos',             2, '9',      90),
+      _ex('c10k_p_squat',     'Sentadilla sin peso',              2, '9',      90),
+      _ex('c10k_p_curl',      'Curl de femoral con fitball',      2, '9',      90),
+    ];
+  }
+
+  WORKOUT_PLANS.carrera_10km = {
+    id: 'carrera_10km',
+    name: 'Carrera 10KM',
+    planType: 'phased',
+    weeks: 12,
+    description: 'Plan de 12 semanas para correr 10km — combina carrera continua, series cortas (intervalos) y largas + trabajo preventivo de lesiones',
+    trainingDays: [1, 2, 3, 5, 6],
+    dayMeta: {
+      1: { name: 'Carrera + HIIT',         type: 'running',  muscleGroups: ['Cardio', 'Piernas'] },
+      2: { name: 'Prevención de lesiones', type: 'strength', muscleGroups: ['Tobillo', 'Cuádriceps'] },
+      3: { name: 'Carrera ritmo alto',     type: 'running',  muscleGroups: ['Cardio', 'Resistencia'] },
+      5: { name: 'Carrera larga',          type: 'running',  muscleGroups: ['Cardio', 'Resistencia'] },
+      6: { name: 'Prevención de lesiones', type: 'strength', muscleGroups: ['Pie', 'Cuádriceps', 'Femoral'] }
+    },
+    weeklySchedule: [
+      // S1
+      {
+        1: [...movD1(), warmup(), runCont(1, 1, 4, '140-160 ppm'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), runCont(1, 3, 4, 'ritmo libre'), cooldown()],
+        5: [...movD5(), warmup(), runCont(1, 5, 4, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S2
+      {
+        1: [...movD1(), warmup(), runCont(2, 1, 4, '140-160 ppm'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), runCont(2, 3, 4, 'ritmo libre'), cooldown()],
+        5: [...movD5(), warmup(), runCont(2, 5, 4, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S3
+      {
+        1: [...movD1(), warmup(), runCont(3, 1, 4, '140-160 ppm'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), runCont(3, 3, 4, 'ritmo libre'), cooldown()],
+        5: [...movD5(), warmup(), runCont(3, 5, 4, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S4 — empiezan intervalos
+      {
+        1: [...movD1(), warmup(), ...intervals(4, 1, 4, 400, '8/10'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), runCont(4, 3, 4, '170 ppm'), cooldown()],
+        5: [...movD5(), warmup(), runCont(4, 5, 6, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S5
+      {
+        1: [...movD1(), warmup(), ...intervals(5, 1, 4, 400, '8/10'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), runCont(5, 3, 5, '170 ppm'), cooldown()],
+        5: [...movD5(), warmup(), runCont(5, 5, 6, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S6 — series largas en D3
+      {
+        1: [...movD1(), warmup(), ...intervals(6, 1, 6, 400, '8/10'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), ...longSeries(6, 3, 2, 2), cooldown()],
+        5: [...movD5(), warmup(), runCont(6, 5, 7, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S7
+      {
+        1: [...movD1(), warmup(), ...intervals(7, 1, 6, 400, '8/10'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), ...longSeries(7, 3, 2, 2), cooldown()],
+        5: [...movD5(), warmup(), runCont(7, 5, 7, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S8 — sprints suben a 600m, series largas a 3km
+      {
+        1: [...movD1(), warmup(), ...intervals(8, 1, 4, 600, '6-7/10'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), ...longSeries(8, 3, 2, 3), cooldown()],
+        5: [...movD5(), warmup(), runCont(8, 5, 7, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S9
+      {
+        1: [...movD1(), warmup(), ...intervals(9, 1, 4, 600, '6-7/10'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), ...longSeries(9, 3, 2, 3), cooldown()],
+        5: [...movD5(), warmup(), runCont(9, 5, 8, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S10
+      {
+        1: [...movD1(), warmup(), ...intervals(10, 1, 5, 600, '6-7/10'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), ...longSeries(10, 3, 2, 3), cooldown()],
+        5: [...movD5(), warmup(), runCont(10, 5, 8, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S11 — series largas a 4km, carrera larga 9km
+      {
+        1: [...movD1(), warmup(), ...intervals(11, 1, 5, 600, '7/10'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), ...longSeries(11, 3, 2, 4), cooldown()],
+        5: [...movD5(), warmup(), runCont(11, 5, 9, '140-155 ppm'), cooldown()],
+        6: prevB()
+      },
+      // S12 — tapering + prueba final 10km
+      {
+        1: [...movD1(), warmup(), runCont(12, 1, 3, '150-160 ppm — Tapering'), cooldown()],
+        2: prevA(),
+        3: [...movD3(), warmup(), ...longSeries(12, 3, 2, 4), cooldown()],
+        5: [
+          ...movD5(),
+          _ex('c10k_final_warm', 'Calentamiento | Correr a trote suave', 1, '7 min', 0, '¡Llegó EL DÍA! Todo el trabajo tiene su recompensa, y hoy lo vas a ver.'),
+          _ex('c10k_final_run',  '🎯 Prueba Final — Correr 10 KM', 1, '10 km', 0, '160-170 ppm. ¡A por los 10KM continuos!'),
+          _ex('c10k_final_cool', 'Vuelta a la calma | Correr a trote suave', 1, '5 min', 0, 'Comparte cómo te ha ido.'),
+        ],
+        6: prevB()
+      }
+    ]
+  };
+})();

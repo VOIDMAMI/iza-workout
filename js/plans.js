@@ -26,6 +26,7 @@ const PROGRAM_PLAN_CATEGORY = {
   gluteos_mamasota:    'FUERZA',
   // CARRERA
   carrera_5km:         'CARRERA',
+  carrera_10km:        'CARRERA',
   // HÍBRIDOS
   hibrido_fuerza_carrera:'HIBRIDOS',
   woods:               'HIBRIDOS',
