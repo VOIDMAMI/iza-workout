@@ -325,9 +325,13 @@ function releaseWakeLock() {
   }
 }
 
-// Re-acquire wake lock when app comes back to foreground
+// Re-acquire wake lock when app comes back to foreground.
+// Si hay un workout activo O un timer de descanso corriendo, re-pedir.
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && Workout?.currentWorkout && !_wakeLock) {
+  if (document.visibilityState !== 'visible' || _wakeLock) return;
+  const hasWorkout = !!Workout?.currentWorkout;
+  const hasActiveTimer = !!Tracker?.timerInterval;
+  if (hasWorkout || hasActiveTimer) {
     requestWakeLock();
   }
 });

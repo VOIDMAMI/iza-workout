@@ -245,6 +245,11 @@ const Tracker = {
     this.timerSeconds = Math.max(0, Math.ceil((this.timerEndAt - Date.now()) / 1000));
     this.timerFired = false;
 
+    // Reforzar wake lock: pedirlo de nuevo al iniciar el timer para que la
+    // pantalla no se apague durante el descanso (clave en iOS para que el
+    // _tick siga ejecutándose y suene el aviso a tiempo).
+    requestWakeLock();
+
     // Update preset buttons
     document.querySelectorAll('.timer-preset-btn').forEach(btn => {
       btn.classList.remove('active');
