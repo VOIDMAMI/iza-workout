@@ -296,30 +296,35 @@ function _makeTripleBeepDataUri(freq, beepSec, gapSec, volume) {
   return 'data:audio/wav;base64,' + btoa(binary);
 }
 
-// Alert final: usa <audio> HTML5 con los 3 pitidos en un solo clip.
-// En iOS la categoría de Audio HTML5 es "playback" → SUENA con cascos
-// aunque haya música del sistema sonando, y aunque la app esté en
-// background. Sí pausa Spotify ~1.5s pero solo 1 vez por descanso.
-//
-// Web Audio API se silenciaba con cascos cuando Spotify ocupaba la
-// sesión de audio (categoría "ambient") — por eso volvemos a HTML5.
-let _alertAudio = null;
-function _getAlertAudio() {
-  if (!_alertAudio) {
-    // 3 pitidos de 0.35s separados por 0.25s de silencio → clip ~1.55s
-    _alertAudio = new Audio(_makeTripleBeepDataUri(1000, 0.35, 0.25, 0.85));
-    _alertAudio.preload = 'auto';
+// Cacheamos solo el data URI (barato — generar el WAV es lento) pero
+// creamos un Audio NUEVO en cada playAlertSound() y lo descartamos al
+// terminar. Así iOS no nos deja "ocupando" el reproductor del sistema
+// indefinidamente: Spotify recupera el foco en cuanto el clip acaba.
+let _alertAudioUri = null;
+function _getAlertAudioUri() {
+  if (!_alertAudioUri) {
+    // 3 pitidos de 0.35s separados por 0.25s → clip ~1.55s
+    _alertAudioUri = _makeTripleBeepDataUri(1000, 0.35, 0.25, 0.85);
   }
-  return _alertAudio;
+  return _alertAudioUri;
 }
 
-// Reproduce el clip con los 3 pitidos finales del descanso.
 function playAlertSound() {
   try {
-    const a = _getAlertAudio();
-    a.currentTime = 0;
+    const a = new Audio(_getAlertAudioUri());
+    a.preload = 'none';   // evita que iOS lo registre como "media activa"
+    // Liberar la sesión de audio en cuanto termina o falla.
+    const dispose = () => {
+      try {
+        a.pause();
+        a.src = '';
+        a.load();          // fuerza release del recurso
+      } catch (e) {}
+    };
+    a.addEventListener('ended', dispose, { once: true });
+    a.addEventListener('error', dispose, { once: true });
     const p = a.play();
-    if (p && p.catch) p.catch(() => {});
+    if (p && p.catch) p.catch(dispose);
   } catch (e) {}
 }
 
@@ -344,18 +349,21 @@ function unlockAudio() {
     }
   } catch (e) {}
 
-  // 2. Audio HTML5 para alert final (autorizar reproducción posterior)
+  // 2. Audio HTML5 para alert final: reproducir un clip muteado y
+  //    descartarlo de inmediato → iOS autoriza Audio HTML5 sin dejar
+  //    una instancia "viva" que robe el foco a Spotify.
   try {
-    const a = _getAlertAudio();
+    const a = new Audio(_getAlertAudioUri());
+    a.preload = 'none';
     a.muted = true;
+    const dispose = () => {
+      try { a.pause(); a.src = ''; a.load(); } catch (e) {}
+    };
     const p = a.play();
     if (p && p.then) {
-      p.then(() => { a.pause(); a.currentTime = 0; a.muted = false; })
-       .catch(() => { a.muted = false; });
+      p.then(dispose).catch(dispose);
     } else {
-      a.pause();
-      a.currentTime = 0;
-      a.muted = false;
+      dispose();
     }
   } catch (e) {}
 }
