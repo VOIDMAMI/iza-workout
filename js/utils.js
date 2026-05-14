@@ -239,30 +239,88 @@ function _beep(freq, durationSec, volume) {
   osc.stop(now + durationSec);
 }
 
-// Alert final usa <audio> HTML5: suena fuerte y se oye con cascos sí o sí.
-// Pausa Spotify ~0.5s pero solo ocurre al terminar el descanso (1 vez por
-// cronómetro), no cada tick. Ver memoria ios_audio para el contexto.
+// Construye un WAV con 3 pitidos consecutivos separados por silencios.
+// Un solo clip HTML5 → una sola interrupción de música en iOS.
+function _makeTripleBeepDataUri(freq, beepSec, gapSec, volume) {
+  const sampleRate = 44100;
+  const beepSamples = Math.floor(sampleRate * beepSec);
+  const gapSamples  = Math.floor(sampleRate * gapSec);
+  // 3 beeps + 2 gaps
+  const numSamples = beepSamples * 3 + gapSamples * 2;
+  const bytesPerSample = 2;
+  const dataSize = numSamples * bytesPerSample;
+  const buffer = new ArrayBuffer(44 + dataSize);
+  const view = new DataView(buffer);
+
+  const writeStr = (offset, str) => {
+    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+  };
+  writeStr(0, 'RIFF');
+  view.setUint32(4, 36 + dataSize, true);
+  writeStr(8, 'WAVE');
+  writeStr(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * bytesPerSample, true);
+  view.setUint16(32, bytesPerSample, true);
+  view.setUint16(34, 16, true);
+  writeStr(36, 'data');
+  view.setUint32(40, dataSize, true);
+
+  const fade = Math.min(0.01, beepSec / 4);
+  const fadeSamples = Math.floor(sampleRate * fade);
+  let offset = 44;
+  for (let beep = 0; beep < 3; beep++) {
+    for (let i = 0; i < beepSamples; i++) {
+      let amp = volume;
+      if (i < fadeSamples) amp *= i / fadeSamples;
+      else if (i > beepSamples - fadeSamples) amp *= (beepSamples - i) / fadeSamples;
+      const s = Math.sin(2 * Math.PI * freq * (i / sampleRate)) * amp;
+      view.setInt16(offset, s * 32767, true);
+      offset += 2;
+    }
+    if (beep < 2) {
+      // gap (silencio)
+      for (let i = 0; i < gapSamples; i++) {
+        view.setInt16(offset, 0, true);
+        offset += 2;
+      }
+    }
+  }
+
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return 'data:audio/wav;base64,' + btoa(binary);
+}
+
+// Alert final: usa <audio> HTML5 con los 3 pitidos en un solo clip.
+// En iOS la categoría de Audio HTML5 es "playback" → SUENA con cascos
+// aunque haya música del sistema sonando, y aunque la app esté en
+// background. Sí pausa Spotify ~1.5s pero solo 1 vez por descanso.
+//
+// Web Audio API se silenciaba con cascos cuando Spotify ocupaba la
+// sesión de audio (categoría "ambient") — por eso volvemos a HTML5.
 let _alertAudio = null;
 function _getAlertAudio() {
   if (!_alertAudio) {
-    _alertAudio = new Audio(_makeBeepDataUri(1000, 0.5, 0.7));
+    // 3 pitidos de 0.35s separados por 0.25s de silencio → clip ~1.55s
+    _alertAudio = new Audio(_makeTripleBeepDataUri(1000, 0.35, 0.25, 0.85));
     _alertAudio.preload = 'auto';
   }
   return _alertAudio;
 }
 
-// Reproduce 3 pitidos consecutivos para avisar de fin de descanso.
-// Usa Web Audio API (igual que los ticks) → se MEZCLA con la música,
-// NO pausa Spotify ni música del sistema. iOS hace audio ducking
-// automático (baja un poco el volumen de la música mientras suena).
-// Frecuencia 1000 Hz, duración 0.35s, volumen 0.85 para que se oiga claro.
+// Reproduce el clip con los 3 pitidos finales del descanso.
 function playAlertSound() {
-  const beepOnce = () => {
-    try { _beep(1000, 0.35, 0.85); } catch (e) {}
-  };
-  beepOnce();
-  setTimeout(beepOnce, 500);
-  setTimeout(beepOnce, 1000);
+  try {
+    const a = _getAlertAudio();
+    a.currentTime = 0;
+    const p = a.play();
+    if (p && p.catch) p.catch(() => {});
+  } catch (e) {}
 }
 
 // Ticks 3-2-1 usan Web Audio API: se mezclan con la música (no pausan
