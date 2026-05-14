@@ -212,19 +212,22 @@ function ensureNotificationPermission() {
   Notification.requestPermission().catch(() => {});
 }
 
-function showRestDoneNotification() {
-  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+// Patrón de vibración largo: 7 pulsos fuertes con pausas cortas.
+// Cuando Spotify suena iOS silencia el sonido de la notificación pero
+// la vibración sí se siente — patrón largo para que se note bien.
+const _REST_VIBRATE = [400, 150, 400, 150, 400, 150, 600];
 
+function _fireRestNotification(tag) {
   const title = '¡Descanso terminado! 💪';
   const options = {
     body: 'Continúa con la siguiente serie',
     icon: './assets/icons/icon-192.png',
     badge: './assets/icons/icon-192.png',
-    tag: 'rest-done',
+    tag: tag,
     renotify: true,
-    requireInteraction: false,
+    requireInteraction: true,   // queda en pantalla hasta que la descartes
     silent: false,
-    vibrate: [200, 100, 200, 100, 400]
+    vibrate: _REST_VIBRATE
   };
 
   // Preferir SW.showNotification (funciona con pantalla bloqueada / app en
@@ -238,6 +241,15 @@ function showRestDoneNotification() {
   } else {
     try { new Notification(title, options); } catch (e) {}
   }
+}
+
+function showRestDoneNotification() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  // Dispara 2 notificaciones separadas ~1.5s con tags distintos. Cada una
+  // vibra → dos rachas de vibración largas seguidas para que se note bien
+  // aunque iOS silencie el sonido por tener Spotify activo.
+  _fireRestNotification('rest-done-1');
+  setTimeout(() => _fireRestNotification('rest-done-2'), 1500);
 }
 
 /**
