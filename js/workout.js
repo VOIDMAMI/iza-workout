@@ -185,16 +185,23 @@ const Workout = {
       const exLog = dayLog[ex.id] || { sets: [], completed: false };
       const lastWeight = Storage.getLastWeight(ex.id);
 
+      // Soporte reps por serie con coma: '8,10' → serie1=8, serie2=10 (en la misma tarjeta)
+      const repsPerSet = (typeof ex.reps === 'string' && ex.reps.includes(','))
+        ? ex.reps.split(',').map(r => r.trim())
+        : null;
+      const repsForSet = (i) => repsPerSet ? (repsPerSet[i] ?? repsPerSet[repsPerSet.length - 1]) : ex.reps;
+
       let setsHtml = '';
       for (let i = 0; i < ex.sets; i++) {
         const setLog = exLog.sets[i] || { weight: 0, reps: 0, completed: false };
         const isCompleted = setLog.completed;
         const placeholderWeight = lastWeight ? lastWeight : '';
+        const repsThisSet = repsForSet(i);
 
         setsHtml += `
           <div class="set-row ${isCompleted ? 'completed' : ''}" data-exercise="${ex.id}" data-set="${i}">
             <span class="set-number">${isCompleted ? '✓' : i + 1}</span>
-            <span class="set-target">${ex.reps} reps</span>
+            <span class="set-target">${repsThisSet} reps</span>
             <div class="set-inputs">
               <div class="set-input-group">
                 <span class="set-input-label">KG</span>
@@ -211,7 +218,7 @@ const Workout = {
                 <input type="number" class="input-tracker" 
                   id="reps-${ex.id}-${i}" 
                   value="${setLog.reps || ''}" 
-                  placeholder="${typeof ex.reps === 'string' ? ex.reps.split('-')[0] : ex.reps}"
+                  placeholder="${typeof repsThisSet === 'string' ? repsThisSet.split('-')[0] : repsThisSet}"
                   min="0"
                   onchange="Tracker.onInputChange('${ex.id}', ${i})"
                 >
