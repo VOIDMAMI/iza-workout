@@ -118,6 +118,7 @@ const App = {
     `;
     overlay.onclick = () => this.closeWarmupSheet();
     document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('visible'));
     vibrate(20);
   },
 
