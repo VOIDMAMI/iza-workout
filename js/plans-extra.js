@@ -8089,3 +8089,31 @@ WORKOUT_PLANS.quemando_gym = {
     ]
   };
 })();
+
+/* ══════════════ CALENTAMIENTO (circuito tren inferior) ══════════════ */
+/* Plan utilitario: mismo circuito de calentamiento todos los días.
+   Pensado para activar antes de pierna / tren inferior.            */
+WORKOUT_PLANS.calentamiento = (() => {
+  const circuit = () => [
+    _ex('cal_cardio',    'Cardio suave (bici / cinta / elíptica)', 1, '3-5 min',     0, 'Ritmo cómodo, sube pulsaciones progresivamente.'),
+    _ex('cal_hip_circ',  'Movilidad | Círculos de cadera',          1, '10/lado',     0),
+    _ex('cal_ankle',     'Movilidad | Flexión tobillo en pared',    1, '10/lado',     0),
+    _ex('cal_world_gr',  'World\'s greatest stretch',               1, '5/lado',      0, 'Estiramiento dinámico todo el tren inferior.'),
+    _ex('cal_glute_br',  'Glute bridge sin peso',                   2, '15',         30),
+    _ex('cal_clamshell', 'Clamshells con banda',                    2, '15/lado',    30),
+    _ex('cal_monster',   'Monster walks con banda',                 2, '10 pasos/lado', 30, 'Adelante, atrás y lateral.'),
+    _ex('cal_squat_air', 'Sentadilla al aire profunda',             2, '12',         30, 'Bajada controlada, talones pegados.'),
+    _ex('cal_lunge',     'Zancada caminando',                       1, '8/pierna',    0),
+    _ex('cal_kb_swing',  'Kettlebell swing ligero (activación)',    1, '15',          0, 'Peso bajo, foco en cadera. Opcional.'),
+  ];
+  const meta = { name: 'Calentamiento — Tren inferior', type: 'strength', muscleGroups: ['Glúteos', 'Cadera', 'Piernas', 'Core'] };
+  return {
+    id: 'calentamiento',
+    name: 'Calentamiento (Pierna)',
+    description: 'Circuito de activación para tren inferior · ~10 min',
+    planType: 'repeating',
+    trainingDays: [0, 1, 2, 3, 4, 5, 6],
+    dayMeta: { 0: meta, 1: meta, 2: meta, 3: meta, 4: meta, 5: meta, 6: meta },
+    schedule: { 0: circuit(), 1: circuit(), 2: circuit(), 3: circuit(), 4: circuit(), 5: circuit(), 6: circuit() }
+  };
+})();
