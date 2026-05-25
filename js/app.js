@@ -164,11 +164,8 @@ const App = {
     const activePlanName = WORKOUT_PLANS[activePlanId]?.name || 'Plan';
     const planSwitcherHtml = plans.length > 1 ? `
       <div class="home-plan-switch anim-fade-in-up anim-delay-1">
-        <div class="home-plan-switch-info">
-          <div class="home-plan-switch-label">Plan activo</div>
-          <div class="home-plan-switch-name">${activePlanName}</div>
-        </div>
-        <div class="plan-selector-dropdown" style="margin:0;">
+        <span class="home-plan-switch-label">Plan</span>
+        <div class="plan-selector-dropdown" style="margin:0; flex:1;">
           <select class="plan-select" onchange="App.changePlan(this.value)">
             ${plans.map(p => `<option value="${p.id}" ${p.id === activePlanId ? 'selected' : ''}>${p.name}</option>`).join('')}
           </select>
