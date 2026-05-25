@@ -82,6 +82,55 @@ const App = {
   // Navigate to a specific date's workout (from calendar or home card)
   // date: Date object — if omitted, uses today
   // planId: plan to use — if omitted, uses ACTIVE_PLAN
+  openWarmupSheet() {
+    const existing = document.getElementById('warmup-sheet-overlay');
+    if (existing) existing.remove();
+    const options = [
+      { id: 'calentamiento',           emoji: '🦵', name: 'Tren inferior', sub: 'Hip thrust, sentadilla, peso muerto' },
+      { id: 'calentamiento_superior',  emoji: '💪', name: 'Tren superior', sub: 'Press, dominadas, remo, jalón' },
+      { id: 'calentamiento_cardio',    emoji: '🏃', name: 'Cardio / Carrera', sub: 'Drills + movilidad + strides' },
+    ];
+    const overlay = document.createElement('div');
+    overlay.className = 'swap-modal-overlay';
+    overlay.id = 'warmup-sheet-overlay';
+    overlay.innerHTML = `
+      <div class="swap-modal" onclick="event.stopPropagation()">
+        <div class="swap-modal-header">
+          <div>
+            <div class="swap-modal-title">🔥 Elige calentamiento</div>
+            <div class="swap-modal-subtitle">Estiramientos dinámicos + activación</div>
+          </div>
+          <button class="swap-modal-close" onclick="App.closeWarmupSheet()" aria-label="Cerrar">✕</button>
+        </div>
+        <div class="swap-modal-body">
+          ${options.map(o => `
+            <button class="warmup-option" onclick="App.startWarmup('${o.id}')">
+              <div class="warmup-option-emoji">${o.emoji}</div>
+              <div class="warmup-option-info">
+                <div class="warmup-option-name">${o.name}</div>
+                <div class="warmup-option-sub">${o.sub}</div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    overlay.onclick = () => this.closeWarmupSheet();
+    document.body.appendChild(overlay);
+    vibrate(20);
+  },
+
+  closeWarmupSheet() {
+    const overlay = document.getElementById('warmup-sheet-overlay');
+    if (overlay) overlay.remove();
+  },
+
+  startWarmup(planId) {
+    this.closeWarmupSheet();
+    this.navigateToWorkout(undefined, planId);
+  },
+
   changePlan(planId) {
     if (!planId || planId === Storage.getSelectedPlan()) return;
     Storage.setSelectedPlan(planId);
@@ -185,6 +234,16 @@ const App = {
       <div class="anim-fade-in-up anim-delay-1">
         ${todayCardHtml}
       </div>
+
+      <!-- Warmup CTA -->
+      <button class="create-workout-cta warmup-cta anim-fade-in-up anim-delay-2" onclick="App.openWarmupSheet()">
+        <div class="create-workout-cta-icon">🔥</div>
+        <div class="create-workout-cta-text">
+          <div class="create-workout-cta-title">Calentar</div>
+          <div class="create-workout-cta-sub">Tren inferior · Tren superior · Cardio</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
 
       <!-- Create Workout CTA -->
       <button class="create-workout-cta anim-fade-in-up anim-delay-2" onclick="App.navigate('create')">
