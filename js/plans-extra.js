@@ -8090,6 +8090,37 @@ WORKOUT_PLANS.quemando_gym = {
   };
 })();
 
+/* ══════════════ CALENTAMIENTO TREN SUPERIOR (estiramientos dinámicos + activación) ══════════════ */
+/* Prepara los ejercicios reales del tren superior: press militar, press banca,
+   dominadas, jalón, remo, elevaciones laterales, curl, tríceps.
+   Foco: movilidad torácica + escapular + manguito rotador.                  */
+WORKOUT_PLANS.calentamiento_superior = (() => {
+  const circuit = () => [
+    _ex('cas_wrist',     'Movilidad de muñecas',                      1, '10/dirección',  0, 'Círculos, flexión/extensión. Prepara presses y curls.'),
+    _ex('cas_arm_circ',  'Círculos de brazos (pequeños → grandes)',   1, '10/dirección',  0, 'Calienta el deltoides y cápsula del hombro.'),
+    _ex('cas_tspine',    'Movilidad torácica (T-spine rotation)',     1, '8/lado',        0, 'En cuadrupedia, mano detrás de la nuca. Prepara press y jalón.'),
+    _ex('cas_cat_cow',   'Cat-cow (gato-vaca)',                       1, '10',            0, 'Movilidad columna y escápulas.'),
+    _ex('cas_pass',      'Pasadas de hombro con palo o banda',        1, '10',            0, 'Manos anchas, círculo completo frente→atrás. Cápsula del hombro.'),
+    _ex('cas_scap_pu',   'Scapular push-ups (protracción-retracción)',1, '10',            0, 'Plancha alta. Activa serrato. Prepara press banca/militar.'),
+    _ex('cas_scap_pull', 'Scapular pull-ups (colgado en barra)',      1, '8',             0, 'Solo deprime escápulas sin doblar codos. Prepara dominadas/jalón.'),
+    _ex('cas_band_pa',   'Band pull-apart',                           2, '15',           20, 'Banda al pecho, brazos rectos, abre. Retracción escapular.'),
+    _ex('cas_face_pull', 'Face pulls con banda',                      2, '15',           20, 'Codos altos, banda a la cara. Manguito posterior + trapecio.'),
+    _ex('cas_ext_rot',   'Rotación externa con banda',                2, '12/lado',      20, 'Codo pegado al costado. Activa manguito rotador. Prepara press.'),
+    _ex('cas_lat_raise', 'Elevación lateral sin peso (activación)',   1, '15',            0, 'Rango completo controlado. Activa deltoide medio.'),
+    _ex('cas_pushup_in', 'Push-up con apoyo (activación pecho)',      1, '8-10',          0, 'Rodillas o inclinado. Activa pecho/tríceps antes del press.'),
+  ];
+  const meta = { name: 'Calentamiento — Tren superior', type: 'strength', muscleGroups: ['Hombros', 'Pecho', 'Espalda', 'Manguito rotador', 'Escápulas'] };
+  return {
+    id: 'calentamiento_superior',
+    name: 'Calentamiento (Tren superior)',
+    description: 'Estiramientos dinámicos + activación · ~8-10 min',
+    planType: 'repeating',
+    trainingDays: [0, 1, 2, 3, 4, 5, 6],
+    dayMeta: { 0: meta, 1: meta, 2: meta, 3: meta, 4: meta, 5: meta, 6: meta },
+    schedule: { 0: circuit(), 1: circuit(), 2: circuit(), 3: circuit(), 4: circuit(), 5: circuit(), 6: circuit() }
+  };
+})();
+
 /* ══════════════ CALENTAMIENTO (estiramientos dinámicos · tren inferior) ══════════════ */
 /* Estiramientos dinámicos + activación específica para preparar los ejercicios
    reales del tren inferior: hip thrust, sentadilla, peso muerto, KB swing,
@@ -8113,7 +8144,7 @@ WORKOUT_PLANS.calentamiento = (() => {
   const meta = { name: 'Calentamiento — Tren inferior', type: 'strength', muscleGroups: ['Cadera', 'Glúteos', 'Isquios', 'Aductores', 'Core'] };
   return {
     id: 'calentamiento',
-    name: 'Calentamiento (Pierna)',
+    name: 'Calentamiento (Tren inferior)',
     description: 'Estiramientos dinámicos + activación · ~8-10 min',
     planType: 'repeating',
     trainingDays: [0, 1, 2, 3, 4, 5, 6],
