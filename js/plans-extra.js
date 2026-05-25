@@ -8090,27 +8090,31 @@ WORKOUT_PLANS.quemando_gym = {
   };
 })();
 
-/* ══════════════ CALENTAMIENTO (circuito tren inferior) ══════════════ */
-/* Plan utilitario: mismo circuito de calentamiento todos los días.
-   Pensado para activar antes de pierna / tren inferior.            */
+/* ══════════════ CALENTAMIENTO (estiramientos dinámicos · tren inferior) ══════════════ */
+/* Estiramientos dinámicos + activación específica para preparar los ejercicios
+   reales del tren inferior: hip thrust, sentadilla, peso muerto, KB swing,
+   hiperextensión, curl femoral. Basado en la metodología de las guías de Iza
+   (calentamiento dinámico 5-10' + activación analítica antes del compuesto).  */
 WORKOUT_PLANS.calentamiento = (() => {
   const circuit = () => [
-    _ex('cal_cardio',    'Cardio suave (bici / cinta / elíptica)', 1, '3-5 min',     0, 'Ritmo cómodo, sube pulsaciones progresivamente.'),
-    _ex('cal_hip_circ',  'Movilidad | Círculos de cadera',          1, '10/lado',     0),
-    _ex('cal_ankle',     'Movilidad | Flexión tobillo en pared',    1, '10/lado',     0),
-    _ex('cal_world_gr',  'World\'s greatest stretch',               1, '5/lado',      0, 'Estiramiento dinámico todo el tren inferior.'),
-    _ex('cal_glute_br',  'Glute bridge sin peso',                   2, '15',         30),
-    _ex('cal_clamshell', 'Clamshells con banda',                    2, '15/lado',    30),
-    _ex('cal_monster',   'Monster walks con banda',                 2, '10 pasos/lado', 30, 'Adelante, atrás y lateral.'),
-    _ex('cal_squat_air', 'Sentadilla al aire profunda',             2, '12',         30, 'Bajada controlada, talones pegados.'),
-    _ex('cal_lunge',     'Zancada caminando',                       1, '8/pierna',    0),
-    _ex('cal_kb_swing',  'Kettlebell swing ligero (activación)',    1, '15',          0, 'Peso bajo, foco en cadera. Opcional.'),
+    _ex('cal_hip_cars',  'Hip CARs (círculos articulares de cadera)', 1, '5/dirección/lado', 0, 'Movilidad articular. Círculo grande y controlado.'),
+    _ex('cal_leg_sw_f',  'Balanceo de pierna frontal',                1, '12/pierna',   0, 'Adelante/atrás. Estira isquios y flexor de cadera.'),
+    _ex('cal_leg_sw_l',  'Balanceo de pierna lateral',                1, '12/pierna',   0, 'Cruza la línea media. Aductores + glúteo medio.'),
+    _ex('cal_ankle_wall','Movilidad de tobillo en pared',             1, '10/lado',     0, 'Rodilla a la pared sin levantar talón. Prepara sentadilla.'),
+    _ex('cal_world_gr',  'World\'s greatest stretch',                 1, '5/lado',      0, 'Lunge + rotación de tronco. Cadera, dorsal y rotadores.'),
+    _ex('cal_9090',      '90/90 hip switch',                          1, '8 cambios',   0, 'Rotación interna/externa de cadera. Prepara para abrir profundo.'),
+    _ex('cal_cossack',   'Sentadilla cosaca alterna',                 1, '6/lado',      0, 'Aductores, cadera profunda y tobillo.'),
+    _ex('cal_inchworm',  'Inchworm a sentadilla profunda',            1, '6',           0, 'Estira cadena posterior y abre cadera para peso muerto.'),
+    _ex('cal_good_morn', 'Buenos días sin peso (good mornings)',      1, '12',          0, 'Bisagra de cadera. Patrón motor para peso muerto y KB swing.'),
+    _ex('cal_glute_br',  'Glute bridge con march (activación)',       2, '10/pierna',  20, 'Cadera arriba, alterna rodillas al pecho. Activa glúteo y core.'),
+    _ex('cal_clamshell', 'Clamshells con banda',                      2, '15/lado',    20, 'Activación glúteo medio. Prepara hip thrust y sentadilla.'),
+    _ex('cal_monster',   'Monster walks con banda',                   1, '10 pasos/dir', 0, 'Adelante, atrás y lateral. Activa glúteo medio.'),
   ];
-  const meta = { name: 'Calentamiento — Tren inferior', type: 'strength', muscleGroups: ['Glúteos', 'Cadera', 'Piernas', 'Core'] };
+  const meta = { name: 'Calentamiento — Tren inferior', type: 'strength', muscleGroups: ['Cadera', 'Glúteos', 'Isquios', 'Aductores', 'Core'] };
   return {
     id: 'calentamiento',
     name: 'Calentamiento (Pierna)',
-    description: 'Circuito de activación para tren inferior · ~10 min',
+    description: 'Estiramientos dinámicos + activación · ~8-10 min',
     planType: 'repeating',
     trainingDays: [0, 1, 2, 3, 4, 5, 6],
     dayMeta: { 0: meta, 1: meta, 2: meta, 3: meta, 4: meta, 5: meta, 6: meta },
