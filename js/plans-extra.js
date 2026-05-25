@@ -8090,6 +8090,37 @@ WORKOUT_PLANS.quemando_gym = {
   };
 })();
 
+/* ══════════════ CALENTAMIENTO CARDIO / CARRERA ══════════════ */
+/* Activación progresiva + movilidad dinámica + drills de técnica de carrera.
+   Pensado para correr o cualquier sesión de cardio (HIIT, LISS, intervalos). */
+WORKOUT_PLANS.calentamiento_cardio = (() => {
+  const circuit = () => [
+    _ex('cac_marcha',    'Marcha activa en sitio',                    1, '1-2 min',       0, 'Sube pulsaciones progresivamente. Brazos activos.'),
+    _ex('cac_ankle',     'Movilidad de tobillo en pared',             1, '10/lado',       0, 'Rodilla a la pared sin levantar talón. Clave para amortiguar.'),
+    _ex('cac_calf',      'Movilidad de gemelo (gato hacia abajo)',    1, '10 bombeos',    0, 'Postura V invertida, alterna talones al suelo.'),
+    _ex('cac_hip_cars',  'Hip CARs (círculos de cadera)',             1, '5/dirección/lado', 0),
+    _ex('cac_leg_sw_f',  'Balanceo de pierna frontal',                1, '12/pierna',     0, 'Estira isquios + flexor cadera. Patrón motor de zancada.'),
+    _ex('cac_leg_sw_l',  'Balanceo de pierna lateral',                1, '12/pierna',     0, 'Aductores + glúteo medio.'),
+    _ex('cac_runn_lung', 'Runners lunge (sprinter stretch)',          1, '6/lado',        0, 'Lunge profundo con codo al suelo. Flexor cadera + isquios.'),
+    _ex('cac_world_gr',  'World\'s greatest stretch',                 1, '5/lado',        0, 'Lunge + rotación torácica. Cadena completa.'),
+    _ex('cac_squat_kn',  'Sentadilla + rodilla al pecho',             1, '5/lado',        0, 'Drill de movilidad cadera específico de carrera.'),
+    _ex('cac_a_skip',    'A-skip (skipping alto)',                    2, '20m / 20s',    15, 'Rodilla alta, brazo opuesto. Coordinación + cadencia.'),
+    _ex('cac_high_kn',   'High knees en sitio',                       2, '30s',          15, 'Rodillas a la cadera, ritmo rápido.'),
+    _ex('cac_butt_kick', 'Butt kicks (talones al glúteo)',            2, '30s',          15, 'Calienta isquios + cuádriceps.'),
+    _ex('cac_strides',   'Strides / aceleraciones progresivas',       4, '50m / 20"',    40, 'Acelera al 70-80% y desacelera. Activa fibras rápidas antes de correr.'),
+  ];
+  const meta = { name: 'Calentamiento — Cardio / Carrera', type: 'strength', muscleGroups: ['Cadera', 'Isquios', 'Gemelos', 'Tobillos', 'Glúteos'] };
+  return {
+    id: 'calentamiento_cardio',
+    name: 'Calentamiento (Cardio / Carrera)',
+    description: 'Movilidad + drills de técnica · ~8-10 min',
+    planType: 'repeating',
+    trainingDays: [0, 1, 2, 3, 4, 5, 6],
+    dayMeta: { 0: meta, 1: meta, 2: meta, 3: meta, 4: meta, 5: meta, 6: meta },
+    schedule: { 0: circuit(), 1: circuit(), 2: circuit(), 3: circuit(), 4: circuit(), 5: circuit(), 6: circuit() }
+  };
+})();
+
 /* ══════════════ CALENTAMIENTO TREN SUPERIOR (estiramientos dinámicos + activación) ══════════════ */
 /* Prepara los ejercicios reales del tren superior: press militar, press banca,
    dominadas, jalón, remo, elevaciones laterales, curl, tríceps.
