@@ -82,9 +82,18 @@ const App = {
   // Navigate to a specific date's workout (from calendar or home card)
   // date: Date object — if omitted, uses today
   // planId: plan to use — if omitted, uses ACTIVE_PLAN
+  changePlan(planId) {
+    if (!planId || planId === Storage.getSelectedPlan()) return;
+    Storage.setSelectedPlan(planId);
+    if (typeof Calendar !== 'undefined') Calendar.selectedPlan = planId;
+    vibrate(20);
+    showToast(`Plan cambiado a ${WORKOUT_PLANS[planId]?.name || planId}`);
+    this.renderHome();
+  },
+
   navigateToWorkout(date, planId) {
     const d = date instanceof Date ? date : new Date();
-    const pid = planId || ACTIVE_PLAN;
+    const pid = planId || Storage.getSelectedPlan() || ACTIVE_PLAN;
     const weekNum = Storage.getPlanCurrentWeek(pid);
     const dayOfWeek = d.getDay();
     Workout.backPage = date instanceof Date ? 'calendar' : 'home';
@@ -149,11 +158,32 @@ const App = {
       weekDays.push({ done, isToday: isTodays, name: DAY_NAMES[d.getDay()] });
     }
 
+    // Active plan switcher
+    const plans = getAvailablePlans();
+    const activePlanId = Storage.getSelectedPlan();
+    const activePlanName = WORKOUT_PLANS[activePlanId]?.name || 'Plan';
+    const planSwitcherHtml = plans.length > 1 ? `
+      <div class="home-plan-switch anim-fade-in-up anim-delay-1">
+        <div class="home-plan-switch-info">
+          <div class="home-plan-switch-label">Plan activo</div>
+          <div class="home-plan-switch-name">${activePlanName}</div>
+        </div>
+        <div class="plan-selector-dropdown" style="margin:0;">
+          <select class="plan-select" onchange="App.changePlan(this.value)">
+            ${plans.map(p => `<option value="${p.id}" ${p.id === activePlanId ? 'selected' : ''}>${p.name}</option>`).join('')}
+          </select>
+          <svg class="plan-select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+    ` : '';
+
     container.innerHTML = `
       <div class="home-header anim-fade-in">
         <div class="home-greeting">${greeting}</div>
         <h1 class="home-title">Iza <span class="wave">💪</span></h1>
       </div>
+
+      ${planSwitcherHtml}
 
       <div class="anim-fade-in-up anim-delay-1">
         ${todayCardHtml}
