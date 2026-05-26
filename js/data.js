@@ -741,7 +741,8 @@ function getTodayWorkout() {
 }
 
 function getWorkoutForDay(dayOfWeek) {
-  return getWorkoutForPlanAndDay(ACTIVE_PLAN, dayOfWeek);
+  const planId = (typeof Storage !== 'undefined' && Storage.getSelectedPlan) ? Storage.getSelectedPlan() : ACTIVE_PLAN;
+  return getWorkoutForPlanAndDay(planId, dayOfWeek);
 }
 
 function getAllExercises() {
