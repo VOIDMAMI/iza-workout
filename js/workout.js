@@ -336,6 +336,10 @@ const Workout = {
 
     // Mostrar banner de notificaciones si el permiso aún no se ha decidido
     Tracker?._updateNotifBanner?.();
+
+    // Si había un timer corriendo (p.ej. tras navegar a otra pestaña y volver),
+    // restaurarlo en la UI usando el estado persistido en localStorage.
+    Tracker?.resumeIfActive?.();
   },
 
   finishWorkout() {
