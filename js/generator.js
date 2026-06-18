@@ -15,7 +15,8 @@ function _gen(name, sets, reps, rest, notes) {
     name,
     sets,
     reps: String(reps),
-    rest: rest || 0,
+    // Descanso base de 60s entre series para todos los entrenos generados.
+    rest: 60,
     notes: notes || ''
   };
 }
