@@ -10,7 +10,9 @@ const STORAGE_KEYS = {
   STREAK: 'iza_streak',
   SELECTED_PLAN: 'iza_selected_plan',
   PLAN_START_DATES: 'iza_plan_start_dates',
-  MY_WORKOUTS: 'iza_my_workouts'
+  MY_WORKOUTS: 'iza_my_workouts',
+  EXERCISE_NOTES: 'iza_exercise_notes',     // notas por ejercicio (clave: nombre normalizado)
+  EXERCISE_WEIGHTS: 'iza_exercise_weights'  // último peso por ejercicio (clave: nombre normalizado)
 };
 
 const Storage = {
@@ -171,6 +173,52 @@ const Storage = {
     });
 
     return prs;
+  },
+
+  /* ---- Notas y peso por NOMBRE de ejercicio (compartido entre planes) ---- */
+
+  // Clave canónica del ejercicio. Misma "Hip Thrust" en cualquier plan → misma clave.
+  _exerciseKey(name) {
+    if (!name) return '';
+    return String(name)
+      .toLowerCase()
+      .split('|')[0]                                        // quita " | DELOAD" o variantes
+      .replace(/\(.*?\)/g, '')                              // quita "(aproximación)" etc.
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')     // quita acentos
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  },
+
+  getExerciseNotes(name) {
+    const key = this._exerciseKey(name);
+    if (!key) return '';
+    const all = this._get(STORAGE_KEYS.EXERCISE_NOTES) || {};
+    return all[key] || '';
+  },
+
+  setExerciseNotes(name, text) {
+    const key = this._exerciseKey(name);
+    if (!key) return;
+    const all = this._get(STORAGE_KEYS.EXERCISE_NOTES) || {};
+    const trimmed = (text || '').trim();
+    if (trimmed) all[key] = trimmed;
+    else delete all[key];
+    this._set(STORAGE_KEYS.EXERCISE_NOTES, all);
+  },
+
+  setExerciseWeight(name, weight) {
+    const key = this._exerciseKey(name);
+    if (!key || !(weight > 0)) return;
+    const all = this._get(STORAGE_KEYS.EXERCISE_WEIGHTS) || {};
+    all[key] = { weight: parseFloat(weight), ts: Date.now() };
+    this._set(STORAGE_KEYS.EXERCISE_WEIGHTS, all);
+  },
+
+  getExerciseWeightByName(name) {
+    const key = this._exerciseKey(name);
+    if (!key) return null;
+    const all = this._get(STORAGE_KEYS.EXERCISE_WEIGHTS) || {};
+    return all[key]?.weight ?? null;
   },
 
   /**

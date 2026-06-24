@@ -36,6 +36,9 @@ const Tracker = {
 
     // Save
     Storage.saveSetLog(dateKey, exerciseId, setIndex, weight, reps, nowCompleted);
+    // Guardar peso compartido por nombre de ejercicio (cross-plan)
+    const exForWeight = Workout.currentWorkout?.exercises?.find(e => e.id === exerciseId);
+    if (exForWeight && weight > 0) Storage.setExerciseWeight(exForWeight.name, weight);
 
     // Update UI
     const setRow = document.querySelector(`.set-row[data-exercise="${exerciseId}"][data-set="${setIndex}"]`);
@@ -90,6 +93,16 @@ const Tracker = {
     const setLog = exLog.sets[setIndex] || { completed: false };
 
     Storage.saveSetLog(dateKey, exerciseId, setIndex, weight, reps, setLog.completed);
+    // Guardar peso compartido por nombre (cross-plan)
+    const exForWeight = Workout.currentWorkout?.exercises?.find(e => e.id === exerciseId);
+    if (exForWeight && weight > 0) Storage.setExerciseWeight(exForWeight.name, weight);
+  },
+
+  // Guardar observaciones por nombre de ejercicio (compartidas entre planes)
+  saveExerciseNotes(exerciseId, text) {
+    const ex = Workout.currentWorkout?.exercises?.find(e => e.id === exerciseId);
+    if (!ex) return;
+    Storage.setExerciseNotes(ex.name, text);
   },
 
   /**

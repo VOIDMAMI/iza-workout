@@ -183,7 +183,11 @@ const Workout = {
 
     const exerciseCards = this.currentWorkout.exercises.map((ex, exIndex) => {
       const exLog = dayLog[ex.id] || { sets: [], completed: false };
-      const lastWeight = Storage.getLastWeight(ex.id);
+      // Peso compartido entre planes: primero busca por nombre normalizado;
+      // si no hay nada todavía, cae al lookup clásico por id de la sesión actual.
+      const lastWeight = Storage.getExerciseWeightByName(ex.name) ?? Storage.getLastWeight(ex.id);
+      // Observaciones por ejercicio (compartidas entre planes)
+      const savedNotes = Storage.getExerciseNotes(ex.name);
 
       // Soporte reps por serie con coma: '8,10' → serie1=8, serie2=10 (en la misma tarjeta)
       const repsPerSet = (typeof ex.reps === 'string' && ex.reps.includes(','))
@@ -265,6 +269,16 @@ const Workout = {
           ${ex.notes ? `<div class="text-sm text-tertiary mb-md" style="font-style:italic">💡 ${ex.notes}</div>` : ''}
           <div class="exercise-sets">
             ${setsHtml}
+          </div>
+          <div class="exercise-notes-wrap">
+            <label class="exercise-notes-label" for="notes-${ex.id}">📝 Observaciones</label>
+            <textarea
+              id="notes-${ex.id}"
+              class="exercise-notes"
+              rows="2"
+              placeholder="Técnica, sensaciones, peso, RIR..."
+              onblur="Tracker.saveExerciseNotes('${ex.id}', this.value)"
+            >${savedNotes ? savedNotes.replace(/</g,'&lt;') : ''}</textarea>
           </div>
         </div>
       `;
