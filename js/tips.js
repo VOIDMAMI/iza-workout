@@ -252,6 +252,100 @@ const TIPS_SECTIONS = [
     ]
   },
   {
+    id: 'rutina_diaria',
+    emoji: '🌿',
+    name: 'Rutina diaria equilibrada',
+    sub: 'Los 8 pasos para ser productiva, sana y equilibrada',
+    tips: [
+      {
+        title: 'Paso 1 · Desayuno completo',
+        body: 'Saltarte la primera comida afecta directamente a la memoria y la motivación. En mujeres se asocia además con más trastornos menstruales y ciclos irregulares. No hace falta que sea elaborado.',
+        points: [
+          'Combo ideal: fibra + carbohidrato + proteína. Ej. kéfir con granola casera, frutos secos y fruta.',
+          'Matcha en vez de café: la teanina modula la cafeína y da energía sostenida sin pico ni bajón.',
+          'Sin tiempo por la mañana: déjalo preparado la noche anterior (1 minuto) y llévatelo en la mochila.'
+        ]
+      },
+      {
+        title: 'Paso 2 · Vaciado mental',
+        body: 'Vuelca en papel todas las tareas, dudas y preocupaciones que te rondan la cabeza. Externalizarlo reduce la carga mental y la fatiga de decidir: activa la corteza prefrontal y calma la amígdala. Es como vaciar la papelera del ordenador.'
+      },
+      {
+        title: 'Paso 2 · Matriz de Eisenhower',
+        body: 'Una vez volcado todo, clasifica cada tarea en cuatro cuadrantes. Esa es tu hoja de ruta del día.',
+        points: [
+          'Importante + urgente → hazlo hoy mismo.',
+          'Importante + no urgente → agéndalo, puede esperar.',
+          'Urgente + no importante → delégalo.',
+          'Ni urgente ni importante → elimínalo.'
+        ]
+      },
+      {
+        title: 'Paso 3 · Movimiento por la mañana',
+        body: 'El ejercicio libera endorfinas (regulan el cortisol) y BDNF, un "fertilizante" para el cerebro. Entrenas el cuerpo y preparas la mente para enfocarse y decidir mejor. "No tengo tiempo para no entrenar".',
+        points: [
+          'Tenlo tan automatizado que no te cuestiones si apetece.',
+          'Si madrugas para trabajar: 10 minutos de movilidad bastan para despertar el cuerpo. El entreno principal, por la tarde.',
+          'Ponlo en el calendario de la app con recordatorios para no fallar.'
+        ]
+      },
+      {
+        title: 'Paso 4 · Autocuidado',
+        body: 'Cepillado en seco antes de la ducha para activar la circulación, ducha y crema hidratante. Parece superficial, pero las rutinas de autocuidado son lo que evita el burnout y cuida la salud mental. Si no cabe por la mañana, conviértelo en tu ritual de noche.'
+      },
+      {
+        title: 'Paso 5 · Ordena tu espacio y tu semana',
+        body: 'El entorno influye en tu concentración: despeja la mesa y deja solo lo que uses. Y en lo digital, frena para ir más rápido: dedica un día a la semana a organizar el calendario.',
+        points: [
+          'No dividas por categorías (trabajo, estudios...): acabas con el calendario a reventar y no cumples nada.',
+          'Usa bloques por duración: tarea (<1 h), trabajo (1-2 h) y proyecto (>2 h, mucha carga mental).',
+          'Máximo al día: 2 trabajos y 1 proyecto. Subestimamos siempre el tiempo (ley de Hofstadter).',
+          'Cuantos menos colores y más huecos vacíos tenga tu día, mejor: los imprevistos llegan seguro.',
+          'Plan de contingencia: adelanta las entregas clave unas 2 semanas para tener colchón.'
+        ]
+      },
+      {
+        title: 'Paso 5 · Cómo plantear el día',
+        points: [
+          'Lo más duro e importante a primera hora, cuando la batería cerebral está al 100%.',
+          'Tareas específicas y realistas, nada de "avanzar en el proyecto": "escribir 5.000 palabras antes del mediodía".',
+          'Cada meta cumplida da un chute de dopamina que te anima a seguir.',
+          'Efecto compuesto: objetivo claro a largo plazo dividido en pequeñas metas diarias. La suma constante es lo que te lleva allí.',
+          'Aprovecha los ratos muertos (trayectos, tren) para lo pequeño: puestos en fila suman horas.'
+        ]
+      },
+      {
+        title: 'Paso 6 · No dejes de aprender',
+        body: 'La formación continua mantiene la flexibilidad cognitiva y la neuroplasticidad: crea redes neuronales, mejora la gestión emocional y frena el deterioro. No vale hacer scroll.',
+        points: [
+          'Crea tu "jardín digital": lista de temas que te interesan (arte, historia, dermatología...) y elige uno.',
+          'Durante unas semanas conviértete en investigadora de ese tema: podcasts, vídeos, libros, papers.',
+          'Herramientas como NotebookLM generan podcasts de tus documentos para aprender casi sin darte cuenta.'
+        ]
+      },
+      {
+        title: 'Paso 7 · Reset a mitad del día',
+        body: 'Exprimir cada segundo está bien hasta que deja de estarlo: llega el burnout. Incluye momentos de reset en el día y en la semana.',
+        points: [
+          '15 minutos de meditación bastan para resetear un cerebro saturado (estudio 2020).',
+          '15 minutos caminando por un parque atendiendo a la naturaleza, o de relajación y mindfulness, reducen el estrés y la fatiga de la tarde.',
+          'Cerrar el portátil y mirar el móvil NO es reset. Necesitas distanciamiento psicológico: hablar con compañeros, dar una vuelta o no hacer nada.',
+          'Deja para la tarde las tareas que menos foco mental requieren.'
+        ]
+      },
+      {
+        title: 'Paso 8 · Desconexión y turno de cierre',
+        body: 'Es el paso que hace funcionar a los siete anteriores. No saber cuándo parar trae insomnio, amigas que no ves y la angustia de vivir en tu propia burbuja de disciplina. La desconexión es un proceso activo para bajar revoluciones (estudio 2025).',
+        points: [
+          'Límites firmes entre trabajo y vida personal.',
+          'Tiempo de calidad con pareja, familia y amigas: tan beneficioso para la salud como el deporte o comer sano.',
+          '"Turno de cierre": tareas fijas antes de echar la llave. Limpiar y ordenar, cambiar las luces, preparar la cena.',
+          'Convierte esto en tu rutina de noche: acaba con el insomnio y te despiertas como nueva.'
+        ]
+      }
+    ]
+  },
+  {
     id: 'nutricion',
     emoji: '🍽️',
     name: 'Alimentación',
