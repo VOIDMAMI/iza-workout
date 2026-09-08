@@ -76,6 +76,7 @@ const App = {
       case 'calendar': Calendar.render(); break;
       case 'progress': Progress.render(); break;
       case 'create':   Creator.render(); break;
+      case 'tips':     Tips.render(); break;
     }
   },
 
@@ -252,6 +253,16 @@ const App = {
         <div class="create-workout-cta-text">
           <div class="create-workout-cta-title">Crear entrenamiento</div>
           <div class="create-workout-cta-sub">Personalizado: duración, tipo, cardio</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+
+      <!-- Tips CTA -->
+      <button class="create-workout-cta tips-cta anim-fade-in-up anim-delay-2" onclick="App.navigate('tips')">
+        <div class="create-workout-cta-icon">💡</div>
+        <div class="create-workout-cta-text">
+          <div class="create-workout-cta-title">Tips de entrenamiento</div>
+          <div class="create-workout-cta-sub">Programación · Técnica · Constancia</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>

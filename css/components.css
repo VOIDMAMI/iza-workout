@@ -1277,6 +1277,15 @@
   box-shadow: 0 6px 22px rgba(242, 78, 30, 0.5);
 }
 
+.tips-cta {
+  background: linear-gradient(135deg, #0EA5E9, #0369A1);
+  box-shadow: 0 4px 16px rgba(3, 105, 161, 0.35);
+}
+.tips-cta:hover,
+.tips-cta:active {
+  box-shadow: 0 6px 22px rgba(3, 105, 161, 0.5);
+}
+
 /* Warmup options (dentro del modal) */
 .warmup-option {
   display: flex;
