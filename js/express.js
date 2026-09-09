@@ -379,7 +379,7 @@ const EXPRESS_WORKOUTS = {
   },
 
   pp_abs_enfaz: {
-    id: 'pp_abs_enfaz', name: 'Abs Express Científico', category: 'POR PARTES', type: 'strength',
+    id: 'pp_abs_enfaz', name: "Abs Express 15''", category: 'POR PARTES', type: 'strength',
     description: 'Los 4 movimientos con más evidencia para el abdomen',
     muscleGroups: ['Core'],
     exercises: [
