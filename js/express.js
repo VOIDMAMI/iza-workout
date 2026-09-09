@@ -378,6 +378,22 @@ const EXPRESS_WORKOUTS = {
     ]
   },
 
+  pp_abs_enfaz: {
+    id: 'pp_abs_enfaz', name: 'Abs Express Científico', category: 'POR PARTES', type: 'strength',
+    description: 'Los 4 movimientos con más evidencia para el abdomen',
+    muscleGroups: ['Core'],
+    exercises: [
+      _ex('pp_abse_ex1', 'Crunch en polea alta', 3, '12-15', 60,
+        'Coloca la polea perpendicular a tu columna. Al subir inhala y deja que la carga estire el abdomen desde extensión controlada; al bajar enrolla la columna en forma de C exhalando, sin mover la cadera hacia atrás.'),
+      _ex('pp_abse_ex2', 'Elevación de piernas con retroversión pélvica', 3, '10-12', 60,
+        'Olvídate de subir y bajar las piernas desde la cadera: haz una retroversión pélvica consciente, curvando la espalda en C y despegando el sacro del suelo. Así aíslas el abdomen en vez de los flexores de cadera.'),
+      _ex('pp_abse_ex3', 'Rollout con rueda abdominal', 3, '8-10', 60,
+        'Mantén una ligera flexión de columna y la pelvis bloqueada durante todo el recorrido. Inicia el retorno enroscando el abdomen, no empujando la cadera hacia atrás. Si te falta fuerza, apóyate en rodillas o usa una pared como tope.'),
+      _ex('pp_abse_ex4', 'Hollowing (vacío abdominal)', 3, '5-10', 45,
+        'Mete el ombligo hacia la columna y sostén la tensión. Progresión: 3x5 reps de 5s → 8 reps de 10s → 10 reps de 15s. Entrena el transverso, tu "faja" profunda que estabiliza la pelvis y protege la zona lumbar.'),
+    ]
+  },
+
   pp_glute_burner: {
     id: 'pp_glute_burner', name: 'Glute Burner', category: 'POR PARTES', type: 'strength',
     description: 'Pirámide ascendente — sin descanso',
