@@ -362,6 +362,82 @@ const TIPS_SECTIONS = [
           'Calorías ligeramente por encima de mantenimiento en fase de ganar músculo.',
           'Paciencia: el músculo se construye en meses, no en semanas.'
         ]
+      },
+      {
+        title: 'Hinchazón vs. distensión',
+        body: 'No es lo mismo. La hinchazón es una sensación subjetiva de presión o gases. La distensión es un cambio físico real: tu cintura aumenta de verdad, y no, no es grasa acumulada de golpe.',
+        points: [
+          'Es normal que la circunferencia abdominal crezca a lo largo del día según comes y bebes, y vuelva al estado inicial por la mañana.',
+          'La línea roja está en la inflamación de verdad: cuando la hinchazón viene con dolor, fatiga o se repite día tras día sin motivo aparente.'
+        ]
+      },
+      {
+        title: 'El eje intestino-cerebro',
+        body: 'Tu intestino y tu cerebro se comunican constantemente por señales nerviosas, hormonales e inflamatorias. El estrés crónico ataca a tu microbiota (las bacterias buenas del intestino) y genera un desequilibrio que se traduce en malas digestiones, dolor y cansancio.',
+        points: [
+          'Ese desequilibrio también afecta a las hormonas que regulan el hambre y la saciedad: por eso cuesta tanto controlar los antojos cuando el intestino está mal.',
+          'Más de la mitad de la población vive así sin saber que el origen está en su intestino.'
+        ]
+      },
+      {
+        title: 'Paso 1 · Alimenta tu microbiota con fibra',
+        body: 'La fibra es el alimento favorito de tus bacterias intestinales. Crea una capa de moco que protege las paredes del intestino frente a invasores.',
+        points: [
+          'Fibra soluble (avena, cítricos, legumbres): forma un gel que ralentiza la digestión y da saciedad. Ideal para controlar antojos.',
+          'Fibra insoluble (cereales integrales, frutos secos): aporta volumen y acelera el tránsito. Ideal si tu problema es ir al baño.',
+          'Si no estás acostumbrada, meter mucha fibra de golpe da gases e hinchazón — no es motivo para dejarla, hay que introducirla bien (siguiente tip).'
+        ]
+      },
+      {
+        title: 'Cómo introducir la fibra sin hincharte',
+        points: [
+          'Empieza por la fibra soluble (avena): se tolera mejor y da menos gases.',
+          'Prepárala bien: remoja y cocina bien las legumbres, hidrata las semillas (la chía necesita mínimo 8 horas) y cuece los cereales un poco más de lo normal.',
+          'Progresión gradual: empieza con 1-2 cucharadas de legumbres e introduce vegetales de distintos colores poco a poco.',
+          'Combina prebióticos (la fibra, el alimento de las bacterias) con probióticos (microorganismos vivos que repueblan tu flora): kéfir, chucrut, kimchi, kombucha.'
+        ]
+      },
+      {
+        title: 'Paso 2 · Hidrátate bien',
+        body: 'Si no bebes suficiente agua, la capa de moco protectora del colon se debilita, las bacterias tocan el tejido intestinal y se genera inflamación. Además, ralentiza el tránsito y favorece el estreñimiento.',
+        points: [
+          'Empieza el día con 1-2 vasos de agua y lleva una botella encima todo el día.'
+        ]
+      },
+      {
+        title: 'Paso 3 · Deja de autodiagnosticarte',
+        body: 'Solo el 3,6% de quienes creen tener una intolerancia alimentaria la tiene realmente demostrada con pruebas médicas. Quitarte alimentos por tu cuenta (gluten, lactosa...) sin diagnóstico daña tu microbiota — justo lo contrario de lo que buscas.',
+        points: [
+          'Cuidado con las redes: hasta un 60% de los vídeos sobre salud intestinal en plataformas como TikTok contienen desinformación o pseudociencia, y muchos buscan venderte un producto.',
+          'Si sospechas una intolerancia real, consúltalo con un profesional antes de eliminar alimentos.'
+        ]
+      },
+      {
+        title: 'El estrógeno también pasa por tu intestino',
+        body: 'Tu intestino tiene su propio "departamento hormonal" (el estroboloma): un grupo de bacterias que reactivan parte del estrógeno que el hígado iba a eliminar, devolviéndolo a la sangre.',
+        points: [
+          'El estrógeno regula el ciclo menstrual, pero también huesos, memoria, estado de ánimo y piel — por eso un intestino dañado se nota en todo el cuerpo, no solo en la tripa.'
+        ]
+      },
+      {
+        title: 'Paso 4 · Gestiona estrés y sueño',
+        body: 'El estrés crónico dispara el cortisol y hace la barrera intestinal más permeable, dejando pasar toxinas e inflamación. Y la falta de sueño desincroniza el reloj interno de tus bacterias, empeorando digestión e inflamación. Es un círculo vicioso en ambos sentidos.',
+        points: [
+          'Dedica 10-20 min antes de dormir a bajar revoluciones: respiración diafragmática (inhala profundo con el abdomen, no el pecho), relajación muscular progresiva (tensar y soltar grupos musculares) o la técnica de Benson (respiración pausada + una palabra o frase corta).',
+          'Si trabajas a turnos: come en un horario fijo dentro de tu turno, hidrátate bien y lleva fruta encima (manzana, plátano) como fuente rápida de fibra y agua.'
+        ]
+      },
+      {
+        title: 'Paso 5 · Ten mascota (si puedes)',
+        body: 'Convivir con perros o gatos entrena y diversifica tu microbiota: te traen microbios del exterior que aumentan tus bacterias buenas, educan al sistema inmunitario y se asocian a menor riesgo de alergias. Además, pasear al perro te hace moverte más sin pensarlo.'
+      },
+      {
+        title: 'Paso 6 · Entrena (el que nadie tiene en cuenta)',
+        body: 'Existe el eje intestino-músculo: cuando alimentas tu microbiota con fibra, tus bacterias fermentan y producen metabolitos que viajan por la sangre hasta el músculo, activando señales de crecimiento clave para la fuerza y reduciendo la inflamación.',
+        points: [
+          'Cuanto más músculo tienes, mejor circula la sangre y mejor funciona el tránsito intestinal: es bidireccional.',
+          'No hace falta vivir en el gimnasio: un estudio con mujeres premenopáusicas mostró que solo cumplir la recomendación de la OMS (30 min de ejercicio moderado, 3 días/semana) ya genera diferencias claras en la diversidad y calidad de las bacterias intestinales frente al sedentarismo.'
+        ]
       }
     ]
   }
