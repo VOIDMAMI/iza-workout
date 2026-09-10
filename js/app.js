@@ -168,9 +168,9 @@ const App = {
 
     // Greeting based on time
     const hour = today.getHours();
-    let greeting = 'Buenos días';
-    if (hour >= 14 && hour < 20) greeting = 'Buenas tardes';
-    if (hour >= 20 || hour < 5) greeting = 'Buenas noches';
+    let greeting = I18N.t('home.greeting.morning');
+    if (hour >= 14 && hour < 20) greeting = I18N.t('home.greeting.afternoon');
+    if (hour >= 20 || hour < 5) greeting = I18N.t('home.greeting.evening');
 
     // Today card content
     let todayCardHtml = '';
@@ -230,7 +230,13 @@ const App = {
     container.innerHTML = `
       <div class="home-header anim-fade-in">
         <div class="home-greeting">${greeting}</div>
-        <h1 class="home-title">Iza <span class="wave">💪</span></h1>
+        <div class="home-header-row">
+          <h1 class="home-title">Iza <span class="wave">💪</span></h1>
+          <div class="lang-switch" role="group" aria-label="${I18N.t('lang.toggle_label')}">
+            <button class="lang-switch-btn ${I18N.lang === 'es' ? 'active' : ''}" onclick="I18N.setLang('es')">ES</button>
+            <button class="lang-switch-btn ${I18N.lang === 'en' ? 'active' : ''}" onclick="I18N.setLang('en')">EN</button>
+          </div>
+        </div>
       </div>
 
       ${planSwitcherHtml}
@@ -243,8 +249,8 @@ const App = {
       <button class="create-workout-cta warmup-cta anim-fade-in-up anim-delay-2" onclick="App.openWarmupSheet()">
         <div class="create-workout-cta-icon">🔥</div>
         <div class="create-workout-cta-text">
-          <div class="create-workout-cta-title">Calentar</div>
-          <div class="create-workout-cta-sub">Tren inferior · Tren superior · Cardio</div>
+          <div class="create-workout-cta-title">${I18N.t('home.warmup.title')}</div>
+          <div class="create-workout-cta-sub">${I18N.t('home.warmup.sub')}</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
@@ -253,8 +259,8 @@ const App = {
       <button class="create-workout-cta anim-fade-in-up anim-delay-2" onclick="App.navigate('create')">
         <div class="create-workout-cta-icon">✨</div>
         <div class="create-workout-cta-text">
-          <div class="create-workout-cta-title">Crear entrenamiento</div>
-          <div class="create-workout-cta-sub">Personalizado: duración, tipo, cardio</div>
+          <div class="create-workout-cta-title">${I18N.t('home.create.title')}</div>
+          <div class="create-workout-cta-sub">${I18N.t('home.create.sub')}</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
@@ -263,8 +269,8 @@ const App = {
       <button class="create-workout-cta tips-cta anim-fade-in-up anim-delay-2" onclick="App.navigate('tips')">
         <div class="create-workout-cta-icon">💡</div>
         <div class="create-workout-cta-text">
-          <div class="create-workout-cta-title">Tips para tu Rutina</div>
-          <div class="create-workout-cta-sub">Programación · Técnica · Constancia</div>
+          <div class="create-workout-cta-title">${I18N.t('home.tips.title')}</div>
+          <div class="create-workout-cta-sub">${I18N.t('home.tips.sub')}</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
@@ -273,8 +279,8 @@ const App = {
       <button class="create-workout-cta spinning-cta anim-fade-in-up anim-delay-2" onclick="App.navigate('spinning')">
         <div class="create-workout-cta-icon">🚴</div>
         <div class="create-workout-cta-text">
-          <div class="create-workout-cta-title">Spinning</div>
-          <div class="create-workout-cta-sub">15 · 20 · 30 min — Principiante a Pro</div>
+          <div class="create-workout-cta-title">${I18N.t('home.spinning.title')}</div>
+          <div class="create-workout-cta-sub">${I18N.t('home.spinning.sub')}</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>

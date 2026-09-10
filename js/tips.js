@@ -470,7 +470,7 @@ const Tips = {
     container.innerHTML = `
       <button class="workout-back" onclick="App.navigate('home')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        Volver
+        ${I18N.t('common.back')}
       </button>
 
       <div class="workout-page-header">

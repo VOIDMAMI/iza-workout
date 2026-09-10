@@ -356,7 +356,7 @@ const Spinning = {
     container.innerHTML = `
       <button class="workout-back" onclick="App.navigate('home')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        Volver
+        ${I18N.t('common.back')}
       </button>
 
       <div class="workout-page-header">
@@ -579,7 +579,7 @@ const Spinning = {
         <p class="empty-state-text">Estírate y bebe agua antes de bajar de la bici.</p>
       </div>
       <button class="btn btn-primary btn-full btn-lg" onclick="Spinning._reset(); App.navigate('spinning')">Hacer otro entreno</button>
-      <button class="btn btn-ghost btn-full" style="margin-top: var(--space-sm);" onclick="Spinning._reset(); App.navigate('home')">Volver al inicio</button>
+      <button class="btn btn-ghost btn-full" style="margin-top: var(--space-sm);" onclick="Spinning._reset(); App.navigate('home')">${I18N.t('common.back_home')}</button>
     `;
     this._reset();
   },

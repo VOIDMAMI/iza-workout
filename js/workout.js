@@ -65,7 +65,7 @@ const Workout = {
     container.innerHTML = `
       <button class="workout-back" onclick="App.navigate(Workout.backPage)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        Volver
+        ${I18N.t('common.back')}
       </button>
       <div class="rest-day-view">
         <div class="rest-day-emoji">😴</div>
@@ -80,7 +80,7 @@ const Workout = {
     container.innerHTML = `
       <button class="workout-back" onclick="App.navigate(Workout.backPage)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        Volver
+        ${I18N.t('common.back')}
       </button>
       <div class="workout-page-header">
         <h1 class="workout-day-name">🏃 ${this.currentWorkout.name}</h1>
@@ -299,7 +299,7 @@ const Workout = {
     container.innerHTML = `
       <button class="workout-back" onclick="App.navigate(Workout.backPage)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-        Volver
+        ${I18N.t('common.back')}
       </button>
 
       <div class="workout-page-header">
