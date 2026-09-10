@@ -118,8 +118,43 @@ const SPINNING_TYPE_META = {
 
 const SPINNING_STORAGE_KEY = 'spinning_session';
 
+// Entrenos reales (no generados) para combinaciones concretas de nivel+duración.
+// Clave: `${levelId}_${durationMin}`. Si existe, sustituye por completo a la
+// generación automática de vueltas para esa combinación.
+const SPINNING_PRESETS = {
+  principiante_15: {
+    source: '15 Minute Beginner Indoor Cycling Session — GCN Training',
+    blocks: [
+      { type: 'calentamiento', label: 'Calentamiento muy suave',        seconds: 60,  rpm: '60-70 rpm',  resistance: 1, resistanceLabel: 'Muy suave' },
+      { type: 'calentamiento', label: 'Calentamiento — sube un poco',   seconds: 60,  rpm: '70-80 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      { type: 'calentamiento', label: 'Calentamiento — cómodo-fuerte',  seconds: 60,  rpm: '75-85 rpm',  resistance: 5, resistanceLabel: 'Media' },
+      { type: 'recuperacion',  label: 'Suave',                          seconds: 60,  rpm: '70-80 rpm',  resistance: 1, resistanceLabel: 'Muy suave' },
+      { type: 'subida',        label: 'Cómodo-fuerte',                  seconds: 120, rpm: '65-75 rpm',  resistance: 5, resistanceLabel: 'Media' },
+      { type: 'recuperacion',  label: 'Suave',                          seconds: 60,  rpm: '70-80 rpm',  resistance: 1, resistanceLabel: 'Muy suave' },
+      { type: 'subida',        label: 'Cómodo-fuerte',                  seconds: 60,  rpm: '65-75 rpm',  resistance: 5, resistanceLabel: 'Media' },
+      { type: 'subida',        label: 'Sube el esfuerzo',               seconds: 120, rpm: '65-75 rpm',  resistance: 6, resistanceLabel: 'Media-fuerte' },
+      { type: 'recuperacion',  label: 'Suave',                          seconds: 30,  rpm: '70-80 rpm',  resistance: 1, resistanceLabel: 'Muy suave' },
+      { type: 'sprint',        label: 'Sprint',                         seconds: 30,  rpm: '100+ rpm',   resistance: 9, resistanceLabel: 'Máxima' },
+      { type: 'recuperacion',  label: 'Recuperación',                   seconds: 120, rpm: '70-80 rpm',  resistance: 1, resistanceLabel: 'Muy suave' },
+      { type: 'subida',        label: 'Cómodo-fuerte',                  seconds: 60,  rpm: '65-75 rpm',  resistance: 5, resistanceLabel: 'Media' },
+      { type: 'enfriamiento',  label: 'Enfriamiento muy suave',         seconds: 60,  rpm: '60-70 rpm',  resistance: 1, resistanceLabel: 'Muy suave' },
+    ]
+  }
+};
+
 // Genera la lista de bloques para un nivel + duración, con cumStart precalculado.
 function buildSpinningWorkout(levelId, durationMin) {
+  const preset = SPINNING_PRESETS[`${levelId}_${durationMin}`];
+  if (preset) {
+    let pCum = 0;
+    const pBlocks = preset.blocks.map(b => {
+      const start = pCum;
+      pCum += b.seconds;
+      return { ...b, start };
+    });
+    return { levelId, durationMin, blocks: pBlocks, totalSeconds: pCum, source: preset.source };
+  }
+
   const level = SPINNING_LEVELS.find(l => l.id === levelId);
   if (!level) return null;
 
@@ -260,6 +295,7 @@ const Spinning = {
           <span>Total</span>
           <span>${formatTime(preview.totalSeconds)}</span>
         </div>
+        ${preview.source ? `<div class="spinning-preview-source">🎬 ${preview.source}</div>` : ''}
       </div>
 
       <button class="btn btn-primary btn-full btn-lg" style="margin-top: var(--space-lg);" onclick="Spinning.start()">
