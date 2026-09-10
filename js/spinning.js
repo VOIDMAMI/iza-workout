@@ -197,6 +197,54 @@ const SPINNING_PRESETS = {
       { type: 'enfriamiento', label: 'Enfriamiento — sigue pedaleando', seconds: 60, rpm: '70-80 rpm', resistance: 2, resistanceLabel: 'Suave' },
       { type: 'enfriamiento', label: 'Enfriamiento muy suave',          seconds: 60, rpm: '60-70 rpm', resistance: 1, resistanceLabel: 'Muy suave' },
     ]
+  },
+  pro_15: {
+    source: 'Calorie Burning Cycling Workout | Micro Wave — GCN Training x Zwift',
+    sourceUrl: 'https://www.youtube.com/watch?v=557ZO8nu08s',
+    blocks: [
+      // Calentamiento (2:50) — 70% -> 88% FTP progresivo
+      { type: 'calentamiento', label: 'Calentamiento muy suave',   seconds: 50, rpm: '65-75 rpm', resistance: 2, resistanceLabel: 'Suave' },
+      { type: 'calentamiento', label: 'Calentamiento — sube',      seconds: 60, rpm: '75-85 rpm', resistance: 3, resistanceLabel: 'Media' },
+      { type: 'calentamiento', label: 'Calentamiento — casi listo', seconds: 60, rpm: '80-90 rpm', resistance: 5, resistanceLabel: 'Media' },
+
+      // Base sostenida (1:30) — ~85% FTP
+      { type: 'subida', label: 'Base sostenida', seconds: 90, rpm: '85-95 rpm', resistance: 5, resistanceLabel: 'Media' },
+
+      // 6 "micro-olas" de 45/20/15/10s — el núcleo del Micro Wave (9 min)
+      { type: 'recuperacion', label: 'Recuperación activa', seconds: 45, rpm: '85-90 rpm',  resistance: 4,  resistanceLabel: 'Media' },
+      { type: 'subida',       label: 'Sube',                seconds: 20, rpm: '95-105 rpm', resistance: 7,  resistanceLabel: 'Muy fuerte' },
+      { type: 'subida',       label: 'Fuerte',               seconds: 15, rpm: '100-110 rpm', resistance: 8, resistanceLabel: 'Muy fuerte' },
+      { type: 'sprint',       label: 'Al límite',            seconds: 10, rpm: '110+ rpm',   resistance: 10, resistanceLabel: 'Máxima' },
+
+      { type: 'recuperacion', label: 'Recuperación activa', seconds: 45, rpm: '85-90 rpm',  resistance: 4,  resistanceLabel: 'Media' },
+      { type: 'subida',       label: 'Sube',                seconds: 20, rpm: '95-105 rpm', resistance: 7,  resistanceLabel: 'Muy fuerte' },
+      { type: 'subida',       label: 'Fuerte',               seconds: 15, rpm: '100-110 rpm', resistance: 8, resistanceLabel: 'Muy fuerte' },
+      { type: 'sprint',       label: 'Al límite',            seconds: 10, rpm: '110+ rpm',   resistance: 10, resistanceLabel: 'Máxima' },
+
+      { type: 'recuperacion', label: 'Recuperación activa', seconds: 45, rpm: '85-90 rpm',  resistance: 4,  resistanceLabel: 'Media' },
+      { type: 'subida',       label: 'Sube',                seconds: 20, rpm: '95-105 rpm', resistance: 7,  resistanceLabel: 'Muy fuerte' },
+      { type: 'subida',       label: 'Fuerte',               seconds: 15, rpm: '100-110 rpm', resistance: 8, resistanceLabel: 'Muy fuerte' },
+      { type: 'sprint',       label: 'Al límite',            seconds: 10, rpm: '110+ rpm',   resistance: 10, resistanceLabel: 'Máxima' },
+
+      { type: 'recuperacion', label: 'Recuperación activa', seconds: 45, rpm: '85-90 rpm',  resistance: 4,  resistanceLabel: 'Media' },
+      { type: 'subida',       label: 'Sube',                seconds: 20, rpm: '95-105 rpm', resistance: 7,  resistanceLabel: 'Muy fuerte' },
+      { type: 'subida',       label: 'Fuerte',               seconds: 15, rpm: '100-110 rpm', resistance: 8, resistanceLabel: 'Muy fuerte' },
+      { type: 'sprint',       label: 'Al límite',            seconds: 10, rpm: '110+ rpm',   resistance: 10, resistanceLabel: 'Máxima' },
+
+      { type: 'recuperacion', label: 'Recuperación activa', seconds: 45, rpm: '85-90 rpm',  resistance: 4,  resistanceLabel: 'Media' },
+      { type: 'subida',       label: 'Sube',                seconds: 20, rpm: '95-105 rpm', resistance: 7,  resistanceLabel: 'Muy fuerte' },
+      { type: 'subida',       label: 'Fuerte',               seconds: 15, rpm: '100-110 rpm', resistance: 8, resistanceLabel: 'Muy fuerte' },
+      { type: 'sprint',       label: 'Al límite',            seconds: 10, rpm: '110+ rpm',   resistance: 10, resistanceLabel: 'Máxima' },
+
+      { type: 'recuperacion', label: 'Recuperación activa — última ola', seconds: 45, rpm: '85-90 rpm',  resistance: 4,  resistanceLabel: 'Media' },
+      { type: 'subida',       label: 'Sube',                             seconds: 20, rpm: '95-105 rpm', resistance: 7,  resistanceLabel: 'Muy fuerte' },
+      { type: 'subida',       label: 'Fuerte',                            seconds: 15, rpm: '100-110 rpm', resistance: 8, resistanceLabel: 'Muy fuerte' },
+      { type: 'sprint',       label: 'Al límite — última',                seconds: 10, rpm: '110+ rpm',   resistance: 10, resistanceLabel: 'Máxima' },
+
+      // Enfriamiento (1:40)
+      { type: 'enfriamiento', label: 'Enfriamiento — sigue pedaleando', seconds: 50, rpm: '70-80 rpm', resistance: 2, resistanceLabel: 'Suave' },
+      { type: 'enfriamiento', label: 'Enfriamiento muy suave',          seconds: 50, rpm: '60-70 rpm', resistance: 1, resistanceLabel: 'Muy suave' },
+    ]
   }
 };
 
