@@ -52,6 +52,7 @@ const App = {
 
     // Reanudar timer si quedaba uno activo de antes (refresh / reapertura)
     Tracker?.resumeIfActive?.();
+    Spinning?.resumeIfActive?.();
   },
 
   _switchPage(page, updateHash = true) {
@@ -77,6 +78,7 @@ const App = {
       case 'progress': Progress.render(); break;
       case 'create':   Creator.render(); break;
       case 'tips':     Tips.render(); break;
+      case 'spinning': Spinning.render(); break;
     }
   },
 
@@ -263,6 +265,16 @@ const App = {
         <div class="create-workout-cta-text">
           <div class="create-workout-cta-title">Tips para tu Rutina</div>
           <div class="create-workout-cta-sub">Programación · Técnica · Constancia</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+
+      <!-- Spinning CTA -->
+      <button class="create-workout-cta spinning-cta anim-fade-in-up anim-delay-2" onclick="App.navigate('spinning')">
+        <div class="create-workout-cta-icon">🚴</div>
+        <div class="create-workout-cta-text">
+          <div class="create-workout-cta-title">Spinning</div>
+          <div class="create-workout-cta-sub">15 · 20 · 30 min — Principiante a Pro</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
