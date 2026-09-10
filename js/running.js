@@ -15,7 +15,7 @@ const Running = {
     const logs = Storage.getRunningLogs(15);
 
     container.innerHTML = `
-      <h1 class="mb-lg" style="font-size: var(--font-2xl); font-weight: 800;">🏃 Carrera</h1>
+      <h1 class="mb-lg" style="font-size: var(--font-2xl); font-weight: 800;">🏃 ${I18N.t('running.page_title')}</h1>
 
       <div class="running-stats anim-fade-in mb-xl">
         <div class="stat-card">
@@ -33,7 +33,7 @@ const Running = {
       </div>
 
       <div class="section-header">
-        <h3 class="section-title">Registrar Nueva Carrera</h3>
+        <h3 class="section-title">${I18N.t('running.register_new')}</h3>
       </div>
 
       <div class="running-log-form anim-fade-in-up mb-xl">
@@ -62,7 +62,7 @@ const Running = {
       </div>
 
       <div class="section-header">
-        <h3 class="section-title">Historial</h3>
+        <h3 class="section-title">${I18N.t('running.history')}</h3>
       </div>
 
       ${logs.length > 0 ? `

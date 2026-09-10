@@ -53,7 +53,7 @@ const Plans = {
     const myWorkouts = Storage.getMyWorkouts();
     const myWorkoutsHtml = myWorkouts.length ? `
       <div class="section-header mt-xl">
-        <h3 class="section-title">🔧 Mis entrenos</h3>
+        <h3 class="section-title">🔧 ${I18N.t('plans.my_workouts')}</h3>
         <span class="text-xs text-tertiary">${myWorkouts.length} guardado${myWorkouts.length > 1 ? 's' : ''}</span>
       </div>
       <div class="express-list anim-fade-in-up">
@@ -63,12 +63,12 @@ const Plans = {
 
     container.innerHTML = `
       <div class="page-header anim-fade-in">
-        <h1 class="page-title">Entrenos</h1>
-        <p class="page-subtitle">Tus programas de entrenamiento</p>
+        <h1 class="page-title">${I18N.t('plans.page_title')}</h1>
+        <p class="page-subtitle">${I18N.t('plans.subtitle')}</p>
       </div>
 
       <div class="section-header">
-        <h3 class="section-title">Programas</h3>
+        <h3 class="section-title">${I18N.t('plans.programs')}</h3>
       </div>
       <div class="express-list anim-fade-in-up anim-delay-1">
         ${this._renderProgramCategories()}
@@ -77,8 +77,8 @@ const Plans = {
       ${myWorkoutsHtml}
 
       <div class="section-header mt-xl">
-        <h3 class="section-title">Entrenos Express</h3>
-        <span class="text-xs text-tertiary">Sesiones sueltas</span>
+        <h3 class="section-title">${I18N.t('plans.express')}</h3>
+        <span class="text-xs text-tertiary">${I18N.t('plans.express_sub')}</span>
       </div>
       <div class="express-list anim-fade-in-up anim-delay-2">
         ${this._renderExpressCategories()}
@@ -95,10 +95,10 @@ const Plans = {
             <div class="my-workout-name">${w.name}</div>
             <div class="my-workout-meta">${w.exercises.length} ejercicios · ${tags}</div>
           </div>
-          <button class="my-workout-delete" onclick="Plans.deleteMyWorkout('${w.id}')" aria-label="Eliminar">✕</button>
+          <button class="my-workout-delete" onclick="Plans.deleteMyWorkout('${w.id}')" aria-label="${I18N.t('common.delete')}">✕</button>
         </div>
         <button class="btn btn-primary btn-full btn-md mt-sm" onclick="Plans.startMyWorkout('${w.id}')">
-          ▶ Empezar
+          ▶ ${I18N.t('common.start')}
         </button>
       </div>
     `;
@@ -130,7 +130,7 @@ const Plans = {
           <div class="express-cat-header" onclick="Plans.toggleProgramCat('${cat.id}')">
             <div class="express-cat-icon">${cat.emoji}</div>
             <div class="express-cat-info">
-              <div class="express-cat-name">${cat.name}</div>
+              <div class="express-cat-name">${I18N.progCategoryName(cat)}</div>
               <div class="express-cat-meta">${plans.length} programa${plans.length > 1 ? 's' : ''}</div>
             </div>
             <div class="plan-card-chevron ${isExpanded ? 'expanded' : ''}">
@@ -166,7 +166,7 @@ const Plans = {
           <div class="express-cat-header" onclick="Plans.toggleCategory('${cat.id}')">
             <div class="express-cat-icon">${cat.emoji}</div>
             <div class="express-cat-info">
-              <div class="express-cat-name">${cat.name}</div>
+              <div class="express-cat-name">${I18N.categoryName(cat)}</div>
               <div class="express-cat-meta">${workouts.length} entreno${workouts.length > 1 ? 's' : ''}</div>
             </div>
             <div class="plan-card-chevron ${isExpanded ? 'expanded' : ''}">
@@ -188,8 +188,8 @@ const Plans = {
     return `
       <button class="express-card" onclick="Plans.openExpress('${workout.id}')">
         <div class="express-card-info">
-          <div class="express-card-name">${workout.name}</div>
-          ${workout.description ? `<div class="express-card-desc">${workout.description}</div>` : ''}
+          <div class="express-card-name">${I18N.expressName(workout)}</div>
+          ${workout.description ? `<div class="express-card-desc">${I18N.expressDesc(workout)}</div>` : ''}
           <div class="express-card-meta">
             <span>${exCount} ejercicios</span>
             ${workout.muscleGroups?.length ? `<span>·</span><span>${workout.muscleGroups.slice(0,2).join(' · ')}</span>` : ''}
@@ -230,7 +230,7 @@ const Plans = {
         <div class="plan-card-header" onclick="Plans.togglePlan('${plan.id}')">
           <div class="plan-card-icon">🏋️</div>
           <div class="plan-card-info">
-            <div class="plan-card-name">${plan.name}</div>
+            <div class="plan-card-name">${I18N.planName(plan)}</div>
             <div class="plan-card-meta">${weeksText} · ${daysText} · ${typeLabel}</div>
           </div>
           <div class="plan-card-chevron ${isExpanded ? 'expanded' : ''}">
@@ -370,12 +370,12 @@ const Plans = {
     modal.innerHTML = `
       <div class="modal-card" onclick="event.stopPropagation()">
         <div class="modal-header">
-          <h3 class="modal-title">Fecha de inicio</h3>
+          <h3 class="modal-title">${I18N.t('plans.start_date')}</h3>
           <button class="modal-close" onclick="document.getElementById('plan-start-modal').remove()">✕</button>
         </div>
-        <p class="text-sm text-secondary mb-lg">¿Cuándo empezaste <strong>${plan.name}</strong>? Esto permite calcular en qué semana estás.</p>
+        <p class="text-sm text-secondary mb-lg">¿Cuándo empezaste <strong>${I18N.planName(plan)}</strong>? Esto permite calcular en qué semana estás.</p>
         <div class="form-group">
-          <label class="form-label">Fecha de inicio</label>
+          <label class="form-label">${I18N.t('plans.start_date')}</label>
           <input type="date" id="plan-start-input" class="input" value="${defVal}">
         </div>
         <div class="flex gap-md mt-base">

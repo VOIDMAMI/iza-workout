@@ -83,7 +83,7 @@ const Workout = {
         ${I18N.t('common.back')}
       </button>
       <div class="workout-page-header">
-        <h1 class="workout-day-name">🏃 ${this.currentWorkout.name}</h1>
+        <h1 class="workout-day-name">🏃 ${I18N.workoutName(this.currentWorkout)}</h1>
         <div class="workout-day-info">
           <span class="badge badge-info">${config.type === 'intervals' ? 'Intervalos' : 'Fondo'}</span>
           <span class="text-sm text-secondary">${config.totalTime}</span>
@@ -109,7 +109,7 @@ const Workout = {
       <div class="divider"></div>
 
       <div class="section-header mt-xl">
-        <h3 class="section-title">Registrar Carrera</h3>
+        <h3 class="section-title">${I18N.t('workout.register_run')}</h3>
       </div>
 
       <div class="running-log-form anim-fade-in-up anim-delay-4">
@@ -251,16 +251,16 @@ const Workout = {
                 <div class="exercise-actions">
                   <button class="btn-search-ex" onclick="Workout.searchExercise(event, '${searchQuery.replace(/'/g, "\\'")}')">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-                    Buscar ejercicio
+                    ${I18N.t('workout.search_exercise')}
                   </button>
-                  <button class="btn-swap-ex" onclick="Workout.openSwapModal(event, '${ex.id}')" aria-label="Cambiar ejercicio">
+                  <button class="btn-swap-ex" onclick="Workout.openSwapModal(event, '${ex.id}')" aria-label="${I18N.t('workout.swap')}">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-                    Cambiar
+                    ${I18N.t('workout.swap')}
                   </button>
                   ${ex.notes ? `
-                  <button class="btn-notes-ex" onclick="Workout.toggleNotes(event, '${ex.id}')" aria-label="Ver notas del ejercicio">
+                  <button class="btn-notes-ex" onclick="Workout.toggleNotes(event, '${ex.id}')" aria-label="${I18N.t('workout.notes')}">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                    Notas
+                    ${I18N.t('workout.notes')}
                   </button>` : ''}
                 </div>
               </div>
@@ -276,7 +276,7 @@ const Workout = {
             ${setsHtml}
           </div>
           <div class="exercise-notes-wrap">
-            <label class="exercise-notes-label" for="notes-${ex.id}">📝 Observaciones</label>
+            <label class="exercise-notes-label" for="notes-${ex.id}">${I18N.t('workout.observations')}</label>
             <textarea
               id="notes-${ex.id}"
               class="exercise-notes"
@@ -303,7 +303,7 @@ const Workout = {
       </button>
 
       <div class="workout-page-header">
-        <h1 class="workout-day-name">${this.currentWorkout.name}</h1>
+        <h1 class="workout-day-name">${I18N.workoutName(this.currentWorkout)}</h1>
         <div class="workout-day-info">
           ${this.currentWorkout.muscleGroups.map(g => `<span class="badge badge-primary">${g}</span>`).join('')}
         </div>
@@ -327,7 +327,7 @@ const Workout = {
 
       <div class="rest-timer hidden" id="rest-timer-container">
         <div class="flex items-center justify-between w-full mb-md">
-          <span class="text-sm text-secondary">⏱ Descanso</span>
+          <span class="text-sm text-secondary">${I18N.t('workout.rest')}</span>
           <button class="btn-ghost text-sm" onclick="Tracker.hideTimer()">✕</button>
         </div>
         <div class="timer-display" id="timer-display">00:00</div>
@@ -377,7 +377,7 @@ const Workout = {
         <div style="text-align:center;animation:scaleIn 0.5s cubic-bezier(0.34,1.56,0.64,1);">
           <div style="font-size:4rem;margin-bottom:1rem;">🏆</div>
           <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;">¡Increíble!</div>
-          <div style="color:var(--text-secondary);">Has completado ${this.currentWorkout.name}</div>
+          <div style="color:var(--text-secondary);">Has completado ${I18N.workoutName(this.currentWorkout)}</div>
         </div>
       `;
       document.body.appendChild(celebration);

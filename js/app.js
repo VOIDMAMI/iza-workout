@@ -89,9 +89,9 @@ const App = {
     const existing = document.getElementById('warmup-sheet-overlay');
     if (existing) existing.remove();
     const options = [
-      { id: 'calentamiento',           emoji: '🦵', name: 'Tren inferior', sub: 'Hip thrust, sentadilla, peso muerto' },
-      { id: 'calentamiento_superior',  emoji: '💪', name: 'Tren superior', sub: 'Press, dominadas, remo, jalón' },
-      { id: 'calentamiento_cardio',    emoji: '🏃', name: 'Cardio / Carrera', sub: 'Drills + movilidad + strides' },
+      { id: 'calentamiento',           emoji: '🦵', name: I18N.t('warmup.lower.name'),  sub: I18N.t('warmup.lower.sub') },
+      { id: 'calentamiento_superior',  emoji: '💪', name: I18N.t('warmup.upper.name'),  sub: I18N.t('warmup.upper.sub') },
+      { id: 'calentamiento_cardio',    emoji: '🏃', name: I18N.t('warmup.cardio.name'), sub: I18N.t('warmup.cardio.sub') },
     ];
     const overlay = document.createElement('div');
     overlay.className = 'swap-modal-overlay';
@@ -100,10 +100,10 @@ const App = {
       <div class="swap-modal" onclick="event.stopPropagation()">
         <div class="swap-modal-header">
           <div>
-            <div class="swap-modal-title">🔥 Elige calentamiento</div>
-            <div class="swap-modal-subtitle">Estiramientos dinámicos + activación</div>
+            <div class="swap-modal-title">🔥 ${I18N.t('warmup.pick_title')}</div>
+            <div class="swap-modal-subtitle">${I18N.t('warmup.pick_sub')}</div>
           </div>
-          <button class="swap-modal-close" onclick="App.closeWarmupSheet()" aria-label="Cerrar">✕</button>
+          <button class="swap-modal-close" onclick="App.closeWarmupSheet()" aria-label="${I18N.t('common.close')}">✕</button>
         </div>
         <div class="swap-modal-body">
           ${options.map(o => `
@@ -220,7 +220,7 @@ const App = {
         <span class="home-plan-switch-label">Plan</span>
         <div class="plan-selector-dropdown" style="margin:0; flex:1;">
           <select class="plan-select" onchange="App.changePlan(this.value)">
-            ${plans.map(p => `<option value="${p.id}" ${p.id === activePlanId ? 'selected' : ''}>${p.name}</option>`).join('')}
+            ${plans.map(p => `<option value="${p.id}" ${p.id === activePlanId ? 'selected' : ''}>${I18N.planName(p)}</option>`).join('')}
           </select>
           <svg class="plan-select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
@@ -303,7 +303,7 @@ const App = {
 
       <!-- Quick Actions -->
       <div class="section-header anim-fade-in-up anim-delay-3">
-        <h3 class="section-title">Acceso Rápido</h3>
+        <h3 class="section-title">${I18N.t('home.quick_access')}</h3>
       </div>
 
       <div class="quick-actions anim-fade-in-up anim-delay-4">
@@ -339,7 +339,7 @@ const App = {
 
       <!-- Weekly overview -->
       <div class="section-header anim-fade-in-up anim-delay-5 mt-lg">
-        <h3 class="section-title">Tu Semana</h3>
+        <h3 class="section-title">${I18N.t('home.your_week')}</h3>
         <button class="section-action" onclick="App.navigate('calendar')">Ver todo →</button>
       </div>
 

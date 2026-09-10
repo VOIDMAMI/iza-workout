@@ -35,7 +35,7 @@ const Creator = {
       </button>
 
       <div class="workout-page-header">
-        <h1 class="workout-day-name">✨ Crear entrenamiento</h1>
+        <h1 class="workout-day-name">✨ ${I18N.t('home.create.title')}</h1>
         <div class="workout-day-info">
           <span class="text-sm text-secondary">Personalizado a tu medida</span>
         </div>

@@ -12,13 +12,13 @@ const Progress = {
     if (!container) return;
 
     container.innerHTML = `
-      <h1 class="mb-lg" style="font-size: var(--font-2xl); font-weight: 800;">📊 Tu Progreso</h1>
+      <h1 class="mb-lg" style="font-size: var(--font-2xl); font-weight: 800;">📊 ${I18N.t('progress.page_title')}</h1>
 
       <div class="chip-group progress-tabs mb-xl">
-        <button class="chip ${this.activeTab === 'history' ? 'active' : ''}" onclick="Progress.switchTab('history')">📋 Historial</button>
-        <button class="chip ${this.activeTab === 'prs' ? 'active' : ''}" onclick="Progress.switchTab('prs')">🏆 PRs</button>
-        <button class="chip ${this.activeTab === 'strength' ? 'active' : ''}" onclick="Progress.switchTab('strength')">🏋️ Fuerza</button>
-        <button class="chip ${this.activeTab === 'running' ? 'active' : ''}" onclick="Progress.switchTab('running')">🏃 Carrera</button>
+        <button class="chip ${this.activeTab === 'history' ? 'active' : ''}" onclick="Progress.switchTab('history')">📋 ${I18N.t('progress.tab.history')}</button>
+        <button class="chip ${this.activeTab === 'prs' ? 'active' : ''}" onclick="Progress.switchTab('prs')">🏆 ${I18N.t('progress.tab.prs')}</button>
+        <button class="chip ${this.activeTab === 'strength' ? 'active' : ''}" onclick="Progress.switchTab('strength')">🏋️ ${I18N.t('progress.tab.strength')}</button>
+        <button class="chip ${this.activeTab === 'running' ? 'active' : ''}" onclick="Progress.switchTab('running')">🏃 ${I18N.t('progress.tab.running')}</button>
       </div>
 
       <div id="progress-content"></div>
@@ -298,7 +298,7 @@ const Progress = {
       </div>
 
       <div class="section-header mt-xl">
-        <h3 class="section-title">Últimas Carreras</h3>
+        <h3 class="section-title">${I18N.t('progress.last_runs')}</h3>
       </div>
 
       ${logs.length > 0 ? `
@@ -376,7 +376,7 @@ const Progress = {
       </div>
 
       <div class="section-header">
-        <h3 class="section-title">Historial Reciente</h3>
+        <h3 class="section-title">${I18N.t('progress.recent_history')}</h3>
       </div>
 
       <div class="history-list anim-fade-in-up">
