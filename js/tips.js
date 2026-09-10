@@ -1,5 +1,5 @@
 /* ============================================
-   IZA WORKOUT — Tips (Guía de entrenamiento)
+   IZA WORKOUT — Tips para tu Rutina
    Vista #tips: consejos de programación, técnica (incluye femoral),
    adherencia y nutrición. Acordeones por sección.
    Fuente: rutina "Más Fuertes" (Kiwi / Saiyan Workout).
@@ -474,7 +474,7 @@ const Tips = {
       </button>
 
       <div class="workout-page-header">
-        <h1 class="workout-day-name">💡 Tips de entrenamiento</h1>
+        <h1 class="workout-day-name">💡 Tips para tu Rutina</h1>
         <div class="workout-day-info">
           <span class="text-sm text-secondary">Programación, técnica y constancia</span>
         </div>
