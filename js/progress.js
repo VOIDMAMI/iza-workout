@@ -4,7 +4,7 @@
    ============================================ */
 
 const Progress = {
-  activeTab: 'strength',
+  activeTab: 'history',
   selectedExercise: null,
 
   render() {
@@ -15,10 +15,10 @@ const Progress = {
       <h1 class="mb-lg" style="font-size: var(--font-2xl); font-weight: 800;">📊 Tu Progreso</h1>
 
       <div class="chip-group progress-tabs mb-xl">
-        <button class="chip ${this.activeTab === 'strength' ? 'active' : ''}" onclick="Progress.switchTab('strength')">🏋️ Fuerza</button>
-        <button class="chip ${this.activeTab === 'running' ? 'active' : ''}" onclick="Progress.switchTab('running')">🏃 Carrera</button>
         <button class="chip ${this.activeTab === 'history' ? 'active' : ''}" onclick="Progress.switchTab('history')">📋 Historial</button>
         <button class="chip ${this.activeTab === 'prs' ? 'active' : ''}" onclick="Progress.switchTab('prs')">🏆 PRs</button>
+        <button class="chip ${this.activeTab === 'strength' ? 'active' : ''}" onclick="Progress.switchTab('strength')">🏋️ Fuerza</button>
+        <button class="chip ${this.activeTab === 'running' ? 'active' : ''}" onclick="Progress.switchTab('running')">🏃 Carrera</button>
       </div>
 
       <div id="progress-content"></div>
@@ -32,7 +32,7 @@ const Progress = {
     vibrate(20);
     document.querySelectorAll('.progress-tabs .chip').forEach(c => c.classList.remove('active'));
     const chips = document.querySelectorAll('.progress-tabs .chip');
-    const tabIndex = ['strength', 'running', 'history', 'prs'].indexOf(tab);
+    const tabIndex = ['history', 'prs', 'strength', 'running'].indexOf(tab);
     if (chips[tabIndex]) chips[tabIndex].classList.add('active');
     this.renderTab();
   },
