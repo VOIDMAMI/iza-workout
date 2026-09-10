@@ -1,6 +1,6 @@
 /* ============================================
    IZA WORKOUT — Tips (Guía de entrenamiento)
-   Vista #tips: consejos de programación, técnica, femoral,
+   Vista #tips: consejos de programación, técnica (incluye femoral),
    adherencia y nutrición. Acordeones por sección.
    Fuente: rutina "Más Fuertes" (Kiwi / Saiyan Workout).
    ============================================ */
@@ -81,8 +81,8 @@ const TIPS_SECTIONS = [
   {
     id: 'tecnica',
     emoji: '🎯',
-    name: 'Técnica y set-up',
-    sub: 'Peso muerto, hip thrust, sentadilla, press, remo, hombro',
+    name: 'TECNICA',
+    sub: 'Peso muerto, hip thrust, sentadilla, press, remo, hombro, femoral',
     tips: [
       {
         title: 'Memoriza tu set-up',
@@ -180,15 +180,7 @@ const TIPS_SECTIONS = [
           'Crunch en polea: polea arriba, de espaldas, enróllate como una C metiendo el ombligo y exhala al contraer.',
           'Sentir un músculo no significa trabajarlo objetivamente. Es solo mayor activación.'
         ]
-      }
-    ]
-  },
-  {
-    id: 'femoral',
-    emoji: '🦵',
-    name: 'Femoral completo',
-    sub: 'La regla de las dos articulaciones',
-    tips: [
+      },
       {
         title: 'Los isquios son biarticulares',
         body: 'Cruzan dos articulaciones: rodilla y cadera. Actúan como flexores de rodilla y extensores de cadera. Para trabajarlos al completo hay que entrenarlos de dos formas, dejando una articulación fija y moviendo la otra.',
