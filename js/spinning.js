@@ -2,9 +2,10 @@
    IZA WORKOUT — Spinning
    Entrenos de bici indoor con temporizador de intervalos:
    3 niveles (principiante/medio/pro) x 3 duraciones (15/20/30 min).
-   Cada nivel define una "vuelta" (ciclo de bloques ritmo/resistencia)
-   que se repite hasta rellenar la duración elegida, entre un
-   calentamiento y un enfriamiento fijos.
+   Cada nivel define varias "vueltas" (variantes de bloques ritmo/
+   resistencia) que se van alternando hasta rellenar la duración
+   elegida, entre un calentamiento y un enfriamiento fijos. Así dos
+   vueltas seguidas nunca son idénticas.
    ============================================ */
 
 const SPINNING_DURATIONS = [15, 20, 30];
@@ -16,10 +17,22 @@ const SPINNING_LEVELS = [
     emoji: '🌱',
     name: 'Principiante',
     sub: 'Toma de contacto con la bici',
-    lap: [
-      { type: 'llano',        label: 'Llano suave',    seconds: 90, rpm: '70-80 rpm', resistance: 3, resistanceLabel: 'Suave' },
-      { type: 'subida',       label: 'Subida suave',   seconds: 90, rpm: '60-70 rpm', resistance: 5, resistanceLabel: 'Media' },
-      { type: 'recuperacion', label: 'Recuperación',   seconds: 60, rpm: '80-90 rpm', resistance: 2, resistanceLabel: 'Muy suave' },
+    laps: [
+      [
+        { type: 'llano',        label: 'Llano suave',    seconds: 90, rpm: '70-80 rpm', resistance: 3, resistanceLabel: 'Suave' },
+        { type: 'subida',       label: 'Subida suave',   seconds: 90, rpm: '60-70 rpm', resistance: 5, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 60, rpm: '80-90 rpm', resistance: 2, resistanceLabel: 'Muy suave' },
+      ],
+      [
+        { type: 'llano',        label: 'Llano suave',    seconds: 60,  rpm: '70-80 rpm', resistance: 3, resistanceLabel: 'Suave' },
+        { type: 'subida',       label: 'Subida suave',   seconds: 120, rpm: '60-70 rpm', resistance: 5, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 90,  rpm: '80-90 rpm', resistance: 2, resistanceLabel: 'Muy suave' },
+      ],
+      [
+        { type: 'llano',        label: 'Llano suave',    seconds: 120, rpm: '70-80 rpm', resistance: 3, resistanceLabel: 'Suave' },
+        { type: 'sprint',       label: 'Sprint corto',   seconds: 20,  rpm: '90-100 rpm', resistance: 4, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 100, rpm: '80-90 rpm', resistance: 2, resistanceLabel: 'Muy suave' },
+      ],
     ]
   },
   {
@@ -27,11 +40,33 @@ const SPINNING_LEVELS = [
     emoji: '⚡',
     name: 'Medio',
     sub: 'Sube la intensidad',
-    lap: [
-      { type: 'llano',        label: 'Llano medio',    seconds: 60, rpm: '80-90 rpm',  resistance: 4, resistanceLabel: 'Media' },
-      { type: 'subida',       label: 'Subida fuerte',  seconds: 90, rpm: '60-70 rpm',  resistance: 7, resistanceLabel: 'Fuerte' },
-      { type: 'sprint',       label: 'Sprint',         seconds: 30, rpm: '100+ rpm',   resistance: 5, resistanceLabel: 'Media' },
-      { type: 'recuperacion', label: 'Recuperación',   seconds: 60, rpm: '80-90 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+    laps: [
+      [
+        { type: 'llano',        label: 'Llano medio',    seconds: 60, rpm: '80-90 rpm',  resistance: 4, resistanceLabel: 'Media' },
+        { type: 'subida',       label: 'Subida fuerte',  seconds: 90, rpm: '60-70 rpm',  resistance: 7, resistanceLabel: 'Fuerte' },
+        { type: 'sprint',       label: 'Sprint',         seconds: 30, rpm: '100+ rpm',   resistance: 5, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 60, rpm: '80-90 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      ],
+      [
+        { type: 'llano',        label: 'Llano medio',    seconds: 90, rpm: '80-90 rpm',  resistance: 4, resistanceLabel: 'Media' },
+        { type: 'sprint',       label: 'Sprint',         seconds: 20, rpm: '100+ rpm',   resistance: 5, resistanceLabel: 'Media' },
+        { type: 'subida',       label: 'Subida fuerte',  seconds: 60, rpm: '60-70 rpm',  resistance: 7, resistanceLabel: 'Fuerte' },
+        { type: 'sprint',       label: 'Sprint',         seconds: 20, rpm: '100+ rpm',   resistance: 5, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 50, rpm: '80-90 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      ],
+      [
+        { type: 'subida',       label: 'Subida larga',   seconds: 120, rpm: '60-70 rpm', resistance: 7, resistanceLabel: 'Fuerte' },
+        { type: 'llano',        label: 'Llano medio',    seconds: 60,  rpm: '80-90 rpm', resistance: 4, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 60,  rpm: '80-90 rpm', resistance: 3, resistanceLabel: 'Suave' },
+      ],
+      [
+        { type: 'sprint',       label: 'Sprint',         seconds: 20, rpm: '100+ rpm',   resistance: 5, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 40, rpm: '80-90 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+        { type: 'sprint',       label: 'Sprint',         seconds: 20, rpm: '100+ rpm',   resistance: 5, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 40, rpm: '80-90 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+        { type: 'llano',        label: 'Llano medio',    seconds: 60, rpm: '80-90 rpm',  resistance: 4, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',   seconds: 60, rpm: '80-90 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      ],
     ]
   },
   {
@@ -39,12 +74,35 @@ const SPINNING_LEVELS = [
     emoji: '🔥',
     name: 'Pro',
     sub: 'Máxima exigencia',
-    lap: [
-      { type: 'llano',        label: 'Llano rápido',      seconds: 60, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
-      { type: 'subida',       label: 'Subida muy fuerte', seconds: 90, rpm: '55-65 rpm',  resistance: 8, resistanceLabel: 'Muy fuerte' },
-      { type: 'sprint',       label: 'Sprint máximo',     seconds: 30, rpm: '110+ rpm',   resistance: 6, resistanceLabel: 'Fuerte' },
-      { type: 'subida',       label: 'Subida',            seconds: 60, rpm: '60-70 rpm',  resistance: 7, resistanceLabel: 'Fuerte' },
-      { type: 'recuperacion', label: 'Recuperación',      seconds: 60, rpm: '85-95 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+    laps: [
+      [
+        { type: 'llano',        label: 'Llano rápido',      seconds: 60, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+        { type: 'subida',       label: 'Subida muy fuerte', seconds: 90, rpm: '55-65 rpm',  resistance: 8, resistanceLabel: 'Muy fuerte' },
+        { type: 'sprint',       label: 'Sprint máximo',     seconds: 30, rpm: '110+ rpm',   resistance: 6, resistanceLabel: 'Fuerte' },
+        { type: 'subida',       label: 'Subida',            seconds: 60, rpm: '60-70 rpm',  resistance: 7, resistanceLabel: 'Fuerte' },
+        { type: 'recuperacion', label: 'Recuperación',      seconds: 60, rpm: '85-95 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      ],
+      [
+        { type: 'sprint',       label: 'Sprint máximo',     seconds: 20, rpm: '110+ rpm',   resistance: 6, resistanceLabel: 'Fuerte' },
+        { type: 'recuperacion', label: 'Recuperación',      seconds: 40, rpm: '85-95 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+        { type: 'sprint',       label: 'Sprint máximo',     seconds: 20, rpm: '110+ rpm',   resistance: 6, resistanceLabel: 'Fuerte' },
+        { type: 'recuperacion', label: 'Recuperación',      seconds: 40, rpm: '85-95 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+        { type: 'subida',       label: 'Subida muy fuerte', seconds: 90, rpm: '55-65 rpm',  resistance: 8, resistanceLabel: 'Muy fuerte' },
+        { type: 'recuperacion', label: 'Recuperación',      seconds: 60, rpm: '85-95 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      ],
+      [
+        { type: 'subida',       label: 'Subida montaña',    seconds: 150, rpm: '55-65 rpm', resistance: 9, resistanceLabel: 'Muy fuerte' },
+        { type: 'llano',        label: 'Llano rápido',      seconds: 60,  rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+        { type: 'recuperacion', label: 'Recuperación',      seconds: 90,  rpm: '85-95 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      ],
+      [
+        { type: 'llano',        label: 'Llano rápido',      seconds: 40, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+        { type: 'sprint',       label: 'Sprint máximo',     seconds: 20, rpm: '110+ rpm',   resistance: 6, resistanceLabel: 'Fuerte' },
+        { type: 'subida',       label: 'Subida muy fuerte', seconds: 60, rpm: '55-65 rpm',  resistance: 8, resistanceLabel: 'Muy fuerte' },
+        { type: 'sprint',       label: 'Sprint máximo',     seconds: 20, rpm: '110+ rpm',   resistance: 6, resistanceLabel: 'Fuerte' },
+        { type: 'subida',       label: 'Subida muy fuerte', seconds: 60, rpm: '55-65 rpm',  resistance: 8, resistanceLabel: 'Muy fuerte' },
+        { type: 'recuperacion', label: 'Recuperación',      seconds: 60, rpm: '85-95 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      ],
     ]
   }
 ];
@@ -76,8 +134,11 @@ function buildSpinningWorkout(levelId, durationMin) {
   ];
 
   let remaining = mainSeconds;
+  let lapIndex = 0;
   while (remaining > 0) {
-    for (const b of level.lap) {
+    const lap = level.laps[lapIndex % level.laps.length];
+    lapIndex++;
+    for (const b of lap) {
       if (remaining <= 0) break;
       const secs = Math.min(b.seconds, remaining);
       blocks.push({ ...b, seconds: secs });
