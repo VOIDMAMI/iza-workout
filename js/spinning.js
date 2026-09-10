@@ -124,6 +124,7 @@ const SPINNING_STORAGE_KEY = 'spinning_session';
 const SPINNING_PRESETS = {
   principiante_15: {
     source: '15 Minute Beginner Indoor Cycling Session — GCN Training',
+    sourceUrl: 'https://www.youtube.com/watch?v=fQqndzvURAU',
     blocks: [
       { type: 'calentamiento', label: 'Calentamiento muy suave',        seconds: 60,  rpm: '60-70 rpm',  resistance: 1, resistanceLabel: 'Muy suave' },
       { type: 'calentamiento', label: 'Calentamiento — sube un poco',   seconds: 60,  rpm: '70-80 rpm',  resistance: 3, resistanceLabel: 'Suave' },
@@ -139,6 +140,63 @@ const SPINNING_PRESETS = {
       { type: 'subida',        label: 'Cómodo-fuerte',                  seconds: 60,  rpm: '65-75 rpm',  resistance: 5, resistanceLabel: 'Media' },
       { type: 'enfriamiento',  label: 'Enfriamiento muy suave',         seconds: 60,  rpm: '60-70 rpm',  resistance: 1, resistanceLabel: 'Muy suave' },
     ]
+  },
+  medio_20: {
+    source: 'Quick HIIT Workout | Instant Inferno — GCN Training x Zwift',
+    sourceUrl: 'https://www.youtube.com/watch?v=1xuWyHnnPko',
+    blocks: [
+      // Calentamiento (2:30)
+      { type: 'calentamiento', label: 'Calentamiento muy suave',       seconds: 60, rpm: '60-70 rpm', resistance: 1, resistanceLabel: 'Muy suave' },
+      { type: 'calentamiento', label: 'Calentamiento — sube un poco',  seconds: 45, rpm: '70-80 rpm', resistance: 2, resistanceLabel: 'Suave' },
+      { type: 'calentamiento', label: 'Calentamiento — hasta nivel 4', seconds: 45, rpm: '80-90 rpm', resistance: 4, resistanceLabel: 'Media' },
+
+      // Building the Effort — nivel 3-4 (3 min, 3 intervalos 30s/30s)
+      { type: 'subida',       label: 'Sube el ritmo (4/10)', seconds: 30, rpm: '85-95 rpm', resistance: 4, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (3/10)',         seconds: 30, rpm: '75-85 rpm', resistance: 3, resistanceLabel: 'Suave' },
+      { type: 'subida',       label: 'Sube el ritmo (4/10)', seconds: 30, rpm: '85-95 rpm', resistance: 4, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (3/10)',         seconds: 30, rpm: '75-85 rpm', resistance: 3, resistanceLabel: 'Suave' },
+      { type: 'subida',       label: 'Sube el ritmo (4/10)', seconds: 30, rpm: '85-95 rpm', resistance: 4, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (3/10)',         seconds: 30, rpm: '75-85 rpm', resistance: 3, resistanceLabel: 'Suave' },
+
+      // Ramping Up to Level 5 (3 min, 3 intervalos 30s/30s)
+      { type: 'subida',       label: 'Ritmo fuerte (5/10)', seconds: 30, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (3/10)',        seconds: 30, rpm: '75-85 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      { type: 'subida',       label: 'Ritmo fuerte (5/10)', seconds: 30, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (3/10)',        seconds: 30, rpm: '75-85 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      { type: 'subida',       label: 'Ritmo fuerte (5/10)', seconds: 30, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (3/10)',        seconds: 30, rpm: '75-85 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+
+      // Recover & Reset (1 min, respiro antes del tramo fuerte)
+      { type: 'recuperacion', label: 'Suave (3/10)',         seconds: 30, rpm: '75-85 rpm', resistance: 3, resistanceLabel: 'Suave' },
+      { type: 'recuperacion', label: 'Recuperación (2/10)',  seconds: 30, rpm: '70-80 rpm', resistance: 2, resistanceLabel: 'Muy suave' },
+
+      // Turning Up the Heat — nivel 6 (3 min, 3 intervalos 30s/30s)
+      { type: 'subida',       label: 'Sube el calor (6/10)', seconds: 30, rpm: '90-100 rpm', resistance: 6, resistanceLabel: 'Fuerte' },
+      { type: 'recuperacion', label: 'Suave (3/10)',         seconds: 30, rpm: '75-85 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      { type: 'subida',       label: 'Sube el calor (6/10)', seconds: 30, rpm: '90-100 rpm', resistance: 6, resistanceLabel: 'Fuerte' },
+      { type: 'recuperacion', label: 'Suave (3/10)',         seconds: 30, rpm: '75-85 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+      { type: 'subida',       label: 'Sube el calor (6/10)', seconds: 30, rpm: '90-100 rpm', resistance: 6, resistanceLabel: 'Fuerte' },
+      { type: 'recuperacion', label: 'Suave (3/10)',         seconds: 30, rpm: '75-85 rpm',  resistance: 3, resistanceLabel: 'Suave' },
+
+      // The Final Third — se recompromete, sube el suelo del descanso (3 min, 3 intervalos 30s/30s)
+      { type: 'subida',       label: 'Ritmo fuerte (5/10)', seconds: 30, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (4/10)',        seconds: 30, rpm: '80-90 rpm',  resistance: 4, resistanceLabel: 'Media' },
+      { type: 'subida',       label: 'Ritmo fuerte (5/10)', seconds: 30, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (4/10)',        seconds: 30, rpm: '80-90 rpm',  resistance: 4, resistanceLabel: 'Media' },
+      { type: 'subida',       label: 'Ritmo fuerte (5/10)', seconds: 30, rpm: '90-100 rpm', resistance: 5, resistanceLabel: 'Media' },
+      { type: 'recuperacion', label: 'Suave (4/10)',        seconds: 30, rpm: '80-90 rpm',  resistance: 4, resistanceLabel: 'Media' },
+
+      // Pushing the Limit — nivel 7-8, tramo final sin descanso completo (2:30)
+      { type: 'subida',       label: 'Casi al límite (7/10)', seconds: 30, rpm: '95-105 rpm', resistance: 7, resistanceLabel: 'Muy fuerte' },
+      { type: 'recuperacion', label: 'Suave (5/10)',          seconds: 30, rpm: '85-95 rpm',  resistance: 5, resistanceLabel: 'Media' },
+      { type: 'sprint',       label: 'Al límite (8/10)',      seconds: 30, rpm: '100+ rpm',   resistance: 8, resistanceLabel: 'Muy fuerte' },
+      { type: 'recuperacion', label: 'Suave (5/10)',          seconds: 30, rpm: '85-95 rpm',  resistance: 5, resistanceLabel: 'Media' },
+      { type: 'sprint',       label: 'Al límite (8/10) — última',  seconds: 30, rpm: '100+ rpm', resistance: 8, resistanceLabel: 'Muy fuerte' },
+
+      // Enfriamiento (2 min)
+      { type: 'enfriamiento', label: 'Enfriamiento — sigue pedaleando', seconds: 60, rpm: '70-80 rpm', resistance: 2, resistanceLabel: 'Suave' },
+      { type: 'enfriamiento', label: 'Enfriamiento muy suave',          seconds: 60, rpm: '60-70 rpm', resistance: 1, resistanceLabel: 'Muy suave' },
+    ]
   }
 };
 
@@ -152,7 +210,7 @@ function buildSpinningWorkout(levelId, durationMin) {
       pCum += b.seconds;
       return { ...b, start };
     });
-    return { levelId, durationMin, blocks: pBlocks, totalSeconds: pCum, source: preset.source };
+    return { levelId, durationMin, blocks: pBlocks, totalSeconds: pCum, source: preset.source, sourceUrl: preset.sourceUrl };
   }
 
   const level = SPINNING_LEVELS.find(l => l.id === levelId);
@@ -295,7 +353,11 @@ const Spinning = {
           <span>Total</span>
           <span>${formatTime(preview.totalSeconds)}</span>
         </div>
-        ${preview.source ? `<div class="spinning-preview-source">🎬 ${preview.source}</div>` : ''}
+        ${preview.source ? `
+          <div class="spinning-preview-source">
+            🎬 ${preview.sourceUrl ? `<a href="${preview.sourceUrl}" target="_blank" rel="noopener">${preview.source}</a>` : preview.source}
+          </div>
+        ` : ''}
       </div>
 
       <button class="btn btn-primary btn-full btn-lg" style="margin-top: var(--space-lg);" onclick="Spinning.start()">
@@ -494,6 +556,7 @@ const Spinning = {
         <div class="workout-day-info">
           <span class="text-sm text-secondary">${this._levelName()} · ${this.workout.durationMin} min</span>
         </div>
+        ${this.workout.sourceUrl ? `<a href="${this.workout.sourceUrl}" target="_blank" rel="noopener" class="text-sm" style="color:var(--primary);">🎬 Ver vídeo original</a>` : ''}
       </div>
 
       <div class="spinning-timer-card" id="spinning-timer-card" style="border-color:${meta.color || 'var(--border-light)'}">

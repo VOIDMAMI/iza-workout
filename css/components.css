@@ -1401,6 +1401,18 @@
   font-style: italic;
 }
 
+.spinning-preview-source a {
+  color: var(--primary);
+  font-style: normal;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.spinning-preview-source a:hover,
+.spinning-preview-source a:active {
+  text-decoration: underline;
+}
+
 .spinning-timer-card {
   display: flex;
   flex-direction: column;
