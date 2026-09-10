@@ -1,0 +1,101 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    IZA WORKOUT — MOBILE QUICK START                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+FASTEST WAY TO TEST ON PHONE (2 minutes):
+
+1. Open PowerShell in this folder (Shift + Right-click → Open PowerShell here)
+
+2. Run:
+   python -m http.server 8000
+
+3. Get your IP:
+   ipconfig
+   → Look for IPv4 Address (like 192.168.1.100)
+
+4. On phone (same WiFi):
+   Open browser → http://192.168.1.100:8000
+
+5. Done! App is running on your phone.
+
+────────────────────────────────────────────────────────────────────────────────
+
+INSTALL AS APP (Make it feel native):
+
+Android:
+  1. Tap 3-dot menu (top right)
+  2. Tap "Install app"
+  3. Confirm
+
+iOS:
+  1. Tap Share button
+  2. Tap "Add to Home Screen"
+  3. Tap "Add"
+
+────────────────────────────────────────────────────────────────────────────────
+
+KEY FILES:
+
+MOBILE_SETUP.md      → Detailed mobile configuration info
+TEST_MOBILE.md       → Checklist for testing all features
+DEPLOYMENT.md        → 6 ways to deploy (local, GitHub, Netlify, etc)
+QUICK_START_MOBILE.txt → This file!
+
+────────────────────────────────────────────────────────────────────────────────
+
+EVERYTHING YOU NEED TO KNOW:
+
+✓ Offline support (Service Worker caching)
+✓ Mobile-first responsive design
+✓ PWA installation (home screen app)
+✓ All data stored locally (no server)
+✓ Touch-optimized buttons & inputs
+✓ Spanish language UI
+✓ Works on Android & iOS
+
+────────────────────────────────────────────────────────────────────────────────
+
+SERVICE WORKER CACHE STATUS:
+
+Cache Version: iza-workout-v2
+Includes: All JS files, CSS, manifest, icons
+Offline Mode: ENABLED
+First Load: ~2-3 seconds (creates cache)
+Later Loads: <1 second (from cache)
+
+────────────────────────────────────────────────────────────────────────────────
+
+TROUBLESHOOTING:
+
+"Can't reach phone"
+→ Check phone and computer on same WiFi
+→ Check IP address correct (ipconfig on computer)
+
+"App won't install"
+→ Use localhost (easier) or deploy with HTTPS
+→ See DEPLOYMENT.md for GitHub Pages / Netlify options
+
+"Data disappeared"
+→ Don't clear browser cache! It contains your workout logs.
+→ Use Export feature in Progress tab to backup.
+
+────────────────────────────────────────────────────────────────────────────────
+
+FEATURES READY FOR MOBILE:
+
+🏠 HOME — Today's workout card, quick stats
+📋 ENTRENOS — All training programs (Más Fuertes, Express workouts, etc)
+📅 CALENDAR — Monthly view, set plan dates, see completed days
+📈 PROGRESO — Personal records, running logs, progress charts
+💪 TRACKING — Log weights, reps, rest times during workout
+
+────────────────────────────────────────────────────────────════════════════════
+
+NEXT STEPS:
+
+1. Read MOBILE_SETUP.md for complete configuration details
+2. Read DEPLOYMENT.md to choose how to run the app (local server vs cloud)
+3. Read TEST_MOBILE.md to test all features thoroughly
+4. Start logging workouts! 💪
+
+════════════════════════════════════════════════════════════════════════════════
