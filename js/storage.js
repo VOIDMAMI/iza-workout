@@ -178,12 +178,27 @@ const Storage = {
   /* ---- Notas y peso por NOMBRE de ejercicio (compartido entre planes) ---- */
 
   // Clave canónica del ejercicio. Misma "Hip Thrust" en cualquier plan → misma clave.
+  // Se usa para las NOTAS (técnica válida da igual el esquema de series).
   _exerciseKey(name) {
     if (!name) return '';
     return String(name)
       .toLowerCase()
       .split('|')[0]                                        // quita " | DELOAD" o variantes
       .replace(/\(.*?\)/g, '')                              // quita "(aproximación)" etc.
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')     // quita acentos
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  },
+
+  // Clave para el PESO sugerido. A diferencia de _exerciseKey, NO descarta el
+  // contenido entre paréntesis: "Hip Thrust" y "Hip Thrust (aproximación)" son
+  // el mismo movimiento pero se cargan con pesos muy distintos (la de
+  // aproximación es más ligera), así que deben guardar el peso por separado.
+  _exerciseWeightKey(name) {
+    if (!name) return '';
+    return String(name)
+      .toLowerCase()
+      .split('|')[0]                                        // quita " | DELOAD" o variantes
       .normalize('NFD').replace(/[̀-ͯ]/g, '')     // quita acentos
       .replace(/[^a-z0-9]+/g, ' ')
       .trim();
@@ -207,7 +222,7 @@ const Storage = {
   },
 
   setExerciseWeight(name, weight) {
-    const key = this._exerciseKey(name);
+    const key = this._exerciseWeightKey(name);
     if (!key || !(weight > 0)) return;
     const all = this._get(STORAGE_KEYS.EXERCISE_WEIGHTS) || {};
     all[key] = { weight: parseFloat(weight), ts: Date.now() };
@@ -215,7 +230,7 @@ const Storage = {
   },
 
   getExerciseWeightByName(name) {
-    const key = this._exerciseKey(name);
+    const key = this._exerciseWeightKey(name);
     if (!key) return null;
     const all = this._get(STORAGE_KEYS.EXERCISE_WEIGHTS) || {};
     return all[key]?.weight ?? null;
