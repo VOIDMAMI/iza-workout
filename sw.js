@@ -1,4 +1,4 @@
-const CACHE_NAME = 'iza-workout-v111';
+const CACHE_NAME = 'iza-workout-v112';
 const ASSETS = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const ASSETS = [
   './js/generator.js',
   './js/creator.js',
   './js/tips.js',
+  './js/meals.js',
   './js/spinning.js',
   './js/data.js',
   './js/plans-extra.js',

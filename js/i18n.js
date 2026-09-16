@@ -31,6 +31,8 @@ const I18N_DICT = {
     'home.tips.sub':     'Programación · Técnica · Constancia',
     'home.spinning.title': 'Spinning',
     'home.spinning.sub':   "15 · 20 · 30 min — Principiante a Pro",
+    'home.meals.title':  'Comidas',
+    'home.meals.sub':    'Desayunos · Comidas · Cenas · Acompañamientos',
     'home.quick_access': 'Acceso Rápido',
     'home.your_week':    'Tu Semana',
 
@@ -97,6 +99,8 @@ const I18N_DICT = {
     'home.tips.sub':     'Programming · Technique · Consistency',
     'home.spinning.title': 'Spinning',
     'home.spinning.sub':   '15 · 20 · 30 min — Beginner to Pro',
+    'home.meals.title':  'Meals',
+    'home.meals.sub':    'Breakfast · Lunch · Dinner · Sides',
     'home.quick_access': 'Quick Access',
     'home.your_week':    'Your Week',
 

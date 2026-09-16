@@ -1320,6 +1320,15 @@
   box-shadow: 0 6px 22px rgba(4, 120, 87, 0.5);
 }
 
+.meals-cta {
+  background: linear-gradient(135deg, #F59E0B, #B45309);
+  box-shadow: 0 4px 16px rgba(180, 83, 9, 0.35);
+}
+.meals-cta:hover,
+.meals-cta:active {
+  box-shadow: 0 6px 22px rgba(180, 83, 9, 0.5);
+}
+
 /* ---- Spinning ---- */
 .spinning-level-grid {
   display: grid;

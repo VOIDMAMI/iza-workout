@@ -78,6 +78,7 @@ const App = {
       case 'progress': Progress.render(); break;
       case 'create':   Creator.render(); break;
       case 'tips':     Tips.render(); break;
+      case 'comidas':  Meals.render(); break;
       case 'spinning': Spinning.render(); break;
     }
   },
@@ -281,6 +282,16 @@ const App = {
         <div class="create-workout-cta-text">
           <div class="create-workout-cta-title">${I18N.t('home.spinning.title')}</div>
           <div class="create-workout-cta-sub">${I18N.t('home.spinning.sub')}</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+
+      <!-- Comidas CTA -->
+      <button class="create-workout-cta meals-cta anim-fade-in-up anim-delay-2" onclick="App.navigate('comidas')">
+        <div class="create-workout-cta-icon">🍽️</div>
+        <div class="create-workout-cta-text">
+          <div class="create-workout-cta-title">${I18N.t('home.meals.title')}</div>
+          <div class="create-workout-cta-sub">${I18N.t('home.meals.sub')}</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
