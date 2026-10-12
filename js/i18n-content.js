@@ -1,0 +1,95 @@
+/* ============================================
+   IZA WORKOUT — i18n content overlay (Fase 2)
+   Traducciones EN para nombres/descripciones de PLANES y ENTRENOS
+   EXPRESS. Los nombres de ejercicio individuales y las notas técnicas
+   siguen en español (fases futuras). Si un id no está aquí, el helper
+   cae automáticamente al texto original en español.
+   ============================================ */
+
+const I18N_CONTENT_EN = {
+  plans: {
+    fuerza_avanzado:        { name: 'Strong & Advanced', description: '5-day/week strength program — 12 periodized weeks' },
+    carrera_5km:             { name: '5K Run', description: '12-week plan to run 5K — Walk-Run method + mobility + injury-prevention work' },
+    quema_grasa_comp:        { name: 'Fat Burn Complement', description: '8-week complementary program — cardio/HIIT/sprints/swimming' },
+    perdida_grasa:            { name: 'Fat Loss', description: '12-week fat loss program (Phase 1: 5 days/week · Phase 2: 6 days/week)' },
+    personas_poco_tiempo:     { name: 'Short on Time', description: '3 days a week | 12 progressive weeks' },
+    perdida_grasa_2_0:        { name: 'Fat Loss 2.0', description: '8 weeks | Strength + HIIT + Cardio | 6 days a week' },
+    gluteos_mamasota:         { name: 'Mamasota Glutes', description: '12 weeks | Glute hypertrophy + Upper body | 5 days/week' },
+    hibrido_fuerza_carrera:   { name: 'Hybrid — Strength & Running', description: '12 weeks | Hybrid Strength + Cardio | 6 days/week' },
+    empezando_rutina:         { name: 'Starting From Zero at Home', description: '4 weeks | Beginners at home · Mobility + Strength + HIIT | 7 days/week' },
+    empezando_gym:            { name: 'Starting From Zero at the Gym', description: '4-week gym plan — legs/glutes, upper body/core, HIIT and mobility' },
+    quemando_gym:             { name: 'Burning Fat at the Gym', description: '8-week gym plan — upper/lower body strength, HIIT, Tabata and mobility' },
+    quemando_casa:            { name: 'Burning Fat at Home', description: '8-week home plan — resistance-band strength, HIIT, Tabata and mobility. Sunday rest.' },
+    empezando_cero_20:        { name: 'Starting From Zero 2.0', description: '12-week plan — full body 4 days/week (D1/D3/D5/D7). Block 1 (W1-W5) + deload (W6) + Block 2 (W7-W11) + deload (W12). D7 mobility.' },
+    fuertes_intermedias:      { name: 'Strong Intermediate', description: '12-week plan — intermediate strength 5 days/week (D1, D2, D4, D5, D7). Block A (W1-W3) → Transition B (W4) → Block C (W5-W8) → Advanced Block D (W9-W12). D3 and D6 rest. D7 optional full body.' },
+    empezando_calistenia:     { name: 'Starting Calisthenics', description: '29-week hybrid calisthenics plan (with dumbbells/pulleys) across 8 progressive levels. 3 days/week (D1, D3, D5).' },
+    calistenia_avanzada:      { name: 'Your Advanced Calisthenics Workout', description: 'Continuation of the calisthenics plan (original weeks 30-36). Phase A base (3 wk) + Phase B EXTRA with more volume (4 wk). 3 days/week.' },
+    woods:                    { name: 'Woods', description: "12-week CrossFit/Hyrox-style plan with WOD, AMRAP, Tabata, ergs (SkiErg, RowErg), sled, wall ball and KB. W1 = 4 days. W2-W12 = 5 days (adds 60' LISS Cardio on D6). Blocks: W1-W4 Endurance/Strength/Performance · W5-W9 Bodybuilding/Development · W10-W12 Stimulation + final HYROX test." },
+    atleta:                   { name: 'Athlete', description: 'Multidisciplinary high-performance 12-week plan (strength + plyometrics + sprints + functional). 6 days/week (D5 rest). Block 1 (W1-W6): BASE — technical conditioning + strength. Block 2 (W7-W12): ATHLETIC — heavy strength + plyometric drills + sprints + sled/sandbag. Progression applied via weight/intensity (same plan repeated 6 wk per block).' },
+    carrera_10km:             { name: '10K Run', description: '12-week plan to run 10K — combines continuous running, short intervals and long runs + injury-prevention work' },
+    carrera_21km:             { name: 'Half Marathon 21K', description: '12-week plan to complete a half marathon (21K) — combines technique, hills, intervals, tempo and progressive long runs + injury-prevention work' },
+    carrera_42km:             { name: 'Marathon 42K', description: '12-week plan to complete a marathon (42K) — combines technique, hills, intervals, tempo and very long progressive runs + double injury-prevention work (D2 and D4)' },
+    calentamiento_cardio:     { name: 'Warm-up (Cardio / Running)', description: 'Mobility + technique drills · ~8-10 min' },
+    calentamiento_superior:   { name: 'Warm-up (Upper Body)', description: 'Dynamic stretching + activation · ~8-10 min' },
+    calentamiento:            { name: 'Warm-up (Lower Body)', description: 'Dynamic stretching + activation · ~8-10 min' },
+  },
+
+  express: {
+    hiit_1_0:            { name: 'HIIT 1.0', description: 'Blocks A and B — 40s work / 20s rest' },
+    hiit_2_0:            { name: 'HIIT 2.0', description: '3 rounds — 30s / 15s' },
+    hiit_3_0:            { name: 'HIIT 3.0', description: 'Olympic HIIT — 3 rounds 35s / 10s' },
+    hiit_4_0:            { name: 'HIIT 4.0', description: 'Legs on fire — 3 rounds 30s / 15s' },
+    hiit_5_0:            { name: 'HIIT 5.0', description: '4 rounds — 30s / 10s' },
+    hiit_abs:            { name: 'HIIT Abs', description: 'The sound of the summer is CRUNCH — 2 rounds 35s / 15s' },
+    hiit_abs_sm:         { name: 'HIIT Abs — No Equipment', description: '3 circuits — Final Tabata 20s / 10s' },
+    hiit_gluteos_kb:     { name: 'HIIT Glutes with Kettlebell', description: 'Booty Day at home — 4 rounds 35s / 15s' },
+    hiit_tren_sup:       { name: 'HIIT Upper Body', description: 'One kettlebell and magic — 3 rounds 30s / 15s' },
+    fb_casa:             { name: 'Full Body at Home', description: 'Full body with bench/chair — 2 circuits + Tabata' },
+    fb_gomas:            { name: 'Full Body with Bands', description: '3 rounds — 35s / 10s' },
+    fb_gomas_kb:         { name: 'Full Body with Bands & Kettlebell', description: 'No excuses! — 3 rounds 30s / 15s' },
+    fb_gym:              { name: 'Express Full Body Gym', description: '30 minutes — little time, great results' },
+    fb_mancuernas:       { name: 'Full Body Dumbbells', description: '2 circuits + final Tabata' },
+    pp_dominada_1:       { name: '1 Pull-up', description: 'Full progression for your first pull-up' },
+    pp_flexion_1:        { name: '1 Push-up', description: "You already have your first push-up and didn't know it" },
+    pp_dominada_2:       { name: '1 Pull-up 2.0', description: 'Your first pull-up is here' },
+    pp_abs:              { name: 'Abs Express', description: "Only 30'? Set your abs on fire" },
+    pp_abs_enfaz:        { name: "Abs Express 15''", description: 'The 4 most scientifically-backed abs exercises' },
+    pp_glute_burner:     { name: 'Glute Burner', description: 'Ascending pyramid — no rest' },
+    pp_gluteo_top:       { name: 'Top Glutes', description: 'Explosive Booty Day' },
+    pp_gluteos_casa:     { name: 'Glutes at Home', description: 'Always is glutes time' },
+    pp_gluteos_power:    { name: 'Glutes Power', description: 'Glute day, holy day' },
+    pp_gluteos_piernas:  { name: 'Express Glutes & Legs at Home', description: 'Just 30 min of your day' },
+    pp_hombros_gym:      { name: 'Shoulders at the Gym', description: 'Shoulder day' },
+    pp_sentadilla:       { name: 'Improve Your Squat', description: 'Squat day!' },
+    pp_piernas_gym:      { name: 'Legs at the Gym', description: 'Leg day' },
+    pp_push_day:         { name: 'Push Day Gym', description: 'Chest, shoulders and triceps' },
+    pp_tren_superior:    { name: 'Upper Body', description: 'Monday? Train!' },
+    calistenia_parque:   { name: 'Calisthenics in the Park', description: 'Bar day' },
+    kettlebell_express:  { name: 'Kettlebell Workout', description: 'Saturday at home — 3 rounds 40s / 20s' },
+    mov_cadera:          { name: 'Hip Pain', description: 'Reduce your hip pain' },
+    mov_vacaciones:      { name: 'Vacation Mobility', description: "Don't get rusty on vacation" },
+    mov_oficinistas:     { name: 'Mobility for Office Workers', description: 'Goodbye back and neck pain' },
+    mov_casa_1:          { name: 'Mobility & Stretching at Home 1', description: 'Relax day at home' },
+    mov_casa_2:          { name: 'Mobility & Stretching at Home 2', description: 'Relax day II' },
+    mov_espalda:         { name: 'Reduce Your Back Pain', description: 'Mobility and stretching for the back' },
+    estiramientos:       { name: 'Stretching', description: 'Improve your health while on vacation' },
+  },
+
+  expressCategories: {
+    'HIIT':          { name: 'HIIT' },
+    'FULL BODY':     { name: 'Full Body' },
+    'POR PARTES':    { name: 'By Muscle Group' },
+    'CALISTENIA':    { name: 'Calisthenics' },
+    'KETTLEBELL':    { name: 'Kettlebell' },
+    'MOVILIDAD':     { name: 'Mobility' },
+    'ESTIRAMIENTOS': { name: 'Stretching' },
+  },
+
+  programCategories: {
+    'EMPEZANDO':     { name: 'Starting From 0' },
+    'FUERZA':        { name: 'Strength' },
+    'CARRERA':       { name: 'Running' },
+    'HIBRIDOS':      { name: 'Hybrids' },
+    'PERDIDA_GRASA': { name: 'Fat Loss' },
+  }
+};
