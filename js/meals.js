@@ -57,6 +57,12 @@ const MEALS_SECTIONS = [
         ingredients: ['Arroz cocido', 'Boloñesa vegana (soja texturizada)', 'Verdura asada (berenjena, cebolla, brócoli)'],
         body: 'Saltea la soja texturizada ya hidratada con aceite de oliva, tomate triturado, sal y orégano a fuego bajo hasta que burbujee. Sirve sobre el arroz junto con la verdura asada.',
         tip: 'Lleva el brócoli en un compartimento aparte para que no mezcle sabores con el resto.'
+      },
+      {
+        title: 'Salmón ahumado con queso feta y arroz',
+        ingredients: ['Arroz cocido', 'Salmón ahumado', 'Queso feta desmenuzado', 'Aceite de oliva', 'Limón', 'Pimienta negra'],
+        body: 'Pon el arroz de base (templado o frío). Coloca encima el salmón ahumado en tiras y el queso feta desmenuzado. Aliña con un chorrito de aceite de oliva, unas gotas de limón y pimienta negra.',
+        tip: 'No hace falta añadir sal: el salmón ahumado y el feta ya son bastante salados. Guarda el salmón aparte y móntalo justo antes de comer.'
       }
     ]
   },
