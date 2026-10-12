@@ -135,6 +135,49 @@ const MEALS_SECTIONS = [
         tip: 'Cocina todas las bases juntas en una sola sesión (~1 h) para ahorrar tiempo el resto de la semana.'
       }
     ]
+  },
+  {
+    id: 'hambre',
+    emoji: '🧠',
+    name: 'Controlar el hambre',
+    sub: 'Comer para sentirte saciada',
+    unit: 'consejos',
+    recipes: [
+      {
+        title: 'No es fuerza de voluntad',
+        body: 'Tener hambre todo el rato no es falta de autocontrol: la saciedad la regulan las hormonas, y tu cuerpo ya tiene todo lo necesario para producirlas. Con lo que comes, cómo lo comes y el ejercicio puedes conseguir el mismo efecto que buscan los fármacos para adelgazar, sin sus efectos secundarios ni el efecto rebote.'
+      },
+      {
+        title: '1. Fibra en cada comida',
+        ingredients: ['Avena integral', 'Lentejas y garbanzos', 'Manzana con piel', 'Fruta y verdura en general'],
+        body: 'La fibra hace que la digestión sea más lenta y que la comida llegue hasta la parte del intestino donde se activa la saciedad. Resultado: te sientes llena durante horas.',
+        tip: 'Los ultraprocesados y los azúcares se absorben muy rápido y no llegan a activar esa señal; por eso nunca sacian.'
+      },
+      {
+        title: '2. Proteína y grasa buena',
+        ingredients: ['Pechuga de pavo o pollo', 'Bacalao y pescado blanco', 'Claras de huevo', 'Proteína en polvo', 'Legumbres (proteína + fibra)', 'Aceite de oliva virgen extra'],
+        body: 'La proteína y la grasa son el interruptor de la saciedad. Las legumbres son el combo perfecto porque juntan proteína y fibra. Como grasa, el aceite de oliva virgen extra sacia mucho más que la mantequilla o los aceites refinados.'
+      },
+      {
+        title: '3. Alimentos que alargan la saciedad',
+        ingredients: ['Café', 'Té verde', 'Uvas con piel'],
+        body: 'Ayudan a que la sensación de saciedad que has generado dure más tiempo.',
+        tip: 'No existen alimentos mágicos: el mate o el chocolate negro no hacen milagros. Lo que funciona es combinar fibra, proteína y grasa de calidad en el plato.'
+      },
+      {
+        title: '4. Mastica bien',
+        body: 'Masticar activa la saciedad. Elige comida con textura (mejor sólida que en puré) y sé consciente de cada bocado; no hace falta contar las masticaciones.'
+      },
+      {
+        title: '5. Come despacio',
+        body: 'Date unos 20-30 minutos para comer, sentada, con pequeñas pausas y sin el móvil. Si comes en 5 minutos, el cuerpo no llega a mandar la señal de saciedad y sigues con hambre.'
+      },
+      {
+        title: '6. Entrena con regularidad',
+        body: 'El ejercicio no solo quema calorías: es de las herramientas más potentes para controlar el hambre. Hacer ejercicio de forma regular entrena a tu cuerpo para producir más hormona de la saciedad y evita el hambre voraz y el efecto rebote después de una dieta.',
+        tip: 'El último paso es el que todo el mundo se salta, y sin él los demás funcionan mucho peor.'
+      }
+    ]
   }
 ];
 
@@ -158,7 +201,7 @@ const Meals = {
             <div class="express-cat-icon">${sec.emoji}</div>
             <div class="express-cat-info">
               <div class="express-cat-name">${sec.name}</div>
-              <div class="express-cat-meta">${sec.recipes.length} recetas · ${sec.sub}</div>
+              <div class="express-cat-meta">${sec.recipes.length} ${sec.unit || 'recetas'} ·${sec.sub}</div>
             </div>
             <div class="plan-card-chevron ${isOpen ? 'expanded' : ''}">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
