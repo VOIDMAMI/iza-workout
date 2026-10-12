@@ -238,6 +238,94 @@ const TIPS_SECTIONS = [
     ]
   },
   {
+    id: 'perder_grasa',
+    emoji: '📉',
+    name: 'PERDER GRASA',
+    sub: 'Los 5 hábitos que funcionan sin contar calorías',
+    tips: [
+      {
+        title: 'Hábito 1 · Come suficiente, no lo mínimo',
+        body: 'Comer lo mínimo para verte pequeña es contraproducente. Los carbohidratos son la gasolina de tus músculos: sin ellos no tienes fuerza entrenando, y sin un estímulo real el cuerpo no tiene motivo para mantener el músculo ni para quemar grasa.',
+        points: [
+          'Carbohidratos: la base. No los elimines, ni siquiera para perder grasa.',
+          'Proteína en cada comida principal: sacia, protege el músculo y el cuerpo gasta más energía en digerirla. Las fuentes vegetales (legumbres, soja, frutos secos) son igual de eficaces.',
+          'Grasa buena (aguacate, nueces, aceite de oliva) en vez de quitarla: tus hormonas la necesitan. Una dieta sin grasa apaga el sistema hormonal, sobre todo en mujeres.'
+        ]
+      },
+      {
+        title: 'Hábito 1 · El plato fácil',
+        body: 'Elige tus 20 alimentos sanos favoritos y conviértelos en la base de tu alimentación, sin prohibirte grupos enteros. Para las cantidades, sin pesar nada:',
+        points: [
+          'Medio plato de verdura y fruta, un cuarto de proteína y un cuarto de carbohidrato (cereales integrales, tubérculos).',
+          'Una porción del tamaño de tu palma de grasa buena.',
+          'Días de entreno: quita un cuarto de verdura y súmalo al carbohidrato, que ocupe medio plato.',
+          '¿Hambre? Añade verdura extra para llenar el plato, pero nunca en lugar del carbohidrato.',
+          'Trucos: pon una base de rúcula, canónigos o espinacas bajo la comida; para llevar, ensalada en tarro (aliño abajo, verdura dura, proteína y hojas arriba). La verdura congelada vale igual que la fresca.'
+        ]
+      },
+      {
+        title: 'Hábito 2 · Fuerza antes que cardio',
+        body: 'Ni horas de cinta ni cientos de repeticiones con poco peso. Con la misma dieta, quien hace solo cardio pierde músculo; quien entrena fuerza pierde grasa y gana músculo. Y el músculo, además de dar ese aspecto firme, ayuda a que lo que comes se use como energía y no se acumule como grasa.',
+        points: [
+          'En casa también funciona: tus músculos no saben dónde estás, entienden de intensidad. Acaba cada serie sin poder hacer una repetición más con buena técnica.',
+          'Basta con 3 días de full body o 4 alternando tren superior e inferior.'
+        ]
+      },
+      {
+        title: 'Hábito 2 · Muévete más en el día a día',
+        body: 'Lo que gastas fuera del entreno (andar, subir escaleras, moverte) puede ser más de la mitad de lo que quemas al día. Caminar suma mucho sin agotarte ni darte el hambre voraz del cardio intenso. Olvídate de la obsesión por los 10.000 pasos y crea un estilo de vida más activo:',
+        points: [
+          'Paseo de 15 minutos justo después de comer: mejora la digestión y la hinchazón.',
+          'Aparca más lejos, sube por las escaleras, camina mientras hablas por teléfono.',
+          'Usa los paseos como pausa en el trabajo: bajan el estrés y el cansancio de la tarde.'
+        ]
+      },
+      {
+        title: 'Hábito 3 · Bebe agua',
+        body: 'Cuando bebes poco, el cuerpo retiene líquido. Esa hinchazón que aparece de un día para otro no es grasa. Y con poca deshidratación ya rindes peor entrenando. No se trata de beber para engañar al hambre, sino de que tu cuerpo funcione bien.',
+        points: [
+          'No esperes a tener sed. Piel seca, cansancio, calambres, digestiones pesadas o dolor de cabeza pueden ser señales.',
+          'Referencia: unos 2 litros al día para una mujer sedentaria; más si entrenas o sudas.',
+          'También cuenta lo que comes: fruta, verdura, caldos, cremas y guisos.'
+        ]
+      },
+      {
+        title: 'Hábito 4 · Duerme bien: regla 10-3-2-1',
+        body: 'El sueño sostiene todo el proceso: mientras duermes se reparan tejidos y se regula el metabolismo. Tapones y antifaz ayudan mucho.',
+        points: [
+          '10 horas antes de dormir: cero cafeína (pásate al descafeinado por la tarde).',
+          '3 horas antes: nada de comidas copiosas. Los hidratos en la cena no engordan y ayudan a dormir.',
+          '2 horas antes: sin muchos líquidos, para no despertarte a ir al baño.',
+          '1 hora antes: cero pantallas.',
+          '¿Te cuesta desconectar? Respiración 4x4: inspira 4 s, aguanta 4, espira 4, aguanta 4. Repite 5 veces.'
+        ]
+      },
+      {
+        title: 'Hábito 4 · Menos estrés',
+        body: 'El estrés es el gran enemigo de la pérdida de grasa, y no solo es el del trabajo. Las dietas muy restrictivas y los ayunos largos estresan al cuerpo, y en las mujeres activan antes el "modo ahorro", que frena la pérdida de grasa.'
+      },
+      {
+        title: 'Hábito 5 · Devoción, no disciplina',
+        body: 'Convierte tus metas en tu identidad: en vez de "quiero perder 5 kg", "soy una persona que cuida su salud". No vas a entrenar por obligación, sino porque te importa sentirte bien hoy y a los 80 años.',
+        points: [
+          'Quita decisiones: no "mañana entreno", sino "mañana a las 8 me pongo la ropa y me voy". Si ya está decidido, tu cabeza no negocia.',
+          'Piensa en cómo te vas a sentir justo después de entrenar.',
+          'El día que no apetece: "voy y hago una serie del primer ejercicio; si quiero, me voy". Casi siempre te quedas.',
+          'No todos los días serán el mejor entreno de tu vida: vas plantando semillas.'
+        ]
+      },
+      {
+        title: 'Cómo saber si funciona',
+        body: 'Olvida la báscula: el peso sube y baja por líquidos, el ciclo o la digestión, y puedes estar ganando músculo y perdiendo grasa sin que se mueva.',
+        points: [
+          'Cinta métrica: si la cintura se mantiene o baja y la cadera sube, pierdes grasa y ganas músculo.',
+          'Cómo te queda la ropa y cómo están tu energía, tus digestiones y tu fuerza.',
+          'Una foto al mes, con la misma luz y la misma postura.'
+        ]
+      }
+    ]
+  },
+  {
     id: 'programacion',
     emoji: '🧠',
     name: 'PROGRAMACIÓN',
