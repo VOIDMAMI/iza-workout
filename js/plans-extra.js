@@ -11351,7 +11351,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
     'Acelera progresivamente hasta un ritmo rápido pero suelto (no sprint) y vuelve andando. Cadencia alta, pasos cortos y ligeros.');
   const rodaje = (min, strides) => [
     _ex('r5k_rodaje', 'Rodaje suave (zona 2)', 1, min, 0,
-      'Ritmo conversacional (RPE 4-5): debes poder hablar en frases completas. Si no puedes, baja el ritmo. Aquí se construye la base aeróbica.'),
+      'Ritmo conversacional (~8:15-8:45 /km, RPE 4-5): debes poder hablar en frases completas. Si no puedes, baja el ritmo. Aquí se construye la base aeróbica.'),
     rectas(strides),
   ];
   const series = (id, sets, dist, rest, note) => [
@@ -11381,32 +11381,32 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
         1: fuerzaA(3, 3, true),
         2: rodaje('25 min', 4),
         3: series('r5k_s400', 6, '400m', 90,
-          'A ritmo objetivo de 5K o algo más rápido (RPE 8). Recupera 90" andando o trotando muy suave. Todas las series al mismo ritmo.'),
+          'A ~6:50-7:00 /km: cada 400 m en ~2:45-2:50 (RPE 8). Recupera 90" andando o trotando muy suave. Todas las series al mismo ritmo.'),
         4: fuerzaB(3, '20'),
         6: [_ex('r5k_tirada', 'Tirada larga suave', 1, '5 km', 0,
-          'Todo a ritmo conversacional. El objetivo es acumular tiempo corriendo, no ir rápido. Si lo necesitas, camina 1 min y sigue.')]
+          'Todo a ritmo conversacional (~8:15-8:45 /km). El objetivo es acumular tiempo corriendo, no ir rápido. Si lo necesitas, camina 1 min y sigue.')]
       },
       // S2 — carga: series más largas, tirada 6 km
       {
         1: fuerzaA(3, 2, true),
         2: rodaje('30 min', 4),
         3: series('r5k_s800', 4, '800m', 120,
-          'A ritmo objetivo de 5K (RPE 8). Recupera 2\' trotando suave. Si la última va mucho más lenta que la primera, empieza más conservadora la próxima vez.'),
+          'A ~7:10 /km: cada 800 m en ~5:45 (RPE 8). Recupera 2\' trotando suave. Si la última va mucho más lenta que la primera, empieza más conservadora la próxima vez.'),
         4: fuerzaB(3, '25'),
         6: [_ex('r5k_tirada', 'Tirada larga suave', 1, '6 km', 0,
-          'Ritmo conversacional. Último km algo más alegre si te encuentras bien.')]
+          'Ritmo conversacional (~8:15-8:45 /km). Último km algo más alegre (~7:45) si te encuentras bien.')]
       },
       // S3 — específica: series a ritmo de carrera + ensayo general; la pierna empieza a bajar
       {
         1: fuerzaA(2, 2, true),
         2: rodaje('30 min', 6),
         3: series('r5k_s1k', 3, '1 km', 120,
-          'A ritmo de carrera (el que quieres llevar el día 22). Recupera 2\' trotando. Aprende a sentir ese ritmo sin mirar el reloj.'),
+          'A ritmo de carrera: 7:15-7:20 /km (cada km en ~7:15-7:20). Recupera 2\' trotando. Aprende a sentir ese ritmo sin mirar el reloj.'),
         4: fuerzaB(2, '20'),
         6: [
           _ex('r5k_tirada_s3a', 'Tirada | Suave', 1, '2 km', 0, 'Ritmo conversacional para calentar.'),
           _ex('r5k_tirada_s3b', 'Tirada | Ritmo de carrera', 1, '3 km', 0,
-            'Ensayo general a ritmo de carrera, constante. Prueba también el desayuno, la ropa y las zapatillas que llevarás el día 22.'),
+            'Ensayo general a ritmo de carrera (7:15-7:20 /km), constante. Prueba también el desayuno, la ropa y las zapatillas que llevarás el día 22.'),
           _ex('r5k_tirada_s3c', 'Tirada | Suave', 1, '1 km', 0, 'Suelta piernas y baja pulsaciones.')
         ]
       },
@@ -11417,7 +11417,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
         3: [
           ...warmRun(),
           _ex('r5k_s4_1k', 'Ritmo de carrera', 1, '1 km', 120,
-            'Un único km a ritmo de carrera para recordar la sensación. Debe sentirse controlado.'),
+            'Un único km a ritmo de carrera (7:15-7:20 /km) para recordar la sensación. Debe sentirse controlado.'),
           _ex('r5k_s4_200', 'Series 200m', 4, '200m', 90,
             'Rápidas pero sueltas, sin apretar al máximo. Recupera 90" andando.'),
           coolRun()
@@ -11441,7 +11441,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
           _ex('r5k_race_warm', 'Calentamiento | Trote + movilidad', 1, '10 min', 0,
             '8\' de trote muy suave + balanceos de pierna y 2-3 rectas cortas. Termina 5-10\' antes de la salida.'),
           _ex('r5k_race', 'Carrera 5K Dubái 🏁', 1, '5 km', 0,
-            'Km 1 algo más conservador que tu ritmo objetivo (la emoción de la salida engaña). Km 2-4 a ritmo constante. Último km: lo que quede. Bebe en el avituallamiento aunque no tengas sed. ¡A disfrutarla! 💜')
+            'Objetivo: 7:20 /km (~36:40; tu marca del 28-oct es 7:38 /km, 38:10). Km 1 a ~7:30, sin dejarte llevar por la salida. Km 2-4 a 7:20 constante. Último km: lo que quede. Bebe en el avituallamiento aunque no tengas sed. ¡A disfrutarla! 💜')
         ]
       }
     ]
