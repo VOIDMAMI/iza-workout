@@ -380,13 +380,21 @@ const Storage = {
   },
 
   getPlanCurrentWeek(planId) {
+    return this.getPlanWeekForDate(planId, new Date());
+  },
+
+  // Semana del plan en la que cae una fecha concreta (calendario: cada día del mes
+  // debe mostrar el entreno de SU semana, no el de la semana actual)
+  getPlanWeekForDate(planId, date) {
     const startDateStr = this.getPlanStartDate(planId);
     if (!startDateStr) return 1;
     const plan = WORKOUT_PLANS[planId];
     if (!plan) return 1;
-    const start = new Date(startDateStr);
-    const now = new Date();
-    const week = Math.floor((now - start) / (7 * 24 * 60 * 60 * 1000)) + 1;
+    const [y, m, d] = startDateStr.split('-').map(Number);
+    const start = new Date(y, m - 1, d);
+    const day = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const days = Math.round((day - start) / (24 * 60 * 60 * 1000));
+    const week = Math.floor(days / 7) + 1;
     return Math.min(Math.max(week, 1), plan.weeks || 12);
   },
 

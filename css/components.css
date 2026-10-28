@@ -1025,7 +1025,9 @@
   font-weight: 700;
 }
 
-.calendar-day.has-workout::after {
+.calendar-day.has-workout::after,
+.calendar-day.has-running::after,
+.calendar-day.completed-day::after {
   content: '';
   width: 6px;
   height: 6px;

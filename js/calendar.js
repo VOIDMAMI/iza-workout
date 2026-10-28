@@ -112,7 +112,7 @@ const Calendar = {
       const date = new Date(this.currentYear, this.currentMonth, day);
       const dateKey = formatDateKey(date);
       const dayOfWeek = date.getDay();
-      const workout = getWorkoutForPlanAndDay(planId, dayOfWeek);
+      const workout = getWorkoutForPlanWeekDay(planId, Storage.getPlanWeekForDate(planId, date), dayOfWeek);
       const isTodayDate = isToday(date);
       const isSelected = this.selectedDate && isSameDay(this.selectedDate, date);
 
@@ -153,7 +153,7 @@ const Calendar = {
 
     const planId = this._getPlan();
     const dayOfWeek = date.getDay();
-    const workout = getWorkoutForPlanAndDay(planId, dayOfWeek);
+    const workout = getWorkoutForPlanWeekDay(planId, Storage.getPlanWeekForDate(planId, date), dayOfWeek);
     const dateKey = formatDateKey(date);
     const isCompleted = Storage._get(STORAGE_KEYS.WORKOUT_LOGS)?.[dateKey]?._completed;
     const isFuture = date > new Date() && !isToday(date);
@@ -190,7 +190,7 @@ const Calendar = {
         : 'Ver entrenamiento →';
 
     let exerciseList = '';
-    if (workout.type === 'strength') {
+    if (workout.exercises && !workout.runConfig) {
       exerciseList = workout.exercises.map(ex =>
         `<div class="flex items-center justify-between" style="padding: var(--space-sm) 0; border-bottom: 1px solid var(--border);">
           <span class="text-sm">${ex.name}</span>

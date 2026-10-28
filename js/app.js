@@ -148,11 +148,11 @@ const App = {
   navigateToWorkout(date, planId) {
     const d = date instanceof Date ? date : new Date();
     const pid = planId || Storage.getSelectedPlan() || ACTIVE_PLAN;
-    const weekNum = Storage.getPlanCurrentWeek(pid);
+    const weekNum = Storage.getPlanWeekForDate(pid, d);
     const dayOfWeek = d.getDay();
     Workout.backPage = date instanceof Date ? 'calendar' : 'home';
     this._switchPage('workout');
-    Workout.render(getWorkoutForPlanAndDay(pid, dayOfWeek), d, { weekNum, dayOfWeek, planId: pid });
+    Workout.render(getWorkoutForPlanWeekDay(pid, weekNum, dayOfWeek), d, { weekNum, dayOfWeek, planId: pid });
   },
 
   renderHome() {
