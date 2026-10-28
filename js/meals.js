@@ -178,6 +178,48 @@ const MEALS_SECTIONS = [
         tip: 'El último paso es el que todo el mundo se salta, y sin él los demás funcionan mucho peor.'
       }
     ]
+  },
+  {
+    id: 'correr',
+    emoji: '🏃‍♀️',
+    name: 'Comer para correr',
+    sub: 'Antes, después y el día de la carrera',
+    unit: 'consejos',
+    recipes: [
+      {
+        title: 'Cuánto antes comer',
+        ingredients: ['2-3 h antes: comida normal (arroz/pasta + proteína magra, poca grasa)', '1-1,5 h antes: algo ligero (tostada con miel, plátano, yogur con avena)', '30-45 min antes: un snack mínimo (medio plátano, 2 dátiles, tortita de arroz)', 'Menos de 30 min: nada sólido, solo agua'],
+        body: 'En sesiones de 30-60 minutos no hace falta nada complicado: la clave es no llegar vacía ni con el estómago lleno. Cuanto más cerca del entreno, más pequeño y fácil de digerir.'
+      },
+      {
+        title: 'Según el tipo de sesión',
+        body: 'Rodaje suave: puedes ir con poco, o incluso en ayunas si es temprano y te sienta bien. Series y tirada larga: ve con hidratos en el cuerpo; con el depósito vacío las series salen más lentas y cuestan más.'
+      },
+      {
+        title: 'Qué evitar antes de correr',
+        ingredients: ['Mucha grasa', 'Mucha fibra (legumbres, ensaladas grandes, integrales en cantidad)', 'Picante', 'Lácteos en cantidad si te sientan pesados'],
+        body: 'En las 2-3 horas previas, estos alimentos son los que más flato y molestias de estómago dan al correr.',
+        tip: 'El café 30-60 min antes ayuda a rendir, pero solo si ya estás acostumbrada a tomarlo.'
+      },
+      {
+        title: 'Hidratación (y más con calor)',
+        ingredients: ['300-500 ml de agua 1-2 h antes', 'Solo unos sorbos justo antes de salir', 'Electrolitos si sudas mucho o hace calor'],
+        body: 'Bebe a lo largo de todo el día: si el pis es claro, vas bien. En la tirada larga o con calor, añade electrolitos en el agua de antes o de después.',
+        tip: 'Con calor, corre temprano o al atardecer y evita las horas de sol fuerte.'
+      },
+      {
+        title: 'Después de correr',
+        ingredients: ['Yogur griego con fruta y avena', 'Tostadas con huevo o pavo', 'Batido de proteína con plátano', 'O tu comida normal si toca a esa hora'],
+        body: 'En las 1-2 horas siguientes, combina hidratos para reponer energía y proteína para recuperar el músculo.',
+        tip: 'Si combinas fuerza y carrera y notas las piernas pesadas, muchas veces no es cansancio: te faltan hidratos.'
+      },
+      {
+        title: 'Día de carrera',
+        ingredients: ['Noche antes: cena normal con hidratos (arroz, pasta o patata), sin grasa en exceso', 'Desayuno 2-3 h antes: tostadas con miel + plátano (+ café si lo tomas)', '30 min antes: agua con electrolitos y, si quieres, 2 dátiles', 'Durante: en 5 km no hacen falta geles, solo agua en el avituallamiento'],
+        body: 'Nada nuevo el día de la carrera: desayuna exactamente lo mismo que hayas probado en tu tirada de ensayo general.',
+        tip: 'Usa la última tirada larga antes de la carrera para ensayar desayuno, horario, ropa y zapatillas.'
+      }
+    ]
   }
 ];
 
