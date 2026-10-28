@@ -53,7 +53,7 @@ const Workout = {
       return;
     }
 
-    if (this.currentWorkout.type === 'running') {
+    if (this.currentWorkout.type === 'running' && this.currentWorkout.runConfig) {
       this.renderRunningDay(container);
       return;
     }

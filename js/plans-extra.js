@@ -11281,3 +11281,169 @@ WORKOUT_PLANS.calentamiento = (() => {
     schedule: { 0: circuit(), 1: circuit(), 2: circuit(), 3: circuit(), 4: circuit(), 5: circuit(), 6: circuit() }
   };
 })();
+
+/* ══════════════ RETO 5K DUBÁI — Fuerza + Carrera (4 semanas) ══════════════ */
+/* Bloque específico de 4 semanas para la carrera de 5K del 22-nov (domingo).
+   Configura la fecha de inicio el lunes 26-oct para que la carrera caiga en el
+   domingo de la S4. Fuerza de piernas reducida respecto a Glúteos Mamasota
+   (menos volumen, RIR 2-3, más trabajo unilateral, gemelo/sóleo y tobillo) para
+   que las piernas lleguen frescas a las sesiones de carrera. Las piernas
+   pesadas van el lunes, 48h antes de las series del miércoles. S4 = descarga. */
+WORKOUT_PLANS.reto_5k_dubai = (() => {
+  // ---- Fuerza A (lunes): piernas de corredora ----
+  const fuerzaA = (sets, rir, withHT) => [
+    _ex('r5k_m_ankle', 'Movilidad | Tobillo en pared', 1, '10/lado', 0,
+      'Pie a un palmo de la pared, lleva la rodilla a tocarla sin levantar el talón. Prepara tobillo para zancada y carrera.'),
+    _ex('r5k_monster', 'Activación | Monster walks con banda', 2, '10 pasos/dir', 30,
+      'Banda sobre las rodillas, semiflexión y pies algo rotados hacia fuera. Pasos cortos sin juntar los pies; activa glúteo medio.'),
+    _ex('r5k_bulgara', 'Sentadilla búlgara con mancuernas', sets, '8/lado', 90,
+      `RIR ${rir}. Pie trasero en el banco y pierna delantera adelantada; baja vertical controlando que la rodilla no se vaya hacia dentro. Estabilidad a una pierna = zancada de carrera.`),
+    _ex('r5k_rdl', 'Peso muerto rumano con mancuernas', sets, '8', 90,
+      `RIR ${rir}. Rodillas semiflexionadas, lleva la cadera atrás con espalda neutra deslizando las mancuernas por los muslos hasta notar el femoral; sube apretando glúteo.`),
+    ...(withHT ? [_ex('r5k_ht', 'Hip Thrust', sets, '8', 90,
+      `RIR ${rir}. Escápulas en el banco, pies firmes; empuja con los talones hasta extender la cadera del todo y aprieta el glúteo arriba sin arquear la lumbar. Volumen reducido: ahora la prioridad es la carrera.`)] : []),
+    _ex('r5k_calf_1p', 'Elevación de talones a una pierna', sets, '12/lado', 60,
+      'De pie en un escalón con apoyo de una mano, baja el talón por debajo del escalón y sube lo más alto posible. Gemelo y tendón de Aquiles fuertes = menos sobrecarga al correr.'),
+    _ex('r5k_soleo', 'Elevación de gemelos sentada (sóleo)', sets, '15', 60,
+      'Sentada con peso sobre las rodillas (rodillas a 90°), sube talones y aguanta 1" arriba. El sóleo absorbe gran parte del impacto en carrera.'),
+    _ex('r5k_copenh', 'Core | Plancha Copenhague', 2, '20"/lado', 45,
+      'De lado con la pierna de arriba apoyada en un banco, eleva la cadera y mantén el cuerpo en línea. Aductores y estabilidad de cadera.'),
+    _ex('r5k_deadbug', 'Core | Dead bug', 2, '8/lado', 45,
+      'Boca arriba con brazos al techo y rodillas a 90°, extiende brazo y pierna contrarios sin despegar la lumbar del suelo.'),
+  ];
+
+  // ---- Fuerza B (jueves): torso + core + tobillo, poca carga de pierna ----
+  const mobWgs = () => _ex('r5k_m_wgs', 'Movilidad | World\'s greatest stretch', 1, '5/lado', 0,
+    'Zancada larga, mano al suelo por dentro del pie delantero y rota el tronco llevando el brazo al techo. Abre cadera y dorsal.');
+  const jalon = (sets) => _ex('r5k_jalon', 'Jalón al pecho', sets, '10', 75,
+    'Agarre algo más ancho que los hombros, saca pecho y tira de la barra hasta la clavícula llevando los codos hacia abajo y atrás.');
+  const flexiones = (sets) => _ex('r5k_flex', 'Flexiones', sets, '8-12', 60,
+    'Manos bajo los hombros y cuerpo en línea; baja el pecho hasta casi el suelo con codos a 45°. Si cuesta, apoya rodillas o manos en un banco.');
+  const sidePlank = () => _ex('r5k_side', 'Core | Plancha lateral', 2, '30"/lado', 45,
+    'Apoyada en antebrazo y lateral del pie, cadera alta y cuerpo en línea. Evita que la cadera caiga en cada zancada.');
+  const fuerzaB = (sets, pogo) => [
+    mobWgs(),
+    _ex('r5k_pogo', 'Pogo jumps', 3, pogo, 60,
+      'Saltitos rápidos sobre la parte delantera del pie con rodillas casi rectas, tocando el suelo lo mínimo posible. Rigidez de tobillo = zancada más eficiente.'),
+    _ex('r5k_tibial', 'Elevación de puntas (tibial)', 2, '15', 45,
+      'Espalda apoyada en la pared y talones a un pie de distancia, sube las puntas de los pies hacia la espinilla. Previene la periostitis tibial.'),
+    jalon(sets),
+    _ex('r5k_press', 'Press militar con mancuernas', sets, '8-10', 75,
+      'Sentada o de pie con abdomen firme, empuja las mancuernas sobre la cabeza sin arquear la lumbar y baja controlando hasta las orejas.'),
+    _ex('r5k_remo', 'Remo con mancuerna a una mano', sets, '10/lado', 60,
+      'Rodilla y mano en el banco, espalda plana; tira de la mancuerna hacia la cadera llevando el codo pegado al cuerpo. Brazos fuertes = braceo eficiente.'),
+    flexiones(sets),
+    _ex('r5k_pallof', 'Core | Pallof press', 2, '10/lado', 45,
+      'De lado a la polea o banda a la altura del pecho, empuja los brazos al frente y resiste la rotación sin girar el tronco. Core anti-rotación para correr.'),
+    sidePlank(),
+  ];
+
+  // ---- Carrera ----
+  const warmRun = () => [
+    _ex('r5k_warm', 'Calentamiento | Trote suave', 1, '10 min', 0,
+      'Ritmo muy cómodo, podrías hablar sin problema. Sube la temperatura poco a poco.'),
+    _ex('r5k_drills', 'Técnica | Skipping + talones al glúteo', 2, '20 m', 30,
+      'Skipping: rodillas altas con apoyo en mediopié. Talones: lleva el talón al glúteo. Brazos a 90° relajados, mirada al frente.'),
+  ];
+  const coolRun = () => _ex('r5k_cool', 'Vuelta a la calma | Trote o caminar', 1, '10 min', 0,
+    'Baja pulsaciones poco a poco y termina con estiramientos suaves de gemelo, cuádriceps y flexor de cadera.');
+  const rectas = (n) => _ex('r5k_rectas', 'Rectas progresivas', n, '20"', 60,
+    'Acelera progresivamente hasta un ritmo rápido pero suelto (no sprint) y vuelve andando. Cadencia alta, pasos cortos y ligeros.');
+  const rodaje = (min, strides) => [
+    _ex('r5k_rodaje', 'Rodaje suave (zona 2)', 1, min, 0,
+      'Ritmo conversacional (RPE 4-5): debes poder hablar en frases completas. Si no puedes, baja el ritmo. Aquí se construye la base aeróbica.'),
+    rectas(strides),
+  ];
+  const series = (id, sets, dist, rest, note) => [
+    ...warmRun(),
+    _ex(id, `Series ${dist}`, sets, dist, rest, note),
+    coolRun(),
+  ];
+
+  return {
+    id: 'reto_5k_dubai',
+    name: 'Reto 5K Dubái — Fuerza + Carrera',
+    planType: 'phased',
+    weeks: 4,
+    description: '4 semanas | 3 días de carrera + 2 de fuerza para corredora | Carrera el domingo 22-nov (empieza el lunes 26-oct)',
+    trainingDays: [1, 2, 3, 4, 6, 7],
+    dayMeta: {
+      1: { name: 'Fuerza A — Piernas de corredora',   type: 'strength', muscleGroups: ['Piernas', 'Glúteos', 'Gemelos', 'Core'] },
+      2: { name: 'Rodaje suave',                      type: 'running',  muscleGroups: ['Cardio'] },
+      3: { name: 'Series',                            type: 'running',  muscleGroups: ['Cardio', 'Velocidad'] },
+      4: { name: 'Fuerza B — Torso + core + tobillo', type: 'strength', muscleGroups: ['Espalda', 'Hombros', 'Core', 'Tobillo'] },
+      6: { name: 'Tirada larga',                      type: 'running',  muscleGroups: ['Cardio', 'Resistencia'] },
+      7: { name: '🏁 Carrera 5K Dubái',               type: 'running',  muscleGroups: ['Carrera'] }
+    },
+    weeklySchedule: [
+      // S1 — adaptación: pierna con RIR 3, rodajes cortos
+      {
+        1: fuerzaA(3, 3, true),
+        2: rodaje('25 min', 4),
+        3: series('r5k_s400', 6, '400m', 90,
+          'A ritmo objetivo de 5K o algo más rápido (RPE 8). Recupera 90" andando o trotando muy suave. Todas las series al mismo ritmo.'),
+        4: fuerzaB(3, '20'),
+        6: [_ex('r5k_tirada', 'Tirada larga suave', 1, '5 km', 0,
+          'Todo a ritmo conversacional. El objetivo es acumular tiempo corriendo, no ir rápido. Si lo necesitas, camina 1 min y sigue.')]
+      },
+      // S2 — carga: series más largas, tirada 6 km
+      {
+        1: fuerzaA(3, 2, true),
+        2: rodaje('30 min', 4),
+        3: series('r5k_s800', 4, '800m', 120,
+          'A ritmo objetivo de 5K (RPE 8). Recupera 2\' trotando suave. Si la última va mucho más lenta que la primera, empieza más conservadora la próxima vez.'),
+        4: fuerzaB(3, '25'),
+        6: [_ex('r5k_tirada', 'Tirada larga suave', 1, '6 km', 0,
+          'Ritmo conversacional. Último km algo más alegre si te encuentras bien.')]
+      },
+      // S3 — específica: series a ritmo de carrera + ensayo general; la pierna empieza a bajar
+      {
+        1: fuerzaA(2, 2, true),
+        2: rodaje('30 min', 6),
+        3: series('r5k_s1k', 3, '1 km', 120,
+          'A ritmo de carrera (el que quieres llevar el día 22). Recupera 2\' trotando. Aprende a sentir ese ritmo sin mirar el reloj.'),
+        4: fuerzaB(2, '20'),
+        6: [
+          _ex('r5k_tirada_s3a', 'Tirada | Suave', 1, '2 km', 0, 'Ritmo conversacional para calentar.'),
+          _ex('r5k_tirada_s3b', 'Tirada | Ritmo de carrera', 1, '3 km', 0,
+            'Ensayo general a ritmo de carrera, constante. Prueba también el desayuno, la ropa y las zapatillas que llevarás el día 22.'),
+          _ex('r5k_tirada_s3c', 'Tirada | Suave', 1, '1 km', 0, 'Suelta piernas y baja pulsaciones.')
+        ]
+      },
+      // S4 — descarga y carrera: volumen ~-50%, nada pesado de pierna tras el lunes
+      {
+        1: fuerzaA(2, 4, false),
+        2: rodaje('20 min', 4),
+        3: [
+          ...warmRun(),
+          _ex('r5k_s4_1k', 'Ritmo de carrera', 1, '1 km', 120,
+            'Un único km a ritmo de carrera para recordar la sensación. Debe sentirse controlado.'),
+          _ex('r5k_s4_200', 'Series 200m', 4, '200m', 90,
+            'Rápidas pero sueltas, sin apretar al máximo. Recupera 90" andando.'),
+          coolRun()
+        ],
+        4: [
+          mobWgs(),
+          _ex('r5k_monster', 'Activación | Monster walks con banda', 1, '10 pasos/dir', 30,
+            'Banda sobre las rodillas, semiflexión y pies algo rotados hacia fuera. Pasos cortos sin juntar los pies; activa glúteo medio.'),
+          jalon(2),
+          flexiones(2),
+          _ex('r5k_deadbug', 'Core | Dead bug', 2, '8/lado', 45,
+            'Boca arriba con brazos al techo y rodillas a 90°, extiende brazo y pierna contrarios sin despegar la lumbar del suelo.'),
+          sidePlank()
+        ],
+        6: [
+          _ex('r5k_shakeout', 'Trote de activación', 1, '15 min', 0,
+            'Muy suave, solo para soltar piernas. Duerme bien, hidrátate (con el calor de Dubái añade electrolitos) y deja preparados dorsal, ropa y zapatillas.'),
+          rectas(3)
+        ],
+        7: [
+          _ex('r5k_race_warm', 'Calentamiento | Trote + movilidad', 1, '10 min', 0,
+            '8\' de trote muy suave + balanceos de pierna y 2-3 rectas cortas. Termina 5-10\' antes de la salida.'),
+          _ex('r5k_race', 'Carrera 5K Dubái 🏁', 1, '5 km', 0,
+            'Km 1 algo más conservador que tu ritmo objetivo (la emoción de la salida engaña). Km 2-4 a ritmo constante. Último km: lo que quede. Bebe en el avituallamiento aunque no tengas sed. ¡A disfrutarla! 💜')
+        ]
+      }
+    ]
+  };
+})();
