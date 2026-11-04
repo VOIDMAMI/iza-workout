@@ -138,7 +138,7 @@ const TIMER_FIELDS = [
 ];
 
 function _timerDefaults() {
-  return { id: null, name: '', prep: 10, work: 20, rest: 10, rounds: 8, cycles: 1, cycleRest: 60, cooldown: 0 };
+  return { id: null, name: '', prep: 5, work: 20, rest: 10, rounds: 8, cycles: 1, cycleRest: 60, cooldown: 0 };
 }
 
 function _timerClean(cfg) {
@@ -179,6 +179,7 @@ function buildTimerPhases(cfg) {
 }
 
 const TIMER_DEFAULT_PACE = 420; // seg/km usados si el ejercicio no indica ritmo
+const TIMER_TECH_PACE = 720;    // ejercicios de técnica (skipping...): más lentos
 
 // Convierte un ejercicio de series (carrera, sprints, intervalos de bici...)
 // en una config de temporizador. Devuelve null si no se puede deducir.
@@ -188,12 +189,21 @@ const TIMER_DEFAULT_PACE = 420; // seg/km usados si el ejercicio no indica ritmo
 // Rondas = series, descanso = descanso del ejercicio.
 function timerFromExercise(ex) {
   if (!ex || !(ex.sets >= 2)) return null;
-  if (!/sprint|series|intervalo|cuesta|fartlek/i.test(ex.name) || /nataci/i.test(ex.name)) return null;
+  if (!/sprint|series|intervalo|cuesta|fartlek|t[eé]cnica/i.test(ex.name) || /nataci/i.test(ex.name)) return null;
 
   const reps = String(ex.reps);
   const notes = String(ex.notes || '');
   let work = null;
   let estimatedPace = null;
+
+  // Descanso: el del ejercicio; si es 0, se busca en las notas
+  // ("1 min descanso", "1'-1'30" descanso", "30 seg descanso").
+  let rest = ex.rest || 0;
+  if (!rest) {
+    let r = notes.match(/(\d+)\s*(?:minutos?|min|')[^.]*?descanso/i);
+    if (r) rest = parseInt(r[1], 10) * 60;
+    else if ((r = notes.match(/(\d+)\s*(?:segundos?|seg|s\b|")\s*(?:de\s+)?descanso/i))) rest = parseInt(r[1], 10);
+  }
 
   let m = reps.match(/(\d+)\s*min/i);
   if (m) work = parseInt(m[1], 10) * 60;
@@ -206,15 +216,15 @@ function timerFromExercise(ex) {
     if (t) work = Math.round(parseInt(t[1], 10) * 60 + parseInt(t[2], 10));
     else if ((t = notes.match(/(\d+):(\d\d)(?:\s*-\s*\d+:\d\d)?\s*\/\s*km/i))) pace = parseInt(t[1], 10) * 60 + parseInt(t[2], 10);
     if (work === null) {
-      if (pace === null) { pace = TIMER_DEFAULT_PACE; estimatedPace = pace; }
+      if (pace === null) { pace = /t[eé]cnica/i.test(ex.name) ? TIMER_TECH_PACE : TIMER_DEFAULT_PACE; estimatedPace = pace; }
       work = Math.round(km * pace);
     }
   }
 
   if (!work || work < 1) return null;
   const cfg = _timerClean({
-    name: String(ex.name).replace(/^.*\|\s*/, '').trim(),
-    prep: 10, work, rest: ex.rest || 0, rounds: ex.sets, cycles: 1, cycleRest: 0, cooldown: 0
+    name: String(ex.name).replace(/\s*\|\s*/g, ' · ').trim(),
+    prep: 5, work, rest, rounds: ex.sets, cycles: 1, cycleRest: 0, cooldown: 0
   });
   if (estimatedPace) cfg._estimatedPace = estimatedPace;
   return cfg;
