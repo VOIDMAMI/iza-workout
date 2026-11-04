@@ -189,6 +189,7 @@ function buildTimerPhases(cfg) {
   return { phases: withStarts, totalSeconds: cum };
 }
 
+const TIMER_WHEEL_ITEM_H = 44; // alto de cada número en las ruedas (debe coincidir con el CSS)
 const TIMER_DEFAULT_PACE = 420; // seg/km usados si el ejercicio no indica ritmo
 const TIMER_TECH_PACE = 720;    // ejercicios de técnica (skipping...): más lentos
 
@@ -315,15 +316,9 @@ const Timers = {
         <div class="timer-quick-title">⏲️ ${I18N.t('timers.quick')}</div>
         <div class="timer-quick-sub">${I18N.t('timers.quick_sub')}</div>
         <div class="timer-quick-inputs">
-          <div class="timer-quick-field">
-            <input class="input timer-step-input" id="timer-quick-min" type="number" inputmode="numeric" min="0" max="120" value="${this.quick.m}" aria-label="${I18N.t('timers.min')}">
-            <span>${I18N.t('timers.min')}</span>
-          </div>
+          ${this._wheelHtml('min', 120, I18N.t('timers.min'))}
           <span class="timer-quick-colon">:</span>
-          <div class="timer-quick-field">
-            <input class="input timer-step-input" id="timer-quick-sec" type="number" inputmode="numeric" min="0" max="59" value="${this.quick.s}" aria-label="${I18N.t('timers.sec')}">
-            <span>${I18N.t('timers.sec')}</span>
-          </div>
+          ${this._wheelHtml('sec', 59, I18N.t('timers.sec'))}
         </div>
         <div class="chip-group" style="margin: var(--space-sm) 0;">
           ${[[0, 30], [1, 0], [2, 0], [3, 0], [5, 0], [10, 0]].map(([m, s]) =>
@@ -341,6 +336,60 @@ const Timers = {
         ? `<p class="text-sm text-secondary">${I18N.t('timers.none')}</p>`
         : saved.map(t => this._savedCardHtml(t)).join('')}
     `;
+    this._initWheels();
+  },
+
+  /* ---------- Ruedas (picker táctil) del temporizador rápido ---------- */
+  _wheelHtml(kind, max, label) {
+    let items = '';
+    for (let i = 0; i <= max; i++) {
+      items += `<div class="timer-wheel-item" data-v="${i}">${String(i).padStart(2, '0')}</div>`;
+    }
+    return `
+      <div class="timer-wheel-col">
+        <div class="timer-wheel-box">
+          <div class="timer-wheel" id="timer-wheel-${kind}" role="listbox" aria-label="${label}">${items}</div>
+        </div>
+        <span>${label}</span>
+      </div>`;
+  },
+
+  _wheelValue(kind) {
+    const el = document.getElementById('timer-wheel-' + kind);
+    if (!el) return 0;
+    const last = el.children.length - 1;
+    return Math.min(last, Math.max(0, Math.round(el.scrollTop / TIMER_WHEEL_ITEM_H)));
+  },
+
+  _wheelSet(kind, value, smooth) {
+    const el = document.getElementById('timer-wheel-' + kind);
+    if (!el) return;
+    el.scrollTo({ top: value * TIMER_WHEEL_ITEM_H, behavior: smooth ? 'smooth' : 'auto' });
+  },
+
+  _initWheels() {
+    ['min', 'sec'].forEach(kind => {
+      const el = document.getElementById('timer-wheel-' + kind);
+      if (!el) return;
+      this._wheelSet(kind, kind === 'min' ? this.quick.m : this.quick.s, false);
+      let raf = null, lastSel = -1;
+      const mark = () => {
+        raf = null;
+        const v = this._wheelValue(kind);
+        if (v === lastSel) return;
+        if (lastSel !== -1) vibrate(5);
+        lastSel = v;
+        el.querySelector('.selected')?.classList.remove('selected');
+        el.children[v]?.classList.add('selected');
+      };
+      el.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(mark); }, { passive: true });
+      // Tocar un número lo centra.
+      el.addEventListener('click', e => {
+        const item = e.target.closest('.timer-wheel-item');
+        if (item) this._wheelSet(kind, parseInt(item.dataset.v, 10), true);
+      });
+      mark();
+    });
   },
 
   _summary(cfg) {
@@ -438,15 +487,13 @@ const Timers = {
   quickSet(m, s) {
     vibrate(10);
     this.quick = { m, s };
-    const mi = document.getElementById('timer-quick-min');
-    const si = document.getElementById('timer-quick-sec');
-    if (mi) mi.value = m;
-    if (si) si.value = s;
+    this._wheelSet('min', m, true);
+    this._wheelSet('sec', s, true);
   },
 
   startQuick() {
-    const m = Math.min(120, Math.max(0, parseInt(document.getElementById('timer-quick-min')?.value, 10) || 0));
-    const s = Math.min(59, Math.max(0, parseInt(document.getElementById('timer-quick-sec')?.value, 10) || 0));
+    const m = this._wheelValue('min');
+    const s = this._wheelValue('sec');
     const total = Math.min(7200, m * 60 + s);
     if (total < 1) { showToast(I18N.t('timers.need_time'), 'error'); return; }
     this.quick = { m, s };
