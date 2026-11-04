@@ -64,6 +64,11 @@ Object.assign(I18N_DICT.es, {
   'timers.ph.cycle_rest': 'Descanso entre ciclos',
   'timers.ph.cooldown':'Enfriamiento',
   'timers.default_name':'Mi temporizador',
+  'timers.quick':      'Temporizador rápido',
+  'timers.quick_sub':  'Cuenta atrás simple en minutos y segundos',
+  'timers.min':        'min',
+  'timers.ph.basic':   'Tiempo',
+  'timers.need_time':  'Pon un tiempo mayor que 0',
   'timers.open_from_ex':'Temporizador',
   'timers.estimated':  'Tiempo de entreno estimado a {pace}/km — ajústalo si hace falta',
 });
@@ -114,6 +119,11 @@ Object.assign(I18N_DICT.en, {
   'timers.ph.cycle_rest': 'Rest between cycles',
   'timers.ph.cooldown':'Cool-down',
   'timers.default_name':'My timer',
+  'timers.quick':      'Quick timer',
+  'timers.quick_sub':  'Simple countdown in minutes and seconds',
+  'timers.min':        'min',
+  'timers.ph.basic':   'Time',
+  'timers.need_time':  'Set a time greater than 0',
   'timers.open_from_ex':'Timer',
   'timers.estimated':  'Work time estimated at {pace}/km — adjust it if needed',
 });
@@ -129,7 +139,7 @@ const TIMER_PHASE_META = {
 // Campos editables: key, límites (segundos o unidades) y paso de los botones +/−.
 const TIMER_FIELDS = [
   { key: 'prep',      label: 'timers.prep',       min: 0, max: 600, step: 5, time: true },
-  { key: 'work',      label: 'timers.work',       min: 1, max: 3600, step: 5, time: true },
+  { key: 'work',      label: 'timers.work',       min: 1, max: 7200, step: 5, time: true },
   { key: 'rest',      label: 'timers.rest',       min: 0, max: 3600, step: 5, time: true },
   { key: 'rounds',    label: 'timers.rounds',     min: 1, max: 99,  step: 1, time: false },
   { key: 'cycles',    label: 'timers.cycles',     min: 1, max: 99,  step: 1, time: false },
@@ -143,6 +153,7 @@ function _timerDefaults() {
 
 function _timerClean(cfg) {
   const out = { id: cfg.id || null, name: String(cfg.name || '').trim().slice(0, 40) };
+  if (cfg.basic) out.basic = true; // temporizador rápido: una sola cuenta atrás
   TIMER_FIELDS.forEach(f => {
     let v = parseInt(cfg[f.key], 10);
     if (isNaN(v)) v = _timerDefaults()[f.key];
@@ -236,6 +247,7 @@ function _timerEsc(s) {
 
 const Timers = {
   draft: null,     // configuración en edición
+  quick: { m: 1, s: 0 }, // último valor del temporizador rápido
   returnTo: null,  // 'workout' si se abrió desde una tarjeta de ejercicio
   phases: null,    // fases en ejecución
   totalSeconds: 0,
@@ -299,7 +311,28 @@ const Timers = {
         </div>
       </div>
 
-      <button class="btn btn-primary btn-full btn-lg" style="margin-top: var(--space-lg);" onclick="Timers.newTimer()">
+      <div class="timer-quick-card">
+        <div class="timer-quick-title">⏲️ ${I18N.t('timers.quick')}</div>
+        <div class="timer-quick-sub">${I18N.t('timers.quick_sub')}</div>
+        <div class="timer-quick-inputs">
+          <div class="timer-quick-field">
+            <input class="input timer-step-input" id="timer-quick-min" type="number" inputmode="numeric" min="0" max="120" value="${this.quick.m}" aria-label="${I18N.t('timers.min')}">
+            <span>${I18N.t('timers.min')}</span>
+          </div>
+          <span class="timer-quick-colon">:</span>
+          <div class="timer-quick-field">
+            <input class="input timer-step-input" id="timer-quick-sec" type="number" inputmode="numeric" min="0" max="59" value="${this.quick.s}" aria-label="${I18N.t('timers.sec')}">
+            <span>${I18N.t('timers.sec')}</span>
+          </div>
+        </div>
+        <div class="chip-group" style="margin: var(--space-sm) 0;">
+          ${[[0, 30], [1, 0], [2, 0], [3, 0], [5, 0], [10, 0]].map(([m, s]) =>
+            `<button class="chip" onclick="Timers.quickSet(${m}, ${s})">${m ? m + ' min' : s + ' s'}</button>`).join('')}
+        </div>
+        <button class="btn btn-primary btn-full" onclick="Timers.startQuick()">▶ ${I18N.t('timers.start')}</button>
+      </div>
+
+      <button class="btn btn-secondary btn-full btn-lg" style="margin-top: var(--space-lg);" onclick="Timers.newTimer()">
         + ${I18N.t('timers.new')}
       </button>
 
@@ -399,6 +432,29 @@ const Timers = {
     this.returnTo = null;
     this.draft = { ...t };
     this.render();
+  },
+
+  /* ---------- Temporizador rápido (min:seg) ---------- */
+  quickSet(m, s) {
+    vibrate(10);
+    this.quick = { m, s };
+    const mi = document.getElementById('timer-quick-min');
+    const si = document.getElementById('timer-quick-sec');
+    if (mi) mi.value = m;
+    if (si) si.value = s;
+  },
+
+  startQuick() {
+    const m = Math.min(120, Math.max(0, parseInt(document.getElementById('timer-quick-min')?.value, 10) || 0));
+    const s = Math.min(59, Math.max(0, parseInt(document.getElementById('timer-quick-sec')?.value, 10) || 0));
+    const total = Math.min(7200, m * 60 + s);
+    if (total < 1) { showToast(I18N.t('timers.need_time'), 'error'); return; }
+    this.quick = { m, s };
+    this.returnTo = null;
+    this._start({
+      basic: true, name: I18N.t('timers.quick'),
+      prep: 0, work: total, rest: 0, rounds: 1, cycles: 1, cycleRest: 0, cooldown: 0
+    });
   },
 
   // Enlace directo desde una tarjeta de ejercicio: abre el editor ya relleno.
@@ -669,12 +725,13 @@ const Timers = {
   },
 
   _phaseLabel(p) {
+    if (this.config?.basic && p.type === 'work') return I18N.t('timers.ph.basic');
     return I18N.t('timers.ph.' + p.type);
   },
 
   _roundText(p) {
     const c = this.config;
-    if (!c || !p.round) return '';
+    if (!c || !p.round || c.basic) return '';
     const parts = [`${I18N.t('timers.round')} ${p.round}/${c.rounds}`];
     if (c.cycles > 1) parts.push(`${I18N.t('timers.cycle')} ${p.cycle}/${c.cycles}`);
     return parts.join(' · ');

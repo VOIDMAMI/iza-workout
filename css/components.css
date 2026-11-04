@@ -1401,6 +1401,36 @@
   font-size: var(--font-xs);
   color: var(--text-tertiary);
 }
+.timer-quick-card {
+  margin-top: var(--space-lg);
+  padding: var(--space-base);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.timer-quick-title { font-weight: 700; color: var(--text-primary); }
+.timer-quick-sub {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-md);
+}
+.timer-quick-inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+.timer-quick-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 90px;
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+}
+.timer-quick-field .input { font-size: var(--font-2xl, 24px); }
+.timer-quick-colon { font-size: 28px; font-weight: 800; color: var(--text-secondary); padding-bottom: 16px; }
 .timer-saved-card {
   display: flex;
   align-items: center;
