@@ -1322,6 +1322,111 @@
   box-shadow: 0 6px 22px rgba(4, 120, 87, 0.5);
 }
 
+.timers-cta {
+  background: linear-gradient(135deg, #F43F5E, #BE123C);
+  box-shadow: 0 4px 16px rgba(190, 18, 60, 0.35);
+}
+.timers-cta:hover,
+.timers-cta:active {
+  box-shadow: 0 6px 22px rgba(190, 18, 60, 0.5);
+}
+
+/* ---- Temporizadores personalizados ---- */
+.timer-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+.timer-field { min-width: 0; }
+.timer-field-label {
+  display: block;
+  font-size: var(--font-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-xs);
+}
+.timer-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.timer-step-btn {
+  flex: 0 0 36px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--primary);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.timer-step-btn:active { background: var(--surface-light); }
+.timer-step-input {
+  min-width: 0;
+  padding: var(--space-sm);
+  text-align: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.timer-field-hint {
+  min-height: 16px;
+  margin-top: 2px;
+  text-align: center;
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+}
+.timer-saved-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  margin-top: var(--space-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.timer-saved-main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-xs) 0;
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+}
+.timer-saved-name {
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.timer-saved-sub {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+}
+.timer-saved-total {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--primary);
+}
+.timer-saved-actions { display: flex; gap: 2px; }
+.timer-icon-btn {
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  cursor: pointer;
+}
+.timer-icon-btn:active { background: var(--surface-light); }
+
 .meals-cta {
   background: linear-gradient(135deg, #F59E0B, #B45309);
   box-shadow: 0 4px 16px rgba(180, 83, 9, 0.35);

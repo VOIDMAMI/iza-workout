@@ -53,6 +53,7 @@ const App = {
     // Reanudar timer si quedaba uno activo de antes (refresh / reapertura)
     Tracker?.resumeIfActive?.();
     Spinning?.resumeIfActive?.();
+    Timers?.resumeIfActive?.();
   },
 
   _switchPage(page, updateHash = true) {
@@ -80,6 +81,7 @@ const App = {
       case 'tips':     Tips.render(); break;
       case 'comidas':  Meals.render(); break;
       case 'spinning': Spinning.render(); break;
+      case 'timers':   Timers.render(); break;
     }
   },
 
@@ -282,6 +284,16 @@ const App = {
         <div class="create-workout-cta-text">
           <div class="create-workout-cta-title">${I18N.t('home.spinning.title')}</div>
           <div class="create-workout-cta-sub">${I18N.t('home.spinning.sub')}</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+
+      <!-- Timers CTA -->
+      <button class="create-workout-cta timers-cta anim-fade-in-up anim-delay-2" onclick="App.navigate('timers')">
+        <div class="create-workout-cta-icon">⏱️</div>
+        <div class="create-workout-cta-text">
+          <div class="create-workout-cta-title">${I18N.t('home.timers.title')}</div>
+          <div class="create-workout-cta-sub">${I18N.t('home.timers.sub')}</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
