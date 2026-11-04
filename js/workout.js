@@ -257,6 +257,10 @@ const Workout = {
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
                     ${I18N.t('workout.swap')}
                   </button>
+                  ${typeof timerFromExercise === 'function' && timerFromExercise(ex) ? `
+                  <button class="btn-timer-ex" onclick="Timers.openFromExercise(event, '${ex.id}')" aria-label="${I18N.t('timers.open_from_ex')}">
+                    ⏱️ ${I18N.t('timers.open_from_ex')}
+                  </button>` : ''}
                   ${ex.notes ? `
                   <button class="btn-notes-ex" onclick="Workout.toggleNotes(event, '${ex.id}')" aria-label="${I18N.t('workout.notes')}">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>

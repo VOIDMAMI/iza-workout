@@ -64,6 +64,8 @@ Object.assign(I18N_DICT.es, {
   'timers.ph.cycle_rest': 'Descanso entre ciclos',
   'timers.ph.cooldown':'Enfriamiento',
   'timers.default_name':'Mi temporizador',
+  'timers.open_from_ex':'Temporizador',
+  'timers.estimated':  'Tiempo de entreno estimado a {pace}/km — ajústalo si hace falta',
 });
 
 Object.assign(I18N_DICT.en, {
@@ -112,6 +114,8 @@ Object.assign(I18N_DICT.en, {
   'timers.ph.cycle_rest': 'Rest between cycles',
   'timers.ph.cooldown':'Cool-down',
   'timers.default_name':'My timer',
+  'timers.open_from_ex':'Timer',
+  'timers.estimated':  'Work time estimated at {pace}/km — adjust it if needed',
 });
 
 const TIMER_PHASE_META = {
@@ -174,12 +178,55 @@ function buildTimerPhases(cfg) {
   return { phases: withStarts, totalSeconds: cum };
 }
 
+const TIMER_DEFAULT_PACE = 420; // seg/km usados si el ejercicio no indica ritmo
+
+// Convierte un ejercicio de series (carrera, sprints, intervalos de bici...)
+// en una config de temporizador. Devuelve null si no se puede deducir.
+//  - Reps en tiempo ('30s', '90s al 85%', '1 min') → ese tiempo de entreno.
+//  - Reps en distancia ('400m', '1 km') → tiempo según el ritmo de las notas
+//    ("cada 400 m en ~2:45", "7:15 /km"); si no hay, se estima a TIMER_DEFAULT_PACE.
+// Rondas = series, descanso = descanso del ejercicio.
+function timerFromExercise(ex) {
+  if (!ex || !(ex.sets >= 2)) return null;
+  if (!/sprint|series|intervalo|cuesta|fartlek/i.test(ex.name) || /nataci/i.test(ex.name)) return null;
+
+  const reps = String(ex.reps);
+  const notes = String(ex.notes || '');
+  let work = null;
+  let estimatedPace = null;
+
+  let m = reps.match(/(\d+)\s*min/i);
+  if (m) work = parseInt(m[1], 10) * 60;
+  if (work === null && (m = reps.match(/(\d+)\s*(?:s\b|seg|")/i))) work = parseInt(m[1], 10);
+
+  if (work === null && (m = reps.match(/(\d+(?:[.,]\d+)?)\s*(km|m)(?![a-z])/i))) {
+    const km = parseFloat(m[1].replace(',', '.')) / (m[2].toLowerCase() === 'km' ? 1 : 1000);
+    let pace = null;
+    let t = notes.match(/cada\s+[\d.,]+\s*(?:km|m)\s+en\s+~?(\d+):(\d\d)/i);
+    if (t) work = Math.round(parseInt(t[1], 10) * 60 + parseInt(t[2], 10));
+    else if ((t = notes.match(/(\d+):(\d\d)(?:\s*-\s*\d+:\d\d)?\s*\/\s*km/i))) pace = parseInt(t[1], 10) * 60 + parseInt(t[2], 10);
+    if (work === null) {
+      if (pace === null) { pace = TIMER_DEFAULT_PACE; estimatedPace = pace; }
+      work = Math.round(km * pace);
+    }
+  }
+
+  if (!work || work < 1) return null;
+  const cfg = _timerClean({
+    name: String(ex.name).replace(/^.*\|\s*/, '').trim(),
+    prep: 10, work, rest: ex.rest || 0, rounds: ex.sets, cycles: 1, cycleRest: 0, cooldown: 0
+  });
+  if (estimatedPace) cfg._estimatedPace = estimatedPace;
+  return cfg;
+}
+
 function _timerEsc(s) {
   return String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 }
 
 const Timers = {
   draft: null,     // configuración en edición
+  returnTo: null,  // 'workout' si se abrió desde una tarjeta de ejercicio
   phases: null,    // fases en ejecución
   totalSeconds: 0,
   config: null,    // config en ejecución
@@ -330,6 +377,7 @@ const Timers = {
   /* ---------- Edición ---------- */
   newTimer() {
     vibrate(20);
+    this.returnTo = null;
     this.draft = _timerDefaults();
     this.render();
   },
@@ -338,12 +386,33 @@ const Timers = {
     const t = this._loadSaved().find(x => x.id === id);
     if (!t) return;
     vibrate(20);
+    this.returnTo = null;
     this.draft = { ...t };
     this.render();
   },
 
+  // Enlace directo desde una tarjeta de ejercicio: abre el editor ya relleno.
+  openFromExercise(event, exerciseId) {
+    if (event) event.stopPropagation();
+    const ex = (Workout.currentWorkout?.exercises || []).find(e => e.id === exerciseId);
+    const cfg = timerFromExercise(ex);
+    if (!cfg) return;
+    vibrate(20);
+    const pace = cfg._estimatedPace;
+    delete cfg._estimatedPace;
+    this.draft = cfg;
+    this.returnTo = 'workout';
+    App.navigate('timers');
+    if (pace) showToast(I18N.t('timers.estimated').replace('{pace}', formatTime(pace)), 'info');
+  },
+
   closeEditor() {
     this.draft = null;
+    if (this.returnTo === 'workout') {
+      this.returnTo = null;
+      App._switchPage('workout');
+      return;
+    }
     this.render();
   },
 
@@ -463,6 +532,17 @@ const Timers = {
   stop() {
     if (!confirm(I18N.t('timers.stop_q'))) return;
     this._reset();
+    this._exitRun();
+  },
+
+  // Tras terminar/cancelar: vuelve al entreno si se abrió desde un ejercicio.
+  _exitRun() {
+    if (this.returnTo === 'workout') {
+      this.returnTo = null;
+      this.draft = null;
+      App._switchPage('workout');
+      return;
+    }
     this.render();
   },
 
@@ -621,7 +701,7 @@ const Timers = {
 
   closeFinished() {
     this._reset();
-    this.render();
+    this._exitRun();
   },
 
   _renderTimerScreen(container) {

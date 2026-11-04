@@ -437,6 +437,28 @@
   transform: scale(1.05);
 }
 
+.btn-timer-ex {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  font-size: var(--font-xs);
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #F43F5E, #BE123C);
+  border: 1px solid #BE123C;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(190, 18, 60, 0.35);
+}
+.btn-timer-ex:active {
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(190, 18, 60, 0.5);
+}
+
 /* Swap modal */
 .swap-modal-overlay {
   position: fixed;
