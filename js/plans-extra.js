@@ -11362,10 +11362,10 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
 
   return {
     id: 'reto_5k_dubai',
-    name: 'Reto 5K Dubái — Fuerza + Carrera',
+    name: 'Reto Dubái 10K — Fuerza + Carrera',
     planType: 'phased',
     weeks: 4,
-    description: '4 semanas | 3 días de carrera + 2 de fuerza para corredora | Carrera el domingo 22-nov (empieza el lunes 26-oct)',
+    description: '4 semanas | 3 días de carrera + 2 de fuerza para corredora | 10K el domingo 22-nov (empieza el lunes 26-oct)',
     trainingDays: [1, 2, 3, 4, 6, 7],
     dayMeta: {
       1: { name: 'Fuerza A — Piernas de corredora',   type: 'strength', muscleGroups: ['Piernas', 'Glúteos', 'Gemelos', 'Core'] },
@@ -11373,7 +11373,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
       3: { name: 'Series',                            type: 'running',  muscleGroups: ['Cardio', 'Velocidad'] },
       4: { name: 'Fuerza B — Torso + core + tobillo', type: 'strength', muscleGroups: ['Espalda', 'Hombros', 'Core', 'Tobillo'] },
       6: { name: 'Tirada larga',                      type: 'running',  muscleGroups: ['Cardio', 'Resistencia'] },
-      7: { name: '🏁 Carrera 5K Dubái',               type: 'running',  muscleGroups: ['Carrera'] }
+      7: { name: '🏁 Carrera 10K Dubái',             type: 'running',  muscleGroups: ['Carrera'] }
     },
     weeklySchedule: [
       // S1 — adaptación: pierna con RIR 3, rodajes cortos
@@ -11401,13 +11401,11 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
         1: fuerzaA(2, 2, true),
         2: rodaje('30 min', 6),
         3: series('r5k_s1k', 3, '1 km', 120,
-          'A ritmo de carrera: 7:15-7:20 /km (cada km en ~7:15-7:20). Recupera 2\' trotando. Aprende a sentir ese ritmo sin mirar el reloj.'),
+          'A ritmo de 10K: 7:45 /km (cada km en ~7:45), SIN pasarte. Recupera 2\' trotando. Aprende a sentir ese ritmo sin mirar el reloj: es el que mantendrás en la carrera.'),
         4: fuerzaB(2, '20'),
         6: [
-          _ex('r5k_tirada_s3a', 'Tirada | Suave', 1, '2 km', 0, 'Ritmo conversacional para calentar.'),
-          _ex('r5k_tirada_s3b', 'Tirada | Ritmo de carrera', 1, '3 km', 0,
-            'Ensayo general a ritmo de carrera (7:15-7:20 /km), constante. Prueba también el desayuno, la ropa y las zapatillas que llevarás el día 22.'),
-          _ex('r5k_tirada_s3c', 'Tirada | Suave', 1, '1 km', 0, 'Suelta piernas y baja pulsaciones.')
+          _ex('r5k_tirada_s3a', 'Tirada larga | Suave', 1, '8 km', 0,
+            'Tu tirada más larga antes del 10K (ya hiciste 10 km en marzo). Primer km a 8:15-8:30 aunque te sobren fuerzas; el resto a ritmo conversacional (~8:00-8:30 /km, pulsaciones 130-145). Si lo necesitas, camina 1 min en un avituallamiento. Prueba también el desayuno, la ropa y las zapatillas del día 22.')
         ]
       },
       // S4 — descarga y carrera: volumen ~-50%, nada pesado de pierna tras el lunes
@@ -11417,7 +11415,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
         3: [
           ...warmRun(),
           _ex('r5k_s4_1k', 'Ritmo de carrera', 1, '1 km', 120,
-            'Un único km a ritmo de carrera (7:15-7:20 /km) para recordar la sensación. Debe sentirse controlado.'),
+            'Un único km a ritmo de 10K (7:45 /km) para recordar la sensación. Debe sentirse muy controlado.'),
           _ex('r5k_s4_200', 'Series 200m', 4, '200m', 90,
             'Rápidas pero sueltas, sin apretar al máximo. Recupera 90" andando.'),
           coolRun()
@@ -11440,8 +11438,8 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
         7: [
           _ex('r5k_race_warm', 'Calentamiento | Trote + movilidad', 1, '10 min', 0,
             '8\' de trote muy suave + balanceos de pierna y 2-3 rectas cortas. Termina 5-10\' antes de la salida.'),
-          _ex('r5k_race', 'Carrera 5K Dubái 🏁', 1, '5 km', 0,
-            'Objetivo: 7:20 /km (~36:40; tu marca del 28-oct es 7:38 /km, 38:10). Km 1 a ~7:30, sin dejarte llevar por la salida. Km 2-4 a 7:20 constante. Último km: lo que quede. Bebe en el avituallamiento aunque no tengas sed. ¡A disfrutarla! 💜')
+          _ex('r5k_race', 'Carrera 10K Dubái 🏁', 1, '10 km', 0,
+            'Objetivo: terminarla bien (sin tiempo marcado; en marzo hiciste 1:16:38, salida a 6:09 y fuiste cediendo). Km 1-2 a 7:50-8:00 AUNQUE te sientas con ganas. Km 3-7 constantes a 7:45-7:50 (ritmo conversacional, ~145-155 ppm). Km 8-9: mantén. Último km: lo que quede. Bebe en cada avituallamiento aunque no tengas sed y, si hace falta, camina 20-30" mientras bebes. ¡A disfrutarla! 💜')
         ]
       }
     ]
