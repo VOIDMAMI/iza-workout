@@ -11393,8 +11393,8 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
         3: series('r5k_s800', 4, '800m', 120,
           'A ~7:10 /km: cada 800 m en ~5:45 (RPE 8). Recupera 2\' trotando suave. Si la última va mucho más lenta que la primera, empieza más conservadora la próxima vez.'),
         4: fuerzaB(3, '25'),
-        6: [_ex('r5k_tirada', 'Tirada larga suave', 1, '6 km', 0,
-          'Ritmo conversacional (~8:15-8:45 /km). Último km algo más alegre (~7:45) si te encuentras bien.')]
+        6: [_ex('r5k_tirada', 'Tirada larga suave', 1, '7 km', 0,
+          'Ritmo conversacional (~8:15-8:45 /km, pulsaciones 130-145). Primer km a 8:30 aunque te sobren fuerzas. Último km algo más alegre (~7:45) si te encuentras bien. Si algo molesta, para en los 6 km: no pasa nada.')]
       },
       // S3 — específica: series a ritmo de carrera + ensayo general; la pierna empieza a bajar
       {
@@ -11438,8 +11438,18 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
         7: [
           _ex('r5k_race_warm', 'Calentamiento | Trote + movilidad', 1, '10 min', 0,
             '8\' de trote muy suave + balanceos de pierna y 2-3 rectas cortas. Termina 5-10\' antes de la salida.'),
-          _ex('r5k_race', 'Carrera 10K Dubái 🏁', 1, '10 km', 0,
-            'Objetivo: terminarla bien (sin tiempo marcado; en marzo hiciste 1:16:38, salida a 6:09 y fuiste cediendo). Km 1-2 a 7:50-8:00 AUNQUE te sientas con ganas. Km 3-7 constantes a 7:45-7:50 (ritmo conversacional, ~145-155 ppm). Km 8-9: mantén. Último km: lo que quede. Bebe en cada avituallamiento aunque no tengas sed y, si hace falta, camina 20-30" mientras bebes. ¡A disfrutarla! 💜')
+          _ex('r5k_race_0', '1 · Antes de salir | Desayuno, agua y ropa', 1, 'Antes', 0,
+            'Desayuna 2-3 h antes algo que ya hayas probado (avena, pan con plátano...). Bebe 400-500 ml de agua en la última hora. Dorsal puesto, zapatillas bien atadas y nada nuevo. Ponte en la salida en la zona de ritmo lento: así no te arrastra la gente que sale rápido.'),
+          _ex('r5k_race_1', '2 · Km 1-2 | FRENO: 7:50-8:00 /km', 1, '2 km', 0,
+            'El error de marzo: salir a 6:09. Aquí manda el reloj, no las ganas. Si vas más rápido que 7:50, afloja. Respira por nariz y boca, hombros sueltos. Debes poder hablar.'),
+          _ex('r5k_race_2', '3 · Km 3-7 | CRUCERO: 7:45-7:50 /km', 1, '5 km', 0,
+            'Ritmo constante, sin acelerar ni mirar a quien te adelanta. Pulsaciones ~145-155. Cada km debe parecerte igual de cómodo. En cada avituallamiento: coge el vaso, camina 20-30" y bebe a tragos pequeños; luego retoma el ritmo despacio.'),
+          _ex('r5k_race_3', '4 · Km 8-9 | MANTÉN', 1, '2 km', 0,
+            'Aquí empieza a pesar. Cadencia corta y rápida, pasos ligeros, mira al frente. Divide: "solo un km más". Si te vas a quedar corta, mantén el ritmo sin apretar todavía.'),
+          _ex('r5k_race_4', '5 · Km 10 | LO QUE QUEDE', 1, '1 km', 0,
+            'Si tienes fuerzas, ahora sí: sube el ritmo poco a poco y apreta en los últimos 500 m. Si no, mantén y disfruta la llegada. ¡Lo has hecho antes, y esta vez con cabeza!'),
+          _ex('r5k_race_5', '6 · Al cruzar la meta | Recupera', 1, '10 min', 0,
+            'No te pares en seco: camina 5-10 min, bebe y come algo (plátano, barrita). Estira suave gemelos y cadera cuando bajen las pulsaciones. 💜')
         ]
       }
     ]
