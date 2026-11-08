@@ -520,6 +520,76 @@ const TIPS_SECTIONS = [
         ]
       }
     ]
+  },
+  {
+    id: 'carrera',
+    emoji: '🏃‍♀️',
+    name: 'CARRERA',
+    sub: 'Tirada larga, pulsaciones, fascia, cadencia, semana de carrera',
+    tips: [
+      {
+        title: 'La tirada larga va suave',
+        body: 'La tirada larga sirve para sumar kilómetros y resistencia, no para ir rápido. Si la haces a ritmo de carrera o más rápido, te cansas más, necesitas más días para recuperar y llegas peor al resto de la semana.',
+        points: [
+          'Prueba de la charla: deberías poder decir frases enteras sin jadear.',
+          'Pulsaciones por debajo de ~155 (zona 3 baja). Si suben, frena o camina 30 segundos.',
+          'Ir un poco más lento que el ritmo de carrera es lo correcto, no es "hacerlo peor".'
+        ]
+      },
+      {
+        title: 'Si el ritmo se mantiene pero las pulsaciones suben',
+        body: 'Pasa mucho: el ritmo de cada km es casi igual, pero las pulsaciones suben de 145 a 170. Se llama deriva cardiaca y es la señal de que el cansancio se está acumulando aunque las piernas aún respondan.',
+        points: [
+          'En un entreno: es buen momento para bajar el ritmo o dar la sesión por terminada.',
+          'En la carrera: si pasa en la primera mitad, has salido demasiado rápido. Afloja antes de que sea tarde.'
+        ]
+      },
+      {
+        title: 'Cuenta también lo que andas en el día',
+        body: '10.000 pasos de recados o de centro comercial antes de correr también cansan las piernas y los pies. El día de la tirada larga o de las series, intenta no hacer paseos largos antes. Y si ya los has hecho, recorta la distancia o el ritmo sin culpa.'
+      },
+      {
+        title: 'Fascia plantar: para a tiempo',
+        body: 'La fascia es la banda que va del talón a los dedos por la planta del pie. Si la notas cargada, parar es la decisión correcta: una fascitis puede tenerte semanas sin correr.',
+        points: [
+          'Señal de alarma: dolor en el talón o el arco en los primeros pasos al levantarte de la cama o tras estar sentada.',
+          'Cuidados: rodar la planta con una pelota 2-3 minutos, estirar gemelo y sóleo (rodilla recta y rodilla doblada) y elevaciones de talón lentas.',
+          'Si te duele al correr, ese día no corras. Haz bici o elíptica si quieres moverte.',
+          'Zapatillas con amortiguación en buen estado. Más de ~600-800 km = toca cambiarlas.'
+        ]
+      },
+      {
+        title: 'Pasos más cortos y rápidos',
+        body: 'Con una cadencia baja (unos 150-155 pasos/min) cada paso es largo, pasas más tiempo apoyada en el suelo y el gemelo y la fascia cargan más. Subirla a 160-165 da una pisada más ligera.',
+        points: [
+          'No se trata de ir más rápido. Es el mismo ritmo con pasos más cortos.',
+          'Sube poco a poco, unos 5 pasos/min más. Te ayuda un metrónomo o una playlist a ~160 BPM.',
+          'Pisa por debajo de la cadera, no con el pie muy por delante del cuerpo.'
+        ]
+      },
+      {
+        title: 'No hace falta probar la distancia antes de la carrera',
+        body: 'Si llegas a correr un 80-85% de la distancia (por ejemplo 8-8,5 km para un 10K), el día de la carrera el ambiente, el descanso y los avituallamientos te llevan hasta el final. Intentar la distancia completa a pocos días solo añade cansancio y riesgo de lesión.'
+      },
+      {
+        title: 'Recuperar tras un entreno duro',
+        points: [
+          'Si el reloj marca carga alta o más de 24 h de recuperación, al día siguiente descansa o haz algo muy suave (caminar, movilidad).',
+          'No pongas series ni tirada larga hasta pasadas 48 h.',
+          'Come hidratos y proteína en las horas siguientes y bebe bien, sobre todo con calor.'
+        ]
+      },
+      {
+        title: 'Semana de carrera',
+        points: [
+          'Menos volumen y la misma intensidad: rodajes cortos con algunas rectas para mantener la chispa.',
+          'Nada de fuerza pesada de piernas los 4-5 días antes.',
+          'El día antes, 15-20 minutos muy suaves o descanso.',
+          'No estrenes nada el día de la carrera: ni zapatillas, ni ropa, ni geles, ni desayuno.',
+          'Sal más lenta de lo que te pida el cuerpo los primeros 2 km. Es lo que más se nota al final.'
+        ]
+      }
+    ]
   }
 
 ];
