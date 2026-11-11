@@ -11351,7 +11351,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
     'Acelera progresivamente hasta un ritmo rápido pero suelto (no sprint) y vuelve andando. Cadencia alta, pasos cortos y ligeros.');
   const rodaje = (min, strides) => [
     _ex('r5k_rodaje', 'Rodaje suave (zona 2)', 1, min, 0,
-      'Ritmo conversacional (~8:15-8:45 /km, RPE 4-5): debes poder hablar en frases completas. Si no puedes, baja el ritmo. Aquí se construye la base aeróbica.'),
+      'Tu ritmo cómodo (~7:45-8:00 /km, RPE 4-5): debes poder hablar en frases completas. No hace falta ir más lenta: si las pulsaciones pasan de ~150, acorta el paso sin perder el ritmo de pisada o camina 30-60" y sigue. Aquí se construye la base aeróbica.'),
     rectas(strides),
   ];
   const series = (id, sets, dist, rest, note) => [
@@ -11384,7 +11384,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
           'A ~6:50-7:00 /km: cada 400 m en ~2:45-2:50 (RPE 8). Recupera 90" andando o trotando muy suave. Todas las series al mismo ritmo.'),
         4: fuerzaB(3, '20'),
         6: [_ex('r5k_tirada', 'Tirada larga suave', 1, '5 km', 0,
-          'Todo a ritmo conversacional (~8:15-8:45 /km). El objetivo es acumular tiempo corriendo, no ir rápido. Si lo necesitas, camina 1 min y sigue.')]
+          'Todo a tu ritmo cómodo (~7:45-8:00 /km). El objetivo es acumular tiempo corriendo, no ir rápido. Si lo necesitas, camina 1 min y sigue.')]
       },
       // S2 — carga: series más largas, tirada 6 km
       {
@@ -11394,7 +11394,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
           'A ~7:10 /km: cada 800 m en ~5:45 (RPE 8). Recupera 2\' trotando suave. Si la última va mucho más lenta que la primera, empieza más conservadora la próxima vez.'),
         4: fuerzaB(3, '25'),
         6: [_ex('r5k_tirada', 'Tirada larga suave', 1, '7 km', 0,
-          'Ritmo conversacional (~8:15-8:45 /km, pulsaciones 130-145). Primer km a 8:30 aunque te sobren fuerzas. Último km algo más alegre (~7:45) si te encuentras bien. Si algo molesta, para en los 6 km: no pasa nada.')]
+          'Ritmo cómodo (~7:45-8:00 /km, pulsaciones por debajo de ~155). Primer km a 8:00 aunque te sobren fuerzas. Último km algo más alegre (~7:45) si te encuentras bien. Si algo molesta, para en los 6 km: no pasa nada.')]
       },
       // S3 — específica: series a ritmo de carrera + ensayo general; la pierna empieza a bajar
       {
@@ -11405,7 +11405,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
         4: fuerzaB(2, '20'),
         6: [
           _ex('r5k_tirada_s3a', 'Tirada larga | Suave', 1, '8 km', 0,
-            'Tu tirada más larga antes del 10K (ya hiciste 10 km en marzo). Primer km a 8:15-8:30 aunque te sobren fuerzas; el resto a ritmo conversacional (~8:00-8:30 /km, pulsaciones 130-145). Si lo necesitas, camina 1 min en un avituallamiento. Prueba también el desayuno, la ropa y las zapatillas del día 22.')
+            'Tu tirada más larga antes del 10K (ya hiciste 10 km en marzo). Primer km a ~8:00 aunque te sobren fuerzas; el resto a tu ritmo cómodo (~7:45-8:00 /km, pulsaciones por debajo de ~155), nunca más rápido de 7:40. Pasos cortos y ligeros. Si las pulsaciones suben, camina 30-60" en lugar de trotar arrastrando los pies. Prueba también el desayuno, la ropa y las zapatillas del día 22.')
         ]
       },
       // S4 — descarga y carrera: volumen ~-50%, nada pesado de pierna tras el lunes
