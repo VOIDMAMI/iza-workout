@@ -76,13 +76,34 @@ const Progress = {
     return String(Math.round(n * 100) / 100).replace('.', ',');
   },
 
+  // ¿Es un ejercicio de levantar peso? (fuera técnica de carrera, HIIT, cardio,
+  // movilidad y peso corporal puro: flexiones, planchas, saltos, gomas...)
+  _isLiftExercise(fullName) {
+    const n = String(fullName).toLowerCase();
+    const prefix = n.includes('|') ? n.split('|')[0].trim() : '';
+    if (/^(hiit|correr|run|nataci[oó]n|ergómetro|ergometro|estabilidad|progresi[oó]n|movilidad|activaci[oó]n|estiramiento|calentamiento)$/.test(prefix)) return false;
+    if (/^(movilidad|activaci[oó]n|estiramiento|calentamiento|paseo|caminar|rodar|rodaje|trote|carrera|descanso|\d)/.test(n)) return false;
+    const weighted = /mancuern|barra|polea|m[aá]quina|kettlebell|\bkb\b|\bdb\b|disco|multipower|landmine|prensa|con peso|lastre|sandbag|trineo|sled|goblet|front rack|farmer|devil press|swing|clean|wall ?ball/;
+    const bodyweight = /sin peso|resistencia|goma|banda|fitball|isom[eé]tric|iso hold|salto|jump|plancha|plank|flexi[oó]n|flexiones|dominad|fondo|trx|activaci[oó]n|deslizamiento|con apoyo|con ayuda|pistol|n[oó]rdic|snow angel|toe |walks?\b|hollow/;
+    if (/colgarse|foam roller|inchworm|runners lunge|scapular|rodilla al pecho|cosaca alterna|con resistencia$/.test(n)) return false;
+    if (weighted.test(n)) return true;
+    if (prefix === 'core' || prefix === 'funcional') return false;
+    if (bodyweight.test(n)) return false;
+    return /hip thrust|peso muerto|deadlift|press banca|press militar|press de hombro|press hombro|press franc|press con|jal[oó]n|^remo|\brow\b|sentadilla|hiperextensi|curl|extensi[oó]n (de )?(cu[aá]driceps|tr[ií]ceps)|extensiones tr|elevaci[oó]n(es)? (lateral|frontal)|elevaciones (laterales|frontales|unilaterales)|deltoides|skull|pull over|pull through|cruce de poleas|aperturas de pecho|gemelo|s[oó]leo|buenos d[ií]as|patada (de )?gl[uú]teo|patada de tr[ií]ceps|face ?pull|glute bridge|snatch|zancada|lunge|step up|crunch en polea|rollout|subidas al caj[oó]n/.test(n);
+  },
+
   _strengthCatalog() {
     const groups = new Map();
-    const skip = /^(movilidad|activaci[oó]n|estiramiento|calentamiento|paseo|caminar|rodar|rodaje|trote|carrera|descanso|\d)/i;
+    // Si ya registraste peso en un ejercicio, se queda en la lista aunque el filtro dude
+    const logged = new Set();
+    const logs = Storage._get(STORAGE_KEYS.WORKOUT_LOGS) || {};
+    Object.values(logs).forEach(day => Object.entries(day || {}).forEach(([id, l]) => {
+      if (l && Array.isArray(l.sets) && l.sets.some(s => s.completed && s.weight > 0)) logged.add(id);
+    }));
     const add = (ex) => {
       if (!ex || !ex.id || !ex.name) return;
       const name = this._strengthName(ex.name);
-      if (skip.test(name)) return;
+      if (!logged.has(ex.id) && !this._isLiftExercise(ex.name)) return;
       const key = this._strengthKey(name);
       if (!key) return;
       if (!groups.has(key)) groups.set(key, { key, name, ids: new Set() });
@@ -104,7 +125,7 @@ const Progress = {
     });
     if (typeof EXPRESS_WORKOUTS !== 'undefined') {
       Object.values(EXPRESS_WORKOUTS).forEach(w => {
-        if (w && (!w.type || w.type === 'strength')) (w.exercises || []).forEach(add);
+        if (w && (!w.type || w.type === 'strength') && !/^(HIIT|CALISTENIA|MOVILIDAD|ESTIRAMIENTOS)$/.test(w.category || '')) (w.exercises || []).forEach(add);
       });
     }
     Storage.getMyWorkouts().forEach(w => (w.exercises || []).forEach(add));
