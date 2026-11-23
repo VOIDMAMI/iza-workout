@@ -30,6 +30,7 @@ const PROGRAM_PLAN_CATEGORY = {
   carrera_21km:        'CARRERA',
   carrera_42km:        'CARRERA',
   reto_5k_dubai:       'CARRERA',
+  descarga_post_carrera:'CARRERA',
   // HÍBRIDOS
   hibrido_fuerza_carrera:'HIBRIDOS',
   woods:               'HIBRIDOS',

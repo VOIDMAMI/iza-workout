@@ -10,7 +10,8 @@ const I18N_CONTENT_EN = {
   plans: {
     fuerza_avanzado:        { name: 'Strong & Advanced', description: '5-day/week strength program — 12 periodized weeks' },
     carrera_5km:             { name: '5K Run', description: '12-week plan to run 5K — Walk-Run method + mobility + injury-prevention work' },
-    reto_5k_dubai:           { name: 'Dubai 10K Challenge — Strength + Running', description: '4 weeks | 3 running days + 2 runner strength days | 10K on Sunday Nov 22 (start Monday Oct 26)' },
+    reto_5k_dubai:           { name: 'Dubai 10K Challenge — Strength + Running', description: '4 weeks | 3 running days + 2 runner strength days | Race falls on Sunday of W4: start on the Monday 4 weeks before | ✅ Dubai 10K Nov 22, 2026: ~1:15:10 (7:31 /km), personal best' },
+    descarga_post_carrera:   { name: 'Post-race recovery week', description: '1-week active recovery after a 10K | Walks + relaxed gym (upper body, light legs) + easy ~10 km run on Friday | Start the Monday after the race' },
     quema_grasa_comp:        { name: 'Fat Burn Complement', description: '8-week complementary program — cardio/HIIT/sprints/swimming' },
     perdida_grasa:            { name: 'Fat Loss', description: '12-week fat loss program (Phase 1: 5 days/week · Phase 2: 6 days/week)' },
     personas_poco_tiempo:     { name: 'Short on Time', description: '3 days a week | 12 progressive weeks' },

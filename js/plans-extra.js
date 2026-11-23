@@ -11365,7 +11365,7 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
     name: 'Reto Dubái 10K — Fuerza + Carrera',
     planType: 'phased',
     weeks: 4,
-    description: '4 semanas | 3 días de carrera + 2 de fuerza para corredora | 10K el domingo 22-nov (empieza el lunes 26-oct)',
+    description: '4 semanas | 3 días de carrera + 2 de fuerza para corredora | La carrera cae el domingo de la S4: empieza el lunes 4 semanas antes | ✅ 10K Dubái 22-nov-2026: ~1:15:10 (7:31 /km), marca personal',
     trainingDays: [1, 2, 3, 4, 6, 7],
     dayMeta: {
       1: { name: 'Fuerza A — Piernas de corredora',   type: 'strength', muscleGroups: ['Piernas', 'Glúteos', 'Gemelos', 'Core'] },
@@ -11451,6 +11451,95 @@ WORKOUT_PLANS.reto_5k_dubai = (() => {
           _ex('r5k_race_5', '6 · Al cruzar la meta | Recupera', 1, '10 min', 0,
             'No te pares en seco: camina 5-10 min, bebe y come algo (plátano, barrita). Estira suave gemelos y cadera cuando bajen las pulsaciones. 💜')
         ]
+      }
+    ]
+  };
+})();
+
+/* ══════════════ SEMANA DE DESCARGA POST-CARRERA (1 semana) ══════════════ */
+/* Recuperación activa tras un 10K (creada para la semana del 23-nov-2026,
+   después del 10K de Dubái). Paseos + gym relajado (una serie menos, RIR 3-4,
+   pierna -20-30% de peso, sin peso muerto/sentadilla pesados) + rodaje suave
+   de ~10 km el viernes (Palm Jumeirah). Sábado descanso, domingo torso opcional.
+   Reutilizable después de cualquier carrera: empieza el lunes siguiente. */
+WORKOUT_PLANS.descarga_post_carrera = (() => {
+  const paseo = (id, dur, note) => _ex(id, 'Paseo', 1, dur, 0, note);
+  const movilidad = () => [
+    _ex('dpc_m_ankle', 'Movilidad | Tobillo en pared', 1, '10/lado', 0,
+      'Pie a un palmo de la pared, lleva la rodilla a tocarla sin levantar el talón.'),
+    _ex('dpc_m_9090', 'Movilidad | 90/90 de cadera', 1, '8/lado', 0,
+      'Sentada con ambas piernas a 90°, gira la cadera de un lado a otro sin apoyar las manos si puedes. Abre la cadera cargada de la carrera.'),
+    _ex('dpc_m_calf', 'Estiramiento de gemelo y sóleo en pared', 1, '30"/lado', 0,
+      'Rodilla estirada 30" (gemelo) y luego rodilla doblada 30" (sóleo), talón siempre en el suelo. Suave, sin rebotes.'),
+    _ex('dpc_m_ball', 'Rodar la planta del pie con pelota', 1, '1-2 min/pie', 0,
+      'Pelota de tenis o de masaje bajo la planta, de talón a dedos. Cuida la fascia plantar.'),
+  ];
+  const torso = (sets, note) => [
+    _ex('dpc_wgs', "Movilidad | World's greatest stretch", 1, '5/lado', 0,
+      'Zancada larga, mano al suelo por dentro del pie delantero y rota el tronco llevando el brazo al techo.'),
+    _ex('dpc_jalon', 'Jalón al pecho', sets, '10', 75, `${note} Saca pecho y tira de la barra a la clavícula con los codos hacia abajo.`),
+    _ex('dpc_banca', 'Press banca con mancuernas', sets, '10', 75, `${note} Escápulas atrás y abajo, baja controlando hasta la línea del pecho.`),
+    _ex('dpc_remo', 'Remo con mancuerna a una mano', sets, '10/lado', 60, `${note} Codo pegado, tira hacia la cadera en arco.`),
+    _ex('dpc_militar', 'Press militar con mancuernas', 2, '10', 60, `${note} Abdomen firme, sin arquear la lumbar.`),
+    _ex('dpc_lat', 'Elevaciones laterales mancuernas', 2, '12', 45, 'Peso ligero, el codo dirige, hasta la altura del hombro.'),
+    _ex('dpc_face', 'Face pulls con banda', 2, '15', 45, 'Tira hacia la cara abriendo los codos y juntando escápulas. Postura y hombro sano.'),
+    _ex('dpc_pallof', 'Core | Pallof press', 2, '10/lado', 45, 'Empuja al frente y resiste la rotación sin girar el tronco.'),
+    _ex('dpc_side', 'Core | Plancha lateral', 2, '30"/lado', 45, 'Cadera alta y cuerpo en línea.'),
+  ];
+  const RELAX = 'Relajado: 3-4 reps en recámara, el objetivo es mantener, no progresar.';
+
+  return {
+    id: 'descarga_post_carrera',
+    name: 'Semana de descarga post-carrera',
+    planType: 'phased',
+    weeks: 1,
+    description: '1 semana de recuperación activa tras un 10K | Paseos + gym relajado (torso, pierna suave) + rodaje suave de ~10 km el viernes | Empieza el lunes después de la carrera',
+    trainingDays: [1, 2, 3, 4, 5, 7],
+    dayMeta: {
+      1: { name: 'Paseo + movilidad',                      type: 'running',  muscleGroups: ['Recuperación'] },
+      2: { name: 'Gym: torso + core',                      type: 'strength', muscleGroups: ['Espalda', 'Pecho', 'Hombros', 'Core'] },
+      3: { name: 'Gym: pierna y glúteo suave',             type: 'strength', muscleGroups: ['Glúteos', 'Piernas', 'Gemelos'] },
+      4: { name: 'Paseo largo + movilidad',                type: 'running',  muscleGroups: ['Recuperación'] },
+      5: { name: '🌴 Rodaje suave ~10 km (Palm Jumeirah)', type: 'running',  muscleGroups: ['Cardio', 'Resistencia'] },
+      7: { name: 'Torso ligero (opcional)',                type: 'strength', muscleGroups: ['Espalda', 'Pecho', 'Hombros'] }
+    },
+    weeklySchedule: [
+      {
+        1: [
+          paseo('dpc_paseo_1', '30-45 min', 'Ritmo suave, sin prisa. Ayuda a que las piernas se recuperen de la carrera mejor que quedarte quieta.'),
+          ...movilidad(),
+        ],
+        2: torso(3, RELAX),
+        3: [
+          _ex('dpc_monster', 'Activación | Monster walks con banda', 2, '10 pasos/dir', 30,
+            'Banda sobre las rodillas, semiflexión, pasos cortos sin juntar los pies.'),
+          _ex('dpc_ht', 'Hip Thrust', 3, '10', 90,
+            'Peso un 20-30% más bajo de lo habitual y 3-4 reps en recámara. Aprieta arriba 1" sin arquear la lumbar.'),
+          _ex('dpc_prensa', 'Prensa unilateral', 2, '10/lado', 75,
+            'Peso ligero, pie bajo en la plataforma, glúteo pegado al respaldo. Sin llegar al fallo.'),
+          _ex('dpc_rdl', 'Peso muerto rumano con mancuernas', 2, '10', 75,
+            'Ligero. Cadera atrás con espalda neutra hasta notar el femoral. Esta semana nada de peso muerto ni sentadilla pesados.'),
+          _ex('dpc_abd', 'Abducción cadera máquina', 2, '15', 45, 'Controla la vuelta, sin rebotar.'),
+          _ex('dpc_patada', 'Patada de glúteo en polea', 2, '12/lado', 45, 'Sin balanceo, el glúteo lleva la pierna atrás.'),
+          _ex('dpc_calf', 'Elevación de talones a una pierna', 2, '12/lado', 45,
+            'En un escalón, baja el talón y sube lento. Gemelo y Aquiles fuertes para volver a correr.'),
+          _ex('dpc_deadbug', 'Core | Dead bug', 2, '8/lado', 45, 'Lumbar pegada al suelo todo el rato.'),
+        ],
+        4: [
+          paseo('dpc_paseo_4', '45-60 min', 'A buen ritmo pero cómodo. Nada de gym de pierna hoy: mañana corres.'),
+          ...movilidad(),
+        ],
+        5: [
+          _ex('dpc_run_pre', '1 · Antes de salir | Comida, agua y ropa', 1, 'Antes', 0,
+            'Comida principal 3-4 h antes (arroz, pasta o patata + proteína). Si sales tarde, un plátano o tostada 1 h antes. Bebe durante todo el día. Ropa clara o algo reflectante si ya es de noche. Lleva agua o electrolitos.'),
+          _ex('dpc_run_warm', '2 · Calentamiento | Caminar + trote muy suave', 1, '5-10 min', 0,
+            'Empieza caminando y pasa a trote muy suave. Balanceos de pierna si te apetece.'),
+          _ex('dpc_run', '3 · Rodaje suave | Palm Jumeirah', 1, '~10 km', 0,
+            'NO es otra carrera: rodaje de disfrute. Ritmo cómodo (7:45-8:15 /km), pulsaciones por debajo de 150, pasos cortos y ligeros (155-160). Camina cuando quieras. Si a partir del km 6-7 notas las piernas cansadas, termina andando sin culpa: aún vienes de la carrera.'),
+          _ex('dpc_run_cool', '4 · Al terminar | Recupera', 1, '10 min', 0,
+            'Camina 5-10 min y estira suave gemelo, cuádriceps y cadera. Cena con hidratos y proteína y duerme bien: mañana descansas.'),
+        ],
+        7: torso(2, 'Opcional. Muy ligero, solo si te apetece.'),
       }
     ]
   };
