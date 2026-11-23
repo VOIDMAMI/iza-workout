@@ -299,11 +299,17 @@ const Storage = {
       id: generateId(),
       date: entry.date || formatDateKey(new Date()),
       distance: parseFloat(entry.distance) || 0,
-      time: parseInt(entry.time) || 0,
+      time: parseFloat(entry.time) || 0,
       feeling: entry.feeling || 'normal',
+      race: !!entry.race,
       notes: entry.notes || ''
     });
     this._set(STORAGE_KEYS.RUNNING_LOGS, logs);
+  },
+
+  deleteRunningLog(id) {
+    const logs = this._get(STORAGE_KEYS.RUNNING_LOGS) || [];
+    this._set(STORAGE_KEYS.RUNNING_LOGS, logs.filter(l => l.id !== id));
   },
 
   getRunningLogs(limit = 20) {

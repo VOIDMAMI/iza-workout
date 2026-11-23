@@ -67,9 +67,9 @@ function formatTime(seconds) {
  */
 function formatPace(distanceKm, timeMinutes) {
   if (!distanceKm || distanceKm <= 0) return '--:--';
-  const paceMinutes = timeMinutes / distanceKm;
-  const mins = Math.floor(paceMinutes);
-  const secs = Math.round((paceMinutes - mins) * 60);
+  const paceSecs = Math.round((timeMinutes / distanceKm) * 60);
+  const mins = Math.floor(paceSecs / 60);
+  const secs = paceSecs % 60;
   return mins + ':' + String(secs).padStart(2, '0');
 }
 

@@ -275,6 +275,7 @@ const Progress = {
   renderRunning(container) {
     const stats = Storage.getRunningStats();
     const logs = Storage.getRunningLogs(10);
+    const today = formatDateKey(new Date());
 
     container.innerHTML = `
       <div class="running-stats anim-fade-in">
@@ -292,6 +293,48 @@ const Progress = {
         </div>
       </div>
 
+      <button class="btn btn-primary btn-full mb-xl" id="run-add-toggle" onclick="Progress.toggleRunForm()">＋ Añadir carrera</button>
+
+      <div class="running-log-form anim-fade-in" id="run-add-form" style="display:none">
+        <div class="form-row">
+          <div class="form-group" style="flex:1">
+            <label class="form-label">Fecha</label>
+            <input type="date" class="input" id="run-add-date" value="${today}" max="${today}">
+          </div>
+          <div class="form-group" style="flex:1">
+            <label class="form-label">Distancia (km)</label>
+            <input type="number" class="input" id="run-add-distance" placeholder="10.0" step="0.01" min="0" inputmode="decimal">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tiempo (h : min : seg)</label>
+          <div class="form-row">
+            <input type="number" class="input" id="run-add-h" placeholder="0" min="0" max="9" inputmode="numeric" style="flex:1">
+            <input type="number" class="input" id="run-add-m" placeholder="45" min="0" max="59" inputmode="numeric" style="flex:1">
+            <input type="number" class="input" id="run-add-s" placeholder="00" min="0" max="59" inputmode="numeric" style="flex:1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">¿Cómo te sentiste?</label>
+          <div class="chip-group" id="run-add-feeling">
+            <button class="chip active" data-feeling="great" onclick="Progress.selectRunFeeling(this)">💪 Genial</button>
+            <button class="chip" data-feeling="normal" onclick="Progress.selectRunFeeling(this)">👍 Normal</button>
+            <button class="chip" data-feeling="hard" onclick="Progress.selectRunFeeling(this)">😤 Duro</button>
+            <button class="chip" data-feeling="bad" onclick="Progress.selectRunFeeling(this)">😵 Mal</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="run-race-check">
+            <input type="checkbox" id="run-add-race"> 🏁 Es una competición
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notas (opcional)</label>
+          <textarea class="input" id="run-add-notes" rows="2" placeholder="Ej: 10K Dubái, FC media 161, cadencia 155"></textarea>
+        </div>
+        <button class="btn btn-primary btn-full btn-lg" onclick="Progress.saveManualRun()">Guardar carrera ✓</button>
+      </div>
+
       <div class="chart-container anim-fade-in-up">
         <div class="chart-title">Distancia por Sesión (km)</div>
         <canvas id="running-chart" class="chart-canvas"></canvas>
@@ -303,33 +346,13 @@ const Progress = {
 
       ${logs.length > 0 ? `
         <div class="running-history anim-fade-in-up">
-          ${logs.map(run => {
-            const pace = formatPace(run.distance, run.time);
-            const feelings = { great: '💪', normal: '👍', hard: '😤', bad: '😵' };
-            return `
-              <div class="running-history-item">
-                <div class="run-icon">🏃</div>
-                <div class="run-details">
-                  <div class="run-distance">${run.distance} km</div>
-                  <div class="run-meta">
-                    <span>⏱ ${run.time} min</span>
-                    <span>${formatDateReadable(run.date)}</span>
-                    <span>${feelings[run.feeling] || '👍'}</span>
-                  </div>
-                </div>
-                <div>
-                  <div class="run-pace">${pace}</div>
-                  <div class="run-pace-label">min/km</div>
-                </div>
-              </div>
-            `;
-          }).join('')}
+          ${logs.map(run => this._renderRunItem(run)).join('')}
         </div>
       ` : `
         <div class="empty-state">
           <div class="empty-state-icon">🏃</div>
           <h3 class="empty-state-title">Sin carreras registradas</h3>
-          <p class="empty-state-text">Registra tu primera carrera desde el entrenamiento del día</p>
+          <p class="empty-state-text">Añade una con el botón de arriba o desde el entrenamiento del día</p>
         </div>
       `}
     `;
@@ -338,11 +361,96 @@ const Progress = {
       setTimeout(() => {
         this._drawLineChart(
           document.getElementById('running-chart'),
-          logs.reverse().map(l => ({ label: l.date.slice(5), value: l.distance })),
+          logs.slice().reverse().map(l => ({ label: l.date.slice(5), value: l.distance })),
           '#40C4FF', '#40C4FF'
         );
       }, 100);
     }
+  },
+
+  _formatRunTime(minutes) {
+    const total = Math.round((minutes || 0) * 60);
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    const pad = (n) => String(n).padStart(2, '0');
+    return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+  },
+
+  _renderRunItem(run) {
+    const pace = formatPace(run.distance, run.time);
+    const feelings = { great: '💪', normal: '👍', hard: '😤', bad: '😵' };
+    const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    return `
+      <div class="running-history-item${run.race ? ' is-race' : ''}">
+        <div class="run-icon">${run.race ? '🏁' : '🏃'}</div>
+        <div class="run-details">
+          <div class="run-distance">${run.distance} km${run.race ? ' <span class="run-race-badge">Competición</span>' : ''}</div>
+          <div class="run-meta">
+            <span>⏱ ${this._formatRunTime(run.time)}</span>
+            <span>${formatDateReadable(run.date)}</span>
+            <span>${feelings[run.feeling] || '👍'}</span>
+          </div>
+          ${run.notes ? `<div class="run-notes">${esc(run.notes)}</div>` : ''}
+        </div>
+        <div>
+          <div class="run-pace">${pace}</div>
+          <div class="run-pace-label">min/km</div>
+          <button class="run-delete" onclick="Progress.deleteRun('${run.id}')" aria-label="Borrar">✕</button>
+        </div>
+      </div>
+    `;
+  },
+
+  toggleRunForm() {
+    const form = document.getElementById('run-add-form');
+    const btn = document.getElementById('run-add-toggle');
+    if (!form) return;
+    const open = form.style.display === 'none';
+    form.style.display = open ? 'block' : 'none';
+    if (btn) btn.textContent = open ? 'Cancelar' : '＋ Añadir carrera';
+  },
+
+  selectRunFeeling(btn) {
+    document.querySelectorAll('#run-add-feeling .chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    vibrate(20);
+  },
+
+  saveManualRun() {
+    const val = (id) => document.getElementById(id)?.value;
+    const distance = parseFloat(String(val('run-add-distance') || '').replace(',', '.'));
+    const h = parseInt(val('run-add-h')) || 0;
+    const m = parseInt(val('run-add-m')) || 0;
+    const s = parseInt(val('run-add-s')) || 0;
+    const minutes = h * 60 + m + s / 60;
+    const date = val('run-add-date') || formatDateKey(new Date());
+
+    if (!distance || distance <= 0 || minutes <= 0) {
+      showToast('Completa distancia y tiempo', 'warning');
+      return;
+    }
+
+    const feeling = document.querySelector('#run-add-feeling .chip.active')?.dataset.feeling || 'normal';
+    Storage.saveRunningLog({
+      date,
+      distance,
+      time: Math.round(minutes * 100) / 100,
+      feeling,
+      race: !!document.getElementById('run-add-race')?.checked,
+      notes: (val('run-add-notes') || '').trim()
+    });
+
+    showToast('¡Carrera guardada! 🏃‍♀️');
+    vibrate(100);
+    this.renderTab();
+  },
+
+  deleteRun(id) {
+    if (!confirm('¿Borrar esta carrera?')) return;
+    Storage.deleteRunningLog(id);
+    showToast('Carrera borrada');
+    this.switchTab('running');
   },
 
   renderHistory(container) {
