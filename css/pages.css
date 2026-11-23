@@ -1211,6 +1211,11 @@
   font-size: 16px; /* evita el zoom automático de iOS al enfocar */
 }
 
+#run-add-feeling {
+  flex-wrap: wrap;
+  overflow: visible;
+}
+
 #run-add-form textarea.input {
   resize: vertical;
 }
