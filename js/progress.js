@@ -49,10 +49,93 @@ const Progress = {
     }
   },
 
-  renderStrength(container) {
-    const exercises = getAllExercises();
+  /* ---- FUERZA: ejercicios agrupados por nombre (todos los planes), orden alfabético ---- */
 
-    if (exercises.length === 0) {
+  // Nombre a mostrar: "Hip Thrust | DELOAD" → "Hip Thrust"; "Core | Dead bug" se queda entero
+  _strengthName(name) {
+    const parts = String(name).split('|');
+    if (parts.length > 1 && parts[0].trim().split(/\s+/).length > 1) return parts[0].trim();
+    return String(name).trim();
+  },
+
+  _strengthKey(name) {
+    return String(name).toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ').trim();
+  },
+
+  _esc(t) {
+    return String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  },
+
+  _parseDecimal(v) {
+    return parseFloat(String(v || '').replace(',', '.').trim());
+  },
+
+  _fmtKg(n) {
+    return String(Math.round(n * 100) / 100).replace('.', ',');
+  },
+
+  _strengthCatalog() {
+    const groups = new Map();
+    const skip = /^(movilidad|activaci[oó]n|estiramiento|calentamiento|paseo|caminar|rodar|rodaje|trote|carrera|descanso|\d)/i;
+    const add = (ex) => {
+      if (!ex || !ex.id || !ex.name) return;
+      const name = this._strengthName(ex.name);
+      if (skip.test(name)) return;
+      const key = this._strengthKey(name);
+      if (!key) return;
+      if (!groups.has(key)) groups.set(key, { key, name, ids: new Set() });
+      groups.get(key).ids.add(ex.id);
+    };
+    const visit = (plan, dow, exs) => {
+      if (!Array.isArray(exs)) return;
+      const type = plan.dayMeta && plan.dayMeta[dow] && plan.dayMeta[dow].type;
+      if (type && type !== 'strength') return;
+      exs.forEach(add);
+    };
+    Object.values(WORKOUT_PLANS).forEach(plan => {
+      if (!plan) return;
+      if (plan.planType === 'phased') {
+        (plan.weeklySchedule || []).forEach(week => Object.entries(week || {}).forEach(([d, e]) => visit(plan, d, e)));
+      } else {
+        Object.entries(plan.schedule || {}).forEach(([d, e]) => visit(plan, d, e));
+      }
+    });
+    if (typeof EXPRESS_WORKOUTS !== 'undefined') {
+      Object.values(EXPRESS_WORKOUTS).forEach(w => {
+        if (w && (!w.type || w.type === 'strength')) (w.exercises || []).forEach(add);
+      });
+    }
+    Storage.getMyWorkouts().forEach(w => (w.exercises || []).forEach(add));
+
+    return Array.from(groups.values())
+      .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }));
+  },
+
+  // Todas las sesiones de un ejercicio (entrenos + registros a mano), más reciente primero
+  _strengthEntries(group) {
+    const logs = Storage._get(STORAGE_KEYS.WORKOUT_LOGS) || {};
+    const entries = [];
+    Object.keys(logs).forEach(date => {
+      const day = logs[date] || {};
+      const sets = [];
+      group.ids.forEach(id => {
+        if (day[id] && Array.isArray(day[id].sets)) {
+          day[id].sets.filter(s => s.completed).forEach(s => sets.push({ weight: s.weight || 0, reps: s.reps || 0 }));
+        }
+      });
+      if (sets.length) entries.push({ date, sets, manual: false });
+    });
+    Storage.getManualStrengthLogs()
+      .filter(l => l.key === group.key)
+      .forEach(l => entries.push({ date: l.date, sets: l.sets, manual: true, id: l.id }));
+    return entries.sort((a, b) => b.date.localeCompare(a.date));
+  },
+
+  renderStrength(container) {
+    const catalog = this._strengthCatalog();
+    if (catalog.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
           <div class="empty-state-icon">📊</div>
@@ -63,19 +146,56 @@ const Progress = {
       return;
     }
 
-    // Exercise selector
-    if (!this.selectedExercise) this.selectedExercise = exercises[0].id;
+    // Por defecto: el último ejercicio que hayas registrado
+    let group = catalog.find(g => g.key === this.selectedStrengthKey);
+    if (!group) {
+      const idToGroup = new Map();
+      catalog.forEach(g => g.ids.forEach(id => idToGroup.set(id, g)));
+      const logs = Storage._get(STORAGE_KEYS.WORKOUT_LOGS) || {};
+      const dates = Object.keys(logs).sort().reverse();
+      let foundDate = '';
+      for (const d of dates) {
+        const id = Object.keys(logs[d] || {}).find(k => idToGroup.has(k) && ((logs[d][k] && logs[d][k].sets) || []).some(s => s.completed));
+        if (id) { group = idToGroup.get(id); foundDate = d; break; }
+      }
+      const manual = Storage.getManualStrengthLogs().slice().sort((a, b) => b.date.localeCompare(a.date))[0];
+      if (manual && manual.date >= foundDate) {
+        group = catalog.find(g => g.key === manual.key) || group;
+      }
+      group = group || catalog[0];
+      this.selectedStrengthKey = group.key;
+    }
 
-    const exerciseOptions = exercises.map(ex =>
-      `<option value="${ex.id}" ${ex.id === this.selectedExercise ? 'selected' : ''}>${ex.name}</option>`
+    const entries = this._strengthEntries(group);
+    const today = formatDateKey(new Date());
+    const options = catalog.map(g =>
+      `<option value="${g.key}" ${g.key === group.key ? 'selected' : ''}>${this._esc(g.name)}</option>`
     ).join('');
 
     container.innerHTML = `
       <div class="form-group anim-fade-in">
         <label class="form-label">Selecciona ejercicio</label>
         <select class="input" onchange="Progress.selectExercise(this.value)" id="exercise-select">
-          ${exerciseOptions}
+          ${options}
         </select>
+      </div>
+
+      <button class="btn btn-primary btn-full mb-xl" id="str-add-toggle" onclick="Progress.toggleStrengthForm()">＋ Añadir registro</button>
+
+      <div class="running-log-form anim-fade-in" id="str-add-form" style="display:none">
+        <div class="str-form-title">${this._esc(group.name)}</div>
+        <div class="form-group">
+          <label class="form-label">Fecha</label>
+          <input type="date" class="input run-input-date" id="str-add-date" value="${today}" max="${today}">
+        </div>
+        <div class="form-group">
+          <div class="str-set-row str-set-head">
+            <span></span><span>Peso (kg)</span><span>Reps</span><span></span>
+          </div>
+          <div id="str-sets">${this._strengthSetRow(0, '', '')}</div>
+          <button class="btn btn-secondary btn-full mt-md" onclick="Progress.addStrengthSet()">＋ Añadir serie</button>
+        </div>
+        <button class="btn btn-primary btn-full btn-lg" onclick="Progress.saveManualStrength()">Guardar registro ✓</button>
       </div>
 
       <div class="chart-container anim-fade-in-up">
@@ -87,41 +207,137 @@ const Progress = {
         <div class="chart-title">Volumen Total (kg × reps)</div>
         <canvas id="volume-chart" class="chart-canvas"></canvas>
       </div>
+
+      <div class="section-header mt-xl">
+        <h3 class="section-title">Registros</h3>
+      </div>
+      ${entries.length ? `
+        <div class="running-history anim-fade-in-up">
+          ${entries.slice(0, 15).map(e => this._renderStrengthItem(e)).join('')}
+        </div>
+      ` : `
+        <div class="empty-state">
+          <div class="empty-state-icon">🏋️</div>
+          <h3 class="empty-state-title">Sin registros de este ejercicio</h3>
+          <p class="empty-state-text">Añade uno con el botón de arriba o marcando las series en tu entrenamiento</p>
+        </div>
+      `}
     `;
 
-    // Render charts
+    // Gráficas: una sesión por fecha, de más antigua a más reciente
+    const byDate = {};
+    entries.forEach(e => {
+      const d = byDate[e.date] || (byDate[e.date] = { max: 0, vol: 0 });
+      e.sets.forEach(s => { d.max = Math.max(d.max, s.weight); d.vol += s.weight * s.reps; });
+    });
+    const series = Object.keys(byDate).sort().slice(-15);
     setTimeout(() => {
-      this.drawWeightChart();
-      this.drawVolumeChart();
+      const w = document.getElementById('weight-chart');
+      const v = document.getElementById('volume-chart');
+      if (w) this._drawLineChart(w, series.map(d => ({ label: d.slice(5), value: byDate[d].max })), '#E91E8C', '#FF6BB5');
+      if (v) this._drawBarChart(v, series.map(d => ({ label: d.slice(5), value: byDate[d].vol })), '#7B2FBE', '#9D5BD2');
     }, 100);
   },
 
-  selectExercise(exerciseId) {
-    this.selectedExercise = exerciseId;
-    const content = document.getElementById('progress-content');
-    this.renderStrength(content);
+  _strengthSetRow(i, weight, reps) {
+    return `
+      <div class="str-set-row" data-set="${i}">
+        <span class="str-set-num">${i + 1}</span>
+        <input type="text" class="input str-weight" inputmode="decimal" placeholder="Ej: 42,5" value="${this._esc(weight)}" autocomplete="off">
+        <input type="text" class="input str-reps" inputmode="numeric" placeholder="10" value="${this._esc(reps)}" autocomplete="off">
+        <button class="run-delete str-set-del" onclick="Progress.removeStrengthSet(this)" aria-label="Quitar serie">✕</button>
+      </div>
+    `;
   },
 
-  drawWeightChart() {
-    const canvas = document.getElementById('weight-chart');
-    if (!canvas) return;
-
-    const data = Storage.getExerciseProgress(this.selectedExercise);
-    this._drawLineChart(canvas, data.map(d => ({
-      label: d.date.slice(5), // MM-DD
-      value: d.maxWeight
-    })), '#E91E8C', '#FF6BB5');
+  _renderStrengthItem(e) {
+    const max = Math.max(...e.sets.map(s => s.weight));
+    const detail = e.sets.map(s => `${this._fmtKg(s.weight)}×${s.reps}`).join(' · ');
+    return `
+      <div class="running-history-item">
+        <div class="run-icon">${e.manual ? '✍️' : '🏋️'}</div>
+        <div class="run-details">
+          <div class="run-distance">${e.sets.length} ${e.sets.length === 1 ? 'serie' : 'series'}${e.manual ? ' <span class="run-race-badge">A mano</span>' : ''}</div>
+          <div class="run-meta"><span>${formatDateReadable(e.date)}</span></div>
+          <div class="run-notes">${detail}</div>
+        </div>
+        <div>
+          <div class="run-pace">${this._fmtKg(max)}</div>
+          <div class="run-pace-label">kg máx</div>
+          ${e.manual ? `<button class="run-delete" onclick="Progress.deleteManualStrength('${e.id}')" aria-label="Borrar">✕</button>` : ''}
+        </div>
+      </div>
+    `;
   },
 
-  drawVolumeChart() {
-    const canvas = document.getElementById('volume-chart');
-    if (!canvas) return;
+  selectExercise(key) {
+    this.selectedStrengthKey = key;
+    this.renderStrength(document.getElementById('progress-content'));
+  },
 
-    const data = Storage.getExerciseProgress(this.selectedExercise);
-    this._drawBarChart(canvas, data.map(d => ({
-      label: d.date.slice(5),
-      value: d.totalVolume
-    })), '#7B2FBE', '#9D5BD2');
+  toggleStrengthForm() {
+    const form = document.getElementById('str-add-form');
+    const btn = document.getElementById('str-add-toggle');
+    if (!form) return;
+    const open = form.style.display === 'none';
+    form.style.display = open ? 'block' : 'none';
+    if (btn) btn.textContent = open ? 'Cancelar' : '＋ Añadir registro';
+  },
+
+  addStrengthSet() {
+    const wrap = document.getElementById('str-sets');
+    if (!wrap) return;
+    const rows = wrap.querySelectorAll('.str-set-row');
+    const last = rows[rows.length - 1];
+    const w = last ? last.querySelector('.str-weight').value : '';
+    const r = last ? last.querySelector('.str-reps').value : '';
+    wrap.insertAdjacentHTML('beforeend', this._strengthSetRow(rows.length, w, r));
+  },
+
+  removeStrengthSet(btn) {
+    const wrap = document.getElementById('str-sets');
+    const rows = wrap.querySelectorAll('.str-set-row');
+    if (rows.length <= 1) {
+      rows[0].querySelector('.str-weight').value = '';
+      rows[0].querySelector('.str-reps').value = '';
+      return;
+    }
+    btn.closest('.str-set-row').remove();
+    wrap.querySelectorAll('.str-set-row').forEach((row, i) => {
+      row.querySelector('.str-set-num').textContent = i + 1;
+    });
+  },
+
+  saveManualStrength() {
+    const group = this._strengthCatalog().find(g => g.key === this.selectedStrengthKey);
+    if (!group) return;
+    const sets = [];
+    let bad = false;
+    document.querySelectorAll('#str-sets .str-set-row').forEach(row => {
+      const wRaw = row.querySelector('.str-weight').value.trim();
+      const rRaw = row.querySelector('.str-reps').value.trim();
+      if (!wRaw && !rRaw) return;
+      const weight = wRaw ? this._parseDecimal(wRaw) : 0;
+      const reps = parseInt(rRaw, 10);
+      if (isNaN(weight) || weight < 0 || !reps || reps <= 0) { bad = true; return; }
+      sets.push({ weight: Math.round(weight * 100) / 100, reps });
+    });
+    if (bad || sets.length === 0) {
+      showToast('Revisa peso y reps de cada serie', 'warning');
+      return;
+    }
+    const date = document.getElementById('str-add-date')?.value || formatDateKey(new Date());
+    Storage.saveManualStrengthLog({ date, key: group.key, name: group.name, sets });
+    showToast('¡Registro guardado! 🏋️');
+    vibrate(100);
+    this.renderStrength(document.getElementById('progress-content'));
+  },
+
+  deleteManualStrength(id) {
+    if (!confirm('¿Borrar este registro?')) return;
+    Storage.deleteManualStrengthLog(id);
+    showToast('Registro borrado');
+    this.renderStrength(document.getElementById('progress-content'));
   },
 
   _drawLineChart(canvas, data, color, colorLight) {

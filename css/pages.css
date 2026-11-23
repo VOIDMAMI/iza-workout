@@ -1306,3 +1306,50 @@
 .tip-points li::marker {
   color: var(--primary);
 }
+
+/* ---- Progreso > Fuerza: registro a mano ---- */
+.str-form-title {
+  font-weight: 700;
+  font-size: var(--font-md);
+  margin-bottom: var(--space-lg);
+}
+
+#str-add-form .form-group {
+  min-width: 0;
+}
+
+#str-add-form .input {
+  font-size: 16px; /* evita el zoom automático de iOS */
+  min-width: 0;
+}
+
+.str-set-row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) minmax(0, 1fr) 28px;
+  gap: var(--space-sm);
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.str-set-row .input {
+  text-align: center;
+  font-weight: 700;
+}
+
+.str-set-head span {
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.str-set-num {
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.str-set-row .str-set-del {
+  margin: 0;
+  font-size: var(--font-sm);
+}

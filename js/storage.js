@@ -12,7 +12,8 @@ const STORAGE_KEYS = {
   PLAN_START_DATES: 'iza_plan_start_dates',
   MY_WORKOUTS: 'iza_my_workouts',
   EXERCISE_NOTES: 'iza_exercise_notes',     // notas por ejercicio (clave: nombre normalizado)
-  EXERCISE_WEIGHTS: 'iza_exercise_weights'  // último peso por ejercicio (clave: nombre normalizado)
+  EXERCISE_WEIGHTS: 'iza_exercise_weights', // último peso por ejercicio (clave: nombre normalizado)
+  STRENGTH_MANUAL: 'iza_strength_manual'    // registros de fuerza añadidos a mano desde Progreso
 };
 
 const Storage = {
@@ -404,6 +405,22 @@ const Storage = {
     return Math.min(Math.max(week, 1), plan.weeks || 12);
   },
 
+  /* ---- Registros de fuerza a mano (Progreso > Fuerza) ---- */
+
+  getManualStrengthLogs() {
+    return this._get(STORAGE_KEYS.STRENGTH_MANUAL) || [];
+  },
+
+  saveManualStrengthLog(entry) {
+    const list = this.getManualStrengthLogs();
+    list.push({ id: 'str_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6), ...entry });
+    this._set(STORAGE_KEYS.STRENGTH_MANUAL, list);
+  },
+
+  deleteManualStrengthLog(id) {
+    this._set(STORAGE_KEYS.STRENGTH_MANUAL, this.getManualStrengthLogs().filter(l => l.id !== id));
+  },
+
   /* ---- My Workouts (entrenos generados guardados) ---- */
 
   getMyWorkouts() {
@@ -434,6 +451,7 @@ const Storage = {
     const data = {
       workoutLogs: this._get(STORAGE_KEYS.WORKOUT_LOGS),
       runningLogs: this._get(STORAGE_KEYS.RUNNING_LOGS),
+      strengthManual: this._get(STORAGE_KEYS.STRENGTH_MANUAL),
       streak: this._get(STORAGE_KEYS.STREAK),
       exportDate: new Date().toISOString()
     };
@@ -453,6 +471,7 @@ const Storage = {
       const data = JSON.parse(jsonString);
       if (data.workoutLogs) this._set(STORAGE_KEYS.WORKOUT_LOGS, data.workoutLogs);
       if (data.runningLogs) this._set(STORAGE_KEYS.RUNNING_LOGS, data.runningLogs);
+      if (data.strengthManual) this._set(STORAGE_KEYS.STRENGTH_MANUAL, data.strengthManual);
       if (data.streak) this._set(STORAGE_KEYS.STREAK, data.streak);
       showToast('Datos importados correctamente ✅');
       return true;
