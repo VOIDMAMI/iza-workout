@@ -296,22 +296,29 @@ const Progress = {
       <button class="btn btn-primary btn-full mb-xl" id="run-add-toggle" onclick="Progress.toggleRunForm()">＋ Añadir carrera</button>
 
       <div class="running-log-form anim-fade-in" id="run-add-form" style="display:none">
-        <div class="form-row">
-          <div class="form-group" style="flex:1">
-            <label class="form-label">Fecha</label>
-            <input type="date" class="input" id="run-add-date" value="${today}" max="${today}">
-          </div>
-          <div class="form-group" style="flex:1">
-            <label class="form-label">Distancia (km)</label>
-            <input type="number" class="input" id="run-add-distance" placeholder="10.0" step="0.01" min="0" inputmode="decimal">
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="run-add-date">Fecha</label>
+          <input type="date" class="input run-input-date" id="run-add-date" value="${today}" max="${today}">
         </div>
         <div class="form-group">
-          <label class="form-label">Tiempo (h : min : seg)</label>
-          <div class="form-row">
-            <input type="number" class="input" id="run-add-h" placeholder="0" min="0" max="9" inputmode="numeric" style="flex:1">
-            <input type="number" class="input" id="run-add-m" placeholder="45" min="0" max="59" inputmode="numeric" style="flex:1">
-            <input type="number" class="input" id="run-add-s" placeholder="00" min="0" max="59" inputmode="numeric" style="flex:1">
+          <label class="form-label" for="run-add-distance">Distancia (km)</label>
+          <input type="text" class="input" id="run-add-distance" placeholder="Ej: 10,62" inputmode="decimal" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tiempo</label>
+          <div class="run-time-grid">
+            <div class="run-time-field">
+              <input type="text" class="input" id="run-add-h" placeholder="0" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off">
+              <span>horas</span>
+            </div>
+            <div class="run-time-field">
+              <input type="text" class="input" id="run-add-m" placeholder="00" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off">
+              <span>min</span>
+            </div>
+            <div class="run-time-field">
+              <input type="text" class="input" id="run-add-s" placeholder="00" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off">
+              <span>seg</span>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -419,7 +426,7 @@ const Progress = {
 
   saveManualRun() {
     const val = (id) => document.getElementById(id)?.value;
-    const distance = parseFloat(String(val('run-add-distance') || '').replace(',', '.'));
+    const distance = parseFloat(String(val('run-add-distance') || '').trim().replace(',', '.'));
     const h = parseInt(val('run-add-h')) || 0;
     const m = parseInt(val('run-add-m')) || 0;
     const s = parseInt(val('run-add-s')) || 0;
@@ -428,6 +435,10 @@ const Progress = {
 
     if (!distance || distance <= 0 || minutes <= 0) {
       showToast('Completa distancia y tiempo', 'warning');
+      return;
+    }
+    if (m > 59 || s > 59) {
+      showToast('Minutos y segundos deben ser de 0 a 59', 'warning');
       return;
     }
 
